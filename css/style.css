@@ -1,0 +1,76 @@
+/* Include padding and borders within an element's width. */
+* {
+  box-sizing: border-box;
+}
+
+/* Styles shared by the whole page. */
+body {
+  margin: 0;
+  background-color: #f7f5ef;
+  color: #223b36;
+  font-family: Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+/* Keep the content centred, with space at both edges. */
+header,
+main,
+footer {
+  width: calc(100% - 48px);
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+/* The opening title area. */
+header {
+  padding: 64px 0 48px;
+}
+
+h1,
+h2 {
+  font-family: Georgia, serif;
+  line-height: 1.15;
+}
+
+h1 {
+  margin: 0 0 20px;
+  font-size: clamp(38px, 6vw, 68px);
+}
+
+header p {
+  margin: 0;
+  font-size: 22px;
+}
+
+/* Each chapter receives its own space and separator. */
+section {
+  padding: 44px 0;
+  border-top: 1px solid #d5dcd3;
+}
+
+h2 {
+  margin: 0 0 20px;
+  font-size: 32px;
+}
+
+section p {
+  max-width: 52ch;
+  margin: 0;
+}
+
+.section-number {
+  margin-bottom: 12px;
+  color: #a74618;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 0.12em;
+}
+
+/* Credits and sources will go here later. */
+footer {
+  padding: 28px 0;
+  border-top: 1px solid #d5dcd3;
+  color: #596761;
+  font-size: 13px;
+}
