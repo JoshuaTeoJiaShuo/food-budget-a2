@@ -421,3 +421,689 @@ a {
   outline: 2px solid #a74618;
   outline-offset: 4px;
 }
+
+/* C2: food expenditure treemap */
+
+.chart-panel.c2-panel {
+  margin-top: 28px;
+  padding: 28px;
+  border: 0;
+  background: #fffefa;
+}
+
+.c2-panel .c2-kicker {
+  margin: 0 0 12px;
+  color: #596761;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+}
+
+.c2-panel h3 {
+  margin: 0 0 12px;
+  font-family: Georgia, serif;
+  font-size: clamp(25px, 2.5vw, 30px);
+  line-height: 1.2;
+}
+
+.c2-panel .c2-deck {
+  max-width: 64ch;
+  margin: 0 0 18px;
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.c2-panel .c2-reading {
+  max-width: 85ch;
+  margin: 0 0 16px;
+  color: #46534d;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+/* Group selector and reset button */
+
+.c2-controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 18px 0 8px;
+}
+
+.c2-controls label {
+  color: #223b36;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.c2-controls select,
+.c2-controls button {
+  padding: 8px 10px;
+  border: 1px solid #aab7aa;
+  border-radius: 3px;
+  background: #fffefa;
+  color: #223b36;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.c2-controls select {
+  flex: 1;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.c2-controls button {
+  cursor: pointer;
+}
+
+.c2-controls button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.c2-panel :is(select, button, summary, a):focus-visible {
+  outline: 2px solid #a74618;
+  outline-offset: 4px;
+}
+
+/* Context explains what the current rectangle sizes compare. */
+
+.c2-panel .c2-context {
+  max-width: none;
+  min-height: 2.8em;
+  margin: 8px 0 0;
+  color: #46534d;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Treemap container */
+
+.c2-panel .chart {
+  width: 100%;
+  min-width: 0;
+  margin: 0 0 18px;
+}
+
+.c2-panel .chart.vega-embed {
+  display: block;
+  padding: 0;
+}
+
+.c2-panel .chart svg {
+  display: block;
+}
+
+/* Accessible table for small rectangles and full category names */
+
+.c2-data {
+  margin: 0 0 20px;
+  font-size: 14px;
+}
+
+.c2-data summary {
+  width: fit-content;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.c2-data table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+  margin-top: 14px;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.c2-data caption {
+  margin-bottom: 10px;
+  color: #46534d;
+  text-align: left;
+}
+
+.c2-data th,
+.c2-data td {
+  padding: 9px 8px;
+  border-bottom: 1px solid #d5dcd3;
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+.c2-data thead th {
+  background: #eef2e9;
+  font-weight: 700;
+}
+
+.c2-data tbody th {
+  font-weight: 400;
+}
+
+.c2-data th:last-child,
+.c2-data td:last-child {
+  width: 85px;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Method notes and source */
+
+.c2-notes {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 28px;
+  padding-top: 16px;
+  border-top: 1px solid #d5dcd3;
+}
+
+.c2-panel .c2-notes p {
+  max-width: 55ch;
+  margin: 0;
+  color: #46534d;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.c2-panel .c2-source {
+  max-width: 90ch;
+  margin: 14px 0 0;
+  color: #46534d;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.c2-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-top: 14px;
+  font-size: 13px;
+}
+
+#food-basket > .c2-bridge {
+  max-width: 60ch;
+  margin: 22px 0 0;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Narrow-screen arrangement */
+
+@media (max-width: 600px) {
+  .chart-panel.c2-panel {
+    padding: 20px 12px;
+  }
+
+  .c2-controls label {
+    flex-basis: 100%;
+  }
+
+  .c2-controls select {
+    flex-basis: 100%;
+    width: 100%;
+  }
+
+  .c2-notes {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
+  }
+}
+
+/* C2 refinement: compact controls and clearer supporting text */
+
+.c2-panel .c2-deck {
+  max-width: 65ch;
+  margin-bottom: 14px;
+}
+
+.c2-panel .c2-reading {
+  max-width: 85ch;
+  margin-bottom: 12px;
+}
+
+/* Keep controls together without stretching across the panel. */
+
+.c2-controls {
+  justify-content: flex-start;
+  gap: 10px;
+  margin: 16px 0 0;
+}
+
+.c2-controls select {
+  flex: 0 1 380px;
+  width: 380px;
+  min-width: 0;
+  max-width: 100%;
+}
+
+.c2-controls button {
+  flex: 0 0 auto;
+}
+
+.c2-panel .c2-control-help {
+  max-width: 80ch;
+  margin: 7px 0 12px;
+  color: #596761;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.c2-panel .c2-context {
+  max-width: 90ch;
+  min-height: 0;
+  margin: 0 0 14px;
+  color: #46534d;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.c2-panel .chart {
+  margin: 0 0 18px;
+}
+
+/* Table: group names appear once in the complete view.
+   The group column disappears when one group is selected. */
+
+.c2-data {
+  margin-bottom: 18px;
+}
+
+.c2-data table {
+  margin-top: 14px;
+}
+
+.c2-data caption {
+  margin-bottom: 10px;
+  color: #46534d;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.c2-data thead th:first-child:not([hidden]) {
+  width: 30%;
+}
+
+.c2-data th[hidden] {
+  display: none;
+}
+
+.c2-data .c2-table-group {
+  background: #f3f5ee;
+  color: #223b36;
+  font-weight: 600;
+  vertical-align: top;
+}
+
+.c2-data th,
+.c2-data td {
+  padding: 10px 8px;
+}
+
+.c2-data th:last-child,
+.c2-data td:last-child {
+  width: 85px;
+  white-space: nowrap;
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Keep the comparison with C1 visible.
+   Longer methodological details sit inside the expandable note. */
+
+.c2-panel .c2-comparison-note {
+  max-width: 85ch;
+  margin: 0;
+  padding-top: 14px;
+  border-top: 1px solid #d5dcd3;
+  color: #46534d;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.c2-methods {
+  margin-top: 12px;
+  color: #46534d;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.c2-methods summary {
+  width: fit-content;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.c2-methods-content {
+  max-width: 78ch;
+  margin-top: 12px;
+  padding-left: 14px;
+  border-left: 2px solid #d5dcd3;
+}
+
+.c2-panel .c2-methods-content p {
+  max-width: none;
+  margin: 0 0 12px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.c2-panel .c2-methods-content p:last-child {
+  margin-bottom: 0;
+}
+
+.c2-panel .c2-source {
+  max-width: 90ch;
+  margin-top: 14px;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.c2-links {
+  margin-top: 10px;
+}
+
+/* Stack controls on narrow screens. */
+
+@media (max-width: 600px) {
+  .c2-controls label {
+    flex-basis: 100%;
+  }
+
+  .c2-controls select {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  .c2-controls button {
+    flex: 0 0 auto;
+  }
+
+  .c2-data th,
+  .c2-data td {
+    padding: 8px 5px;
+  }
+
+  .c2-data th:last-child,
+  .c2-data td:last-child {
+    width: 72px;
+  }
+}
+
+
+/* =========================================================
+   Reading sizes
+   Standard is deliberately larger than the previous design.
+   The reading-size selector will activate the other options.
+   ========================================================= */
+
+:root {
+  --reading-body: 1.25rem;
+  --reading-note: 1rem;
+  --reading-control: 1rem;
+}
+
+html[data-reading-size="large"] {
+  --reading-body: 1.375rem;
+  --reading-note: 1.125rem;
+  --reading-control: 1.125rem;
+}
+
+html[data-reading-size="extra-large"] {
+  --reading-body: 1.5rem;
+  --reading-note: 1.25rem;
+  --reading-control: 1.25rem;
+}
+
+/* Main reading text */
+
+body {
+  font-size: var(--reading-body);
+  line-height: 1.6;
+}
+
+main section > p:not(.section-number) {
+  font-size: var(--reading-body);
+  line-height: 1.6;
+  max-width: 62ch;
+}
+
+.c1-panel .c1-deck,
+.c2-panel .c2-deck,
+#food-basket > .c1-bridge,
+#food-basket > .c2-bridge {
+  font-size: var(--reading-body);
+  line-height: 1.6;
+  max-width: 62ch;
+}
+
+/* A more compact opening leaves more room for the story. */
+
+body > header {
+  padding: 36px 0 32px;
+}
+
+body > header h1 {
+  max-width: 24ch;
+  font-size: clamp(2.25rem, 4.2vw, 3.25rem);
+  line-height: 1.15;
+  margin-bottom: 16px;
+}
+
+body > header p {
+  font-size: var(--reading-body);
+  line-height: 1.6;
+}
+
+/* Chapter headings and chart titles */
+
+.section-number {
+  font-size: var(--reading-note);
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+}
+
+.c1-panel h3,
+.c2-panel h3 {
+  font-size: clamp(1.75rem, 2.7vw, 2rem);
+  line-height: 1.2;
+}
+
+/* Supporting text stays smaller than the main paragraphs,
+   but is no longer reduced to 12–13px. */
+
+.c1-panel .c1-kicker,
+.c2-panel .c2-kicker,
+.c1-panel .c1-interaction-hint,
+.c1-panel .c1-takeaway p,
+.c1-panel .c1-notes p,
+.c1-panel .c1-keyboard-help p,
+.c1-panel .c1-measure-row p,
+.c1-panel.is-compact .c1-compact-note,
+.c1-panel.is-compact .c1-compact-measure,
+.c2-panel .c2-reading,
+.c2-panel .c2-control-help,
+.c2-panel .c2-context,
+.c2-panel .c2-comparison-note,
+.c2-panel .c2-notes p,
+.c2-panel .c2-methods-content p,
+.c2-panel .c2-source,
+.chart-panel .chart-note {
+  font-size: var(--reading-note);
+  line-height: 1.6;
+}
+
+.c1-takeaway > span,
+.c1-keyboard-help,
+.c1-label-heading,
+.c1-links,
+.c2-data,
+.c2-methods,
+.c2-links,
+body > footer {
+  font-size: var(--reading-note);
+  line-height: 1.6;
+}
+
+/* Keep explanatory lines comfortable to scan. */
+
+.c1-panel .c1-interaction-hint,
+.c2-panel .c2-reading,
+.c2-panel .c2-control-help,
+.c2-panel .c2-comparison-note,
+.c2-panel .c2-source {
+  max-width: 68ch;
+}
+
+.c1-panel .c1-notes p {
+  max-width: 55ch;
+}
+
+/* Form controls */
+
+.c2-controls label,
+.c2-controls select,
+.c2-controls button {
+  font-size: var(--reading-control);
+  line-height: 1.5;
+}
+
+.c2-controls select,
+.c2-controls button {
+  min-height: 44px;
+  padding: 9px 12px;
+}
+
+.c2-controls {
+  row-gap: 12px;
+}
+
+/* Expandable guidance and source links */
+
+.c1-keyboard-help summary,
+.c2-data summary,
+.c2-methods summary {
+  padding: 4px 0;
+  line-height: 1.6;
+}
+
+.c1-links,
+.c2-links {
+  gap: 12px 24px;
+}
+
+.c1-links a,
+.c2-links a {
+  padding: 4px 0;
+  text-underline-offset: 3px;
+}
+
+/* Exact-value table */
+
+.c2-data table,
+.c2-data caption {
+  font-size: var(--reading-note);
+  line-height: 1.6;
+}
+
+.c2-data th,
+.c2-data td {
+  padding: 12px 10px;
+}
+
+.c2-data th:last-child,
+.c2-data td:last-child {
+  width: 6.5em;
+  white-space: nowrap;
+}
+
+/* Preserve room for reading on small screens. */
+
+@media (max-width: 600px) {
+  body > header {
+    padding: 28px 0;
+  }
+
+  .c2-controls select {
+    flex: 1 1 100%;
+    width: 100%;
+  }
+
+  .c2-data th,
+  .c2-data td {
+    padding: 10px 6px;
+  }
+}
+
+/* Default to Medium, including before JavaScript loads. */
+
+:root {
+  --reading-body: 1.375rem;
+  --reading-note: 1.125rem;
+  --reading-control: 1.125rem;
+}
+
+/* Explicit Small option overrides the Medium default. */
+
+html[data-reading-size="standard"] {
+  --reading-body: 1.25rem;
+  --reading-note: 1rem;
+  --reading-control: 1rem;
+}
+
+/* Reading-size selector */
+
+.reading-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  margin-top: 24px;
+}
+
+/* Preserve hiding until the JavaScript is ready. */
+
+.reading-controls[hidden] {
+  display: none;
+}
+
+.reading-controls label {
+  font-size: var(--reading-control);
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.reading-controls select {
+  min-height: 44px;
+  min-width: 9rem;
+  max-width: 100%;
+  padding: 8px 36px 8px 12px;
+  border: 1px solid #819383;
+  border-radius: 4px;
+  background-color: #fffefa;
+  color: #223b36;
+  font-family: inherit;
+  font-size: var(--reading-control);
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.reading-controls select:focus-visible {
+  outline: 3px solid #63351f;
+  outline-offset: 3px;
+}
+
+body > header .reading-controls-help {
+  flex-basis: 100%;
+  max-width: 60ch;
+  margin: 0;
+  color: #46534d;
+  font-size: var(--reading-note);
+  line-height: 1.5;
+}

@@ -6,6 +6,8 @@
   <script defer src="https://cdn.jsdelivr.net/npm/vega-lite@6.5.0"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/vega-embed@7.3.0"></script>
   <script defer src="js/main.js"></script>
+  <script defer src="js/c2.js"></script>
+  <script defer src="js/reading-size.js"></script>
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,10 +17,24 @@
 </head>
 
 <body>
-  <header>
-    <h1>Australia's Food Budget Divide</h1>
-    <p>What we buy, and who has room to choose.</p>
-  </header>
+    <header>
+      <h1>Australia's Food Budget Divide</h1>
+      <p>What we buy, and who has room to choose.</p>
+
+      <div class="reading-controls" id="reading-controls" hidden>
+        <label for="reading-size">Reading text size</label>
+
+        <select id="reading-size" aria-describedby="reading-size-help">
+          <option value="standard">Standard</option>
+          <option value="large">Large</option>
+          <option value="extra-large">Extra large</option>
+        </select>
+
+        <p id="reading-size-help" class="reading-controls-help">
+          Adjust reading text and chart labels.
+        </p>
+      </div>
+    </header>
 
     <main>
     <section id="food-basket">
@@ -121,6 +137,149 @@
         <p class="c1-bridge">
           These broad groups hide different kinds of purchases.
           What makes up the rest of the food basket?
+        </p>
+
+        <figure class="chart-panel c2-panel" aria-labelledby="c2-title">
+          <figcaption>
+            <p class="c2-kicker">
+              INSIDE THE BASKET · AUSTRALIA, 2015–16
+            </p>
+
+            <h3 id="c2-title">
+              What made up the rest of the food budget?
+            </h3>
+
+            <p class="c2-deck">
+              About two-thirds of food spending went to categories
+              other than meals out and fast foods. Explore how those
+              groups divided into individual purchases.
+            </p>
+          </figcaption>
+
+          <p class="c2-reading">
+            Rectangle area represents weekly spending. Tan highlights
+            meals out and fast foods; green shows other food purchases.
+            Group headings show combined totals where there are
+            multiple categories.
+          </p>
+
+          <div class="c2-controls">
+            <label for="c2-group">Explore a group</label>
+
+            <select
+              id="c2-group"
+              aria-describedby="c2-control-help"
+            >
+              <option value="">All food groups</option>
+            </select>
+
+            <button id="c2-reset" type="button" disabled>
+              All groups
+            </button>
+          </div>
+
+          <p id="c2-control-help" class="c2-control-help">
+            Groups with multiple categories can be enlarged.
+            All categories remain available in the overview and table.
+          </p>
+
+          <p id="c2-context" class="c2-context" aria-live="polite">
+            Average household spending in Australian dollars per week,
+            2015–16.
+          </p>
+
+          <div
+            id="chart-2"
+            class="chart"
+            role="img"
+            aria-label="Nested treemap of average household food spending in 2015–16"
+            aria-describedby="c2-context"
+          ></div>
+
+          <details class="c2-data">
+            <summary>Read exact values and full category names</summary>
+
+            <table>
+              <caption id="c2-table-caption">
+                Average household spending in dollars per week, 2015–16
+              </caption>
+
+              <thead>
+                <tr>
+                  <th scope="col">Food group</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">$/week</th>
+                </tr>
+              </thead>
+
+              <tbody id="c2-table-body"></tbody>
+            </table>
+          </details>
+
+          <p class="c2-comparison-note">
+            Compared with C1, this view separates meat from seafood,
+            and fruit and nuts from vegetables.
+          </p>
+
+          <details class="c2-methods">
+            <summary>About these estimates</summary>
+
+            <div class="c2-methods-content">
+              <p>
+                The treemap contains 13 ABS food groups and
+                42 non-overlapping categories. Group totals are
+                calculated from their displayed categories, so
+                spending is counted once.
+              </p>
+
+              <p>
+                These category estimates sum to $237.03 per
+                household per week. ABS publishes a separate
+                overall total of $236.97. Confidentiality
+                adjustments and rounding mean component estimates
+                need not add exactly to published totals.
+                The values have not been rescaled to match.
+              </p>
+
+              <p>
+                Chart labels are shortened where necessary.
+                The table provides full category names and expands
+                the ABS abbreviations “nfd” (not further defined)
+                and “nec” (not elsewhere classified).
+              </p>
+
+              <p>
+                Selecting a group enlarges it to fill the chart.
+                Rectangle sizes then compare purchases within that
+                group, rather than across the entire food basket.
+              </p>
+            </div>
+          </details>
+
+          <p class="c2-source">
+            Source: ABS,
+            <a
+              href="https://www.abs.gov.au/statistics/economy/finance/household-expenditure-survey-australia-summary-results/2015-16"
+            >
+              Household Expenditure Survey 2015–16</a>,
+            Table 13.9A, Australia column.
+            Amounts are in 2015–16 dollars.
+          </p>
+
+          <div class="c2-links">
+            <a href="charts/c2-food-treemap.vg.json">
+              Chart specification
+            </a>
+
+            <a href="data/food-hierarchy.csv">
+              View data
+            </a>
+          </div>
+        </figure>
+
+        <p class="c2-bridge">
+          Meals out formed the largest single food group nationally.
+          Was the average weekly meals-out bill similar in every state?
         </p>
     </section>
 

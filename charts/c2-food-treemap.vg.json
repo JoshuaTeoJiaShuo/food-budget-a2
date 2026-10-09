@@ -1,0 +1,408 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v6.json",
+  "description": "Australian household food expenditure in 2015–16: 13 food groups containing 42 non-overlapping categories.",
+  "width": 1000,
+  "height": 540,
+  "padding": 0,
+  "autosize": "none",
+  "background": "#fffefa",
+
+  "signals": [
+    {
+      "name": "selectedGroup",
+      "value": ""
+    },
+    {
+      "name": "headerSpace",
+      "value": 42
+    }
+  ],
+
+  "data": [
+    {
+      "name": "raw",
+      "url": "data/food-hierarchy.csv",
+      "format": {
+        "type": "csv",
+        "parse": {
+          "weekly": "number",
+          "hec_code": "string",
+          "parent": "string"
+        }
+      }
+    },
+    {
+      "name": "foodRoot",
+      "values": [
+        {
+          "id": "food",
+          "parentId": null,
+          "kind": "root",
+          "amount": 0
+        }
+      ]
+    },
+    {
+      "name": "groupNodes",
+      "source": "raw",
+      "transform": [
+        {
+          "type": "aggregate",
+          "groupby": ["parent", "parent_label"],
+          "ops": ["sum", "count"],
+          "fields": ["weekly", null],
+          "as": ["total", "childCount"]
+        },
+        {
+          "type": "formula",
+          "as": "id",
+          "expr": "datum.parent"
+        },
+        {
+          "type": "formula",
+          "as": "parentId",
+          "expr": "'food'"
+        },
+        {
+          "type": "formula",
+          "as": "group",
+          "expr": "datum.parent"
+        },
+        {
+          "type": "formula",
+          "as": "name",
+          "expr": "datum.parent_label"
+        },
+        {
+          "type": "formula",
+          "as": "label",
+          "expr": "({'0300':'Unspecified food','0301':'Bakery, flour & cereals','0302':'Meat','0303':'Fish & seafood','0304':'Eggs','0305':'Dairy','0306':'Oils & fats','0307':'Fruit & nuts','0308':'Vegetables','0309':'Condiments, sweets & meals','0310':'Non-alcoholic drinks','0311':'Meals out & fast foods','0399':'Other food & drinks'})[datum.parent]"
+        },
+        {
+          "type": "formula",
+          "as": "kind",
+          "expr": "'group'"
+        },
+        {
+          "type": "formula",
+          "as": "amount",
+          "expr": "0"
+        }
+      ]
+    },
+    {
+      "name": "itemNodes",
+      "source": "raw",
+      "transform": [
+        {
+          "type": "formula",
+          "as": "id",
+          "expr": "datum.hec_code"
+        },
+        {
+          "type": "formula",
+          "as": "parentId",
+          "expr": "datum.parent"
+        },
+        {
+          "type": "formula",
+          "as": "group",
+          "expr": "datum.parent"
+        },
+        {
+          "type": "formula",
+          "as": "name",
+          "expr": "datum.category"
+        },
+        {
+          "type": "formula",
+          "as": "label",
+          "expr": "({'030103':'Cakes, biscuits|& puddings','030200':'Meat not further|defined','030201':'Processed meat','030204':'Pork (excludes|bacon & ham)','030299':'Other meat','030702':'Canned, frozen|& bottled fruit','030703':'Dried fruit|& nuts','030902':'Syrups, honey,|jams & desserts','030904':'Spices, sauces|& other additives','030905':'Canned spaghetti|& baked beans','030906':'Packaged|prepared meals','031001':'Soft drinks &|packaged water','031002':'Fruit &|vegetable juice','031005':'Cordials & milk-|based drinks','0306019999':'Other edible|oils & fats'})[datum.hec_code] || replace(replace(datum.category, /\\bnfd\\b/g, '(not further defined)'), /\\bnec\\b/g, '(not elsewhere classified)')"
+        },
+        {
+          "type": "formula",
+          "as": "groupName",
+          "expr": "datum.parent_label"
+        },
+        {
+          "type": "formula",
+          "as": "kind",
+          "expr": "'item'"
+        },
+        {
+          "type": "formula",
+          "as": "amount",
+          "expr": "datum.weekly"
+        },
+        {
+          "type": "formula",
+          "as": "total",
+          "expr": "datum.weekly"
+        }
+      ]
+    },
+    {
+      "name": "tree",
+      "source": ["foodRoot", "groupNodes", "itemNodes"],
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "selectedGroup === '' || datum.kind === 'root' || datum.id === selectedGroup || datum.parentId === selectedGroup"
+        },
+        {
+          "type": "stratify",
+          "key": "id",
+          "parentKey": "parentId"
+        },
+        {
+          "type": "treemap",
+          "field": "amount",
+          "sort": {
+            "field": "value",
+            "order": "descending"
+          },
+          "method": "squarify",
+          "round": false,
+          "paddingInner": 2,
+          "paddingOuter": 3,
+          "paddingTop": {
+            "signal": "headerSpace"
+          },
+          "size": [
+            {"signal": "width"},
+            {"signal": "height + headerSpace"}
+          ]
+        }
+      ]
+    },
+    {
+      "name": "groups",
+      "source": "tree",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.kind === 'group'"
+        }
+      ]
+    },
+    {
+      "name": "leaves",
+      "source": "tree",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.kind === 'item'"
+        },
+        {
+          "type": "lookup",
+          "from": "groups",
+          "key": "id",
+          "fields": ["group"],
+          "values": ["x0", "x1", "y0", "y1"],
+          "as": [
+            "parentX0",
+            "parentX1",
+            "parentY0",
+            "parentY1"
+          ]
+        },
+        {
+          "type": "formula",
+          "as": "left",
+          "expr": "clamp(datum.x0, datum.parentX0, datum.parentX1)"
+        },
+        {
+          "type": "formula",
+          "as": "right",
+          "expr": "clamp(datum.x1, datum.parentX0, datum.parentX1)"
+        },
+        {
+          "type": "formula",
+          "as": "top",
+          "expr": "clamp(datum.y0, datum.parentY0, datum.parentY1)"
+        },
+        {
+          "type": "formula",
+          "as": "bottom",
+          "expr": "clamp(datum.y1, datum.parentY0, datum.parentY1)"
+        }
+      ]
+    },
+    {
+      "name": "groupLabels",
+      "source": "groups",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.x1 - datum.x0 > 65 && datum.y1 - datum.y0 > 45"
+        }
+      ]
+    },
+    {
+      "name": "groupTotals",
+      "source": "groups",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.childCount > 1 && datum.x1 - datum.x0 > 65 && datum.y1 - datum.y0 > 45"
+        }
+      ]
+    },
+    {
+      "name": "leafLabels",
+      "source": "leaves",
+      "transform": [
+        {
+          "type": "filter",
+          "expr": "datum.right - datum.left > 90 && datum.bottom - datum.top > 64"
+        }
+      ]
+    }
+  ],
+
+  "marks": [
+    {
+      "type": "rect",
+      "from": {"data": "groups"},
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {"field": "x0"},
+          "y": {"signal": "datum.y0 - headerSpace"},
+          "x2": {"field": "x1"},
+          "y2": {"signal": "datum.y1 - headerSpace"},
+          "fill": {"value": "#edf0e8"},
+          "stroke": {"value": "#819383"},
+          "strokeWidth": {"value": 1.2}
+        }
+      }
+    },
+    {
+      "type": "rect",
+      "name": "foodCells",
+      "from": {"data": "leaves"},
+      "encode": {
+        "update": {
+          "x": {"field": "left"},
+          "y": {"signal": "datum.top - headerSpace"},
+          "x2": {"field": "right"},
+          "y2": {"signal": "datum.bottom - headerSpace"},
+          "fill": {
+            "signal": "datum.group === '0311' ? '#e8c8ad' : '#dbe3d6'"
+          },
+          "stroke": {"value": "#fffefa"},
+          "strokeWidth": {"value": 1},
+          "tooltip": {
+            "signal": "{'Category': datum.name, 'Weekly household spending': format(datum.total, '$,.2f'), 'HEC code': datum.id}"
+          }
+        },
+        "hover": {
+          "stroke": {"value": "#46594b"},
+          "strokeWidth": {"value": 2}
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {"data": "groupLabels"},
+      "encode": {
+        "update": {
+          "x": {"signal": "datum.x0 + 8"},
+          "y": {
+            "signal": "datum.y0 - headerSpace + 8"
+          },
+          "limit": {
+            "signal": "max(0, datum.x1 - datum.x0 - 16)"
+          },
+          "text": {"field": "label"},
+          "font": {"value": "Arial"},
+          "fontSize": {"value": 12},
+          "fontWeight": {"value": "bold"},
+          "baseline": {"value": "top"},
+          "fill": {"value": "#223b36"},
+          "tooltip": {
+            "signal": "{'Category': datum.name, 'Weekly household spending': format(datum.total, '$,.2f'), 'HEC code': datum.id}"
+          }
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {"data": "groupTotals"},
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {"signal": "datum.x0 + 8"},
+          "y": {
+            "signal": "datum.y0 - headerSpace + 24"
+          },
+          "limit": {
+            "signal": "max(0, datum.x1 - datum.x0 - 16)"
+          },
+          "text": {
+            "signal": "format(datum.total, '$,.2f')"
+          },
+          "font": {"value": "Arial"},
+          "fontSize": {"value": 12},
+          "baseline": {"value": "top"},
+          "fill": {"value": "#46594b"}
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {"data": "leafLabels"},
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {"signal": "datum.x0 + 8"},
+          "y": {
+            "signal": "datum.y0 - headerSpace + 8"
+          },
+          "limit": {
+            "signal": "max(0, datum.x1 - datum.x0 - 16)"
+          },
+          "text": {
+            "signal": "datum.name === datum.groupName ? '' : datum.label"
+          },
+          "lineBreak": {"value": "|"},
+          "lineHeight": {"value": 15},
+          "font": {"value": "Arial"},
+          "fontSize": {"value": 12},
+          "baseline": {"value": "top"},
+          "fill": {"value": "#223b36"}
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {"data": "leafLabels"},
+      "interactive": false,
+      "encode": {
+        "update": {
+          "x": {
+            "signal": "datum.x0 + (datum.group === '0311' ? 16 : 8)"
+          },
+          "y": {
+            "signal": "datum.y0 - headerSpace + (datum.name === datum.groupName ? 14 : 14 + length(split(datum.label, '|')) * 15)"
+          },
+          "limit": {
+            "signal": "max(0, datum.x1 - datum.x0 - (datum.group === '0311' ? 32 : 16))"
+          },
+          "text": {
+            "signal": "format(datum.amount, '$,.2f')"
+          },
+          "font": {"value": "Arial"},
+          "fontSize": {
+            "signal": "datum.group === '0311' ? min(46, max(22, (datum.x1 - datum.x0) / 7.5)) : 14"
+          },
+          "fontWeight": {"value": "bold"},
+          "baseline": {"value": "top"},
+          "fill": {
+            "signal": "datum.group === '0311' ? '#63351f' : '#223b36'"
+          }
+        }
+      }
+    }
+  ]
+}
