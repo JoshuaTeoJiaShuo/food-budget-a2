@@ -1,0 +1,41 @@
+﻿hec_code,parent,parent_label,category,weekly
+030000,0300,Food and non-alcoholic beverages nfd,Food and non-alcoholic beverages nfd,15.03
+030101,0301,"Bakery products, flour and cereals",Bread,6.89
+030102,0301,"Bakery products, flour and cereals",Flour,0.29
+030103,0301,"Bakery products, flour and cereals","Cakes, biscuits, puddings and related products",8.43
+030104,0301,"Bakery products, flour and cereals",Cereals and pasta,4.23
+030200,0302,Meat (excluding fish and seafood),Meat (excluding fish and seafood) nfd,2.09
+030201,0302,Meat (excluding fish and seafood),"Processed meat (including ham, bacon and sausages)",9.28
+030202,0302,Meat (excluding fish and seafood),Beef and veal,4.84
+030203,0302,Meat (excluding fish and seafood),Mutton and lamb,2.79
+030204,0302,Meat (excluding fish and seafood),Pork (excluding bacon and ham),1.74
+030205,0302,Meat (excluding fish and seafood),Poultry,5.8
+030206,0302,Meat (excluding fish and seafood),Game,0.02
+030207,0302,Meat (excluding fish and seafood),Offal,0.32
+030299,0302,Meat (excluding fish and seafood),Other meat (excluding fish and seafood),0.13
+030300,0303,Fish and seafood,Fish and seafood nfd,0.12
+030301,0303,Fish and seafood,Fish and seafood,5.36
+030401,0304,Eggs and egg products,Eggs and egg products,1.85
+030501,0305,Dairy products,Dairy products,15.11
+030700,0307,Fruit and nuts,Fruit and nuts nfd,0.12
+030701,0307,Fruit and nuts,Fresh fruit,11.39
+030702,0307,Fruit and nuts,"Canned, frozen and bottled fruit",0.75
+030703,0307,Fruit and nuts,Dried fruit and nuts,2.53
+030800,0308,Vegetables,Vegetables nfd,0.1
+030801,0308,Vegetables,Fresh vegetables,12.47
+030802,0308,Vegetables,Frozen vegetables,1.16
+030899,0308,Vegetables,Other vegetables,1.59
+030901,0309,"Condiments, confectionery, food additives and prepared meals",Sugar,0.31
+030902,0309,"Condiments, confectionery, food additives and prepared meals","Syrups, honey, jams, jellies and desserts",1.07
+030903,0309,"Condiments, confectionery, food additives and prepared meals",Confectionery,13.01
+030904,0309,"Condiments, confectionery, food additives and prepared meals","Spices, herbs, sauces, spreads, and other food additives",5.53
+030905,0309,"Condiments, confectionery, food additives and prepared meals",Canned spaghetti and baked beans,0.28
+030906,0309,"Condiments, confectionery, food additives and prepared meals",Packaged prepared meals,5.39
+031000,0310,Non-alcoholic beverages,Non-alcoholic beverages nfd,0.6
+031001,0310,Non-alcoholic beverages,Soft drinks and packaged waters,5.91
+031002,0310,Non-alcoholic beverages,Fruit and vegetable juice,2.31
+031003,0310,Non-alcoholic beverages,Tea and coffee,3.32
+031004,0310,Non-alcoholic beverages,Food drinks,2.18
+031005,0310,Non-alcoholic beverages,Cordials and unpackaged milk based beverages,0.7
+031101,0311,Meals out and fast foods,Meals out and fast foods,80.27
+039901,0399,Other food and non-alcoholic beverages,Other food and non-alcoholic beverages,0.22

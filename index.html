@@ -1,6 +1,12 @@
 <!DOCTYPE html>
 <html lang="en-AU">
+
 <head>
+  <script defer src="https://cdn.jsdelivr.net/npm/vega@6.4.0"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/vega-lite@6.5.0"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/vega-embed@7.3.0"></script>
+  <script defer src="js/main.js"></script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -21,6 +27,100 @@
         <p>
         How has the share of household food spending changed
         across Australian expenditure surveys?
+        </p>
+        <figure class="chart-panel c1-panel" aria-labelledby="c1-title">
+          <figcaption class="c1-heading">
+            <div>
+              <p class="c1-kicker">FOOD SPENDING · SIX SURVEY WAVES</p>
+
+              <h3 id="c1-title">
+                <span class="c1-accent">Meals out</span> took a growing
+                share of the food budget
+              </h3>
+
+              <p class="c1-deck">
+                Meals out and fast foods accounted for roughly one-third
+                of food spending by 2015–16.
+              </p>
+            </div>
+
+            <div class="c1-takeaway">
+              <strong>+9.4</strong>
+              <span>percentage points</span>
+              <p>
+                Meals out and fast foods<br>
+                24.5% in 1988–89 → 33.9% in 2015–16
+              </p>
+            </div>
+          </figcaption>
+
+          <p id="c1-interaction-hint" class="c1-interaction-hint">
+            Hover over a line or category label to follow its trend.
+          </p>
+
+          <p class="c1-compact-measure">
+            Share of total food spending (%)
+          </p>
+
+          <div
+            id="chart-1"
+            class="chart"
+            role="group"
+            tabindex="0"
+            aria-label="Interactive chart of food spending shares"
+            aria-describedby="c1-interaction-hint"
+          ></div>
+
+          <details class="c1-keyboard-help">
+          <summary>Keyboard controls</summary>
+
+          <p>
+            Press Tab to focus the chart. Use the left and right
+            arrow keys to highlight a category. Press Esc to
+            show all categories again.
+          </p>
+        </details>
+
+          <p
+            id="c1-selection-status"
+            class="c1-sr-only"
+            aria-live="polite"
+            aria-atomic="true"
+          ></p>
+
+          <p class="c1-compact-note">
+            Each panel shows one food group. All panels use the same
+            dates and the same 0–40% scale.
+          </p>
+
+          <div class="c1-notes">
+            <p>
+              Spending shares do not measure how often households ate
+              out. Points mark six survey observations; connecting
+              lines do not show annual estimates. Labels are offset
+              where needed to avoid overlap.
+            </p>
+
+            <p>
+              Source: ABARES, <em>Food demand in Australia:
+              trends and issues 2018</em>, Table 11, using ABS
+              Household Expenditure Survey data. Values are rounded.
+            </p>
+          </div>
+
+          <div class="c1-links">
+            <a href="charts/c1-food-shares.vl.json">
+              Chart specification
+            </a>
+            <a href="data/food-share-history.csv">
+              View data
+            </a>
+          </div>
+        </figure>
+
+        <p class="c1-bridge">
+          These broad groups hide different kinds of purchases.
+          What makes up the rest of the food basket?
         </p>
     </section>
 

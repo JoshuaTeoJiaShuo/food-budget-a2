@@ -1,0 +1,9 @@
+﻿state,state_code,year,moderate_or_severe_pct,sample_n
+NSW,1,2025,33,1257
+VIC,2,2025,32,1035
+QLD,3,2025,35,812
+SA,4,2025,30,281
+WA,5,2025,32,428
+TAS,6,2025,33,276
+NT,7,2025,46,102
+ACT,8,2025,31,69

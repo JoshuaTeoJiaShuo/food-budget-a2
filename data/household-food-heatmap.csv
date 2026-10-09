@@ -1,0 +1,92 @@
+﻿household_type,year,hec_code,category,household_weekly,approx_per_person_weekly,rse_pct
+Couple with dependent children,2015-16,0300,Food and non-alcoholic beverages nfd,23.35,5.695121951219513,7.6
+Couple with dependent children,2015-16,0301,"Bakery products, flour and cereals",30.18,7.360975609756098,2.0
+Couple with dependent children,2015-16,0302,Meat (excluding fish and seafood),38.17,9.309756097560976,2.3
+Couple with dependent children,2015-16,0303,Fish and seafood,6.57,1.6024390243902442,4.2
+Couple with dependent children,2015-16,0304,Eggs and egg products,2.43,0.5926829268292684,3.8
+Couple with dependent children,2015-16,0305,Dairy products,21.91,5.343902439024391,2.2
+Couple with dependent children,2015-16,0306,Edible oils and fats,1.87,0.45609756097560983,4.8
+Couple with dependent children,2015-16,0307,Fruit and nuts,20.61,5.026829268292683,2.9
+Couple with dependent children,2015-16,0308,Vegetables,20.17,4.9195121951219525,2.2
+Couple with dependent children,2015-16,0309,"Condiments, confectionery, food additives and prepared meals",37.06,9.039024390243904,2.1
+Couple with dependent children,2015-16,0310,Non-alcoholic beverages,19.42,4.736585365853659,2.3
+Couple with dependent children,2015-16,0311,Meals out and fast foods,106.07,25.870731707317074,2.6
+Couple with dependent children,2015-16,0399,Other food and non-alcoholic beverages,0.27,0.06585365853658538,13.7
+One parent with dependent children,2015-16,0300,Food and non-alcoholic beverages nfd,18.88,6.293333333333333,24.5
+One parent with dependent children,2015-16,0301,"Bakery products, flour and cereals",19.34,6.446666666666666,3.7
+One parent with dependent children,2015-16,0302,Meat (excluding fish and seafood),22.5,7.5,4.4
+One parent with dependent children,2015-16,0303,Fish and seafood,4.34,1.4466666666666665,13.5
+One parent with dependent children,2015-16,0304,Eggs and egg products,1.59,0.53,10.0
+One parent with dependent children,2015-16,0305,Dairy products,15.3,5.1000000000000005,5.7
+One parent with dependent children,2015-16,0306,Edible oils and fats,1.13,0.37666666666666665,13.9
+One parent with dependent children,2015-16,0307,Fruit and nuts,11.73,3.91,6.1
+One parent with dependent children,2015-16,0308,Vegetables,11.55,3.85,4.1
+One parent with dependent children,2015-16,0309,"Condiments, confectionery, food additives and prepared meals",27.76,9.253333333333334,4.6
+One parent with dependent children,2015-16,0310,Non-alcoholic beverages,13.41,4.47,5.2
+One parent with dependent children,2015-16,0311,Meals out and fast foods,51.48,17.16,7.6
+One parent with dependent children,2015-16,0399,Other food and non-alcoholic beverages,0.09,0.03,44.5
+Couple only,2015-16,0300,Food and non-alcoholic beverages nfd,9.97,4.985,8.0
+Couple only,2015-16,0301,"Bakery products, flour and cereals",18.02,9.01,2.2
+Couple only,2015-16,0302,Meat (excluding fish and seafood),26.86,13.43,2.4
+Couple only,2015-16,0303,Fish and seafood,6.22,3.11,5.2
+Couple only,2015-16,0304,Eggs and egg products,1.85,0.925,4.2
+Couple only,2015-16,0305,Dairy products,14.02,7.01,1.7
+Couple only,2015-16,0306,Edible oils and fats,1.62,0.81,5.4
+Couple only,2015-16,0307,Fruit and nuts,15.49,7.745,2.5
+Couple only,2015-16,0308,Vegetables,16.55,8.275,2.7
+Couple only,2015-16,0309,"Condiments, confectionery, food additives and prepared meals",22.93,11.465,2.4
+Couple only,2015-16,0310,Non-alcoholic beverages,14.13,7.065,2.8
+Couple only,2015-16,0311,Meals out and fast foods,78.86,39.43,2.7
+Couple only,2015-16,0399,Other food and non-alcoholic beverages,0.23,0.115,20.4
+Other one-family,2015-16,0300,Food and non-alcoholic beverages nfd,21.06,6.793548387096774,15.2
+Other one-family,2015-16,0301,"Bakery products, flour and cereals",22.23,7.170967741935484,3.1
+Other one-family,2015-16,0302,Meat (excluding fish and seafood),34.58,11.154838709677419,4.7
+Other one-family,2015-16,0303,Fish and seafood,6.76,2.1806451612903226,7.3
+Other one-family,2015-16,0304,Eggs and egg products,2.25,0.7258064516129032,5.7
+Other one-family,2015-16,0305,Dairy products,16.97,5.474193548387096,3.8
+Other one-family,2015-16,0306,Edible oils and fats,1.9,0.6129032258064515,6.1
+Other one-family,2015-16,0307,Fruit and nuts,16.49,5.3193548387096765,4.2
+Other one-family,2015-16,0308,Vegetables,18.61,6.003225806451613,3.5
+Other one-family,2015-16,0309,"Condiments, confectionery, food additives and prepared meals",30.37,9.796774193548387,3.5
+Other one-family,2015-16,0310,Non-alcoholic beverages,20.6,6.645161290322581,5.6
+Other one-family,2015-16,0311,Meals out and fast foods,108.32,34.941935483870964,4.5
+Other one-family,2015-16,0399,Other food and non-alcoholic beverages,0.34,0.10967741935483871,22.9
+Multiple-family,2015-16,0300,Food and non-alcoholic beverages nfd,51.43,9.70377358490566,35.1
+Multiple-family,2015-16,0301,"Bakery products, flour and cereals",35.16,6.633962264150943,8.1
+Multiple-family,2015-16,0302,Meat (excluding fish and seafood),52.27,9.862264150943398,12.1
+Multiple-family,2015-16,0303,Fish and seafood,11.66,2.2,17.6
+Multiple-family,2015-16,0304,Eggs and egg products,3.09,0.5830188679245283,14.9
+Multiple-family,2015-16,0305,Dairy products,29.29,5.526415094339622,10.3
+Multiple-family,2015-16,0306,Edible oils and fats,3.53,0.6660377358490566,19.2
+Multiple-family,2015-16,0307,Fruit and nuts,25.78,4.8641509433962264,14.2
+Multiple-family,2015-16,0308,Vegetables,31.82,6.003773584905661,8.5
+Multiple-family,2015-16,0309,"Condiments, confectionery, food additives and prepared meals",38.99,7.356603773584906,8.2
+Multiple-family,2015-16,0310,Non-alcoholic beverages,27.46,5.181132075471698,17.6
+Multiple-family,2015-16,0311,Meals out and fast foods,118.14,22.29056603773585,10.5
+Multiple-family,2015-16,0399,Other food and non-alcoholic beverages,0.26,0.04905660377358491,np
+Lone person,2015-16,0300,Food and non-alcoholic beverages nfd,5.67,5.67,9.0
+Lone person,2015-16,0301,"Bakery products, flour and cereals",8.81,8.81,2.7
+Lone person,2015-16,0302,Meat (excluding fish and seafood),11.32,11.32,3.4
+Lone person,2015-16,0303,Fish and seafood,2.82,2.82,7.8
+Lone person,2015-16,0304,Eggs and egg products,0.97,0.97,5.0
+Lone person,2015-16,0305,Dairy products,7.16,7.16,2.4
+Lone person,2015-16,0306,Edible oils and fats,0.77,0.77,6.5
+Lone person,2015-16,0307,Fruit and nuts,7.13,7.13,3.5
+Lone person,2015-16,0308,Vegetables,7.09,7.09,2.9
+Lone person,2015-16,0309,"Condiments, confectionery, food additives and prepared meals",11.86,11.86,2.9
+Lone person,2015-16,0310,Non-alcoholic beverages,7.3,7.3,3.1
+Lone person,2015-16,0311,Meals out and fast foods,35.03,35.03,3.4
+Lone person,2015-16,0399,Other food and non-alcoholic beverages,0.08,0.08,np
+Group household,2015-16,0300,Food and non-alcoholic beverages nfd,18.34,7.336,15.8
+Group household,2015-16,0301,"Bakery products, flour and cereals",13.11,5.244,8.1
+Group household,2015-16,0302,Meat (excluding fish and seafood),19.7,7.88,10.5
+Group household,2015-16,0303,Fish and seafood,4.54,1.816,13.4
+Group household,2015-16,0304,Eggs and egg products,1.82,0.728,22.9
+Group household,2015-16,0305,Dairy products,11.3,4.5200000000000005,7.4
+Group household,2015-16,0306,Edible oils and fats,0.72,0.288,21.4
+Group household,2015-16,0307,Fruit and nuts,10.45,4.18,11.9
+Group household,2015-16,0308,Vegetables,12.7,5.08,9.1
+Group household,2015-16,0309,"Condiments, confectionery, food additives and prepared meals",20.88,8.352,7.3
+Group household,2015-16,0310,Non-alcoholic beverages,19.31,7.723999999999999,13.8
+Group household,2015-16,0311,Meals out and fast foods,150.67,60.267999999999994,13.6
+Group household,2015-16,0399,Other food and non-alcoholic beverages,0.42,0.16799999999999998,47.3

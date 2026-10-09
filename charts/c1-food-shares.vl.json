@@ -1,0 +1,386 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "description": "Food spending shares across six survey waves, with aligned direct labels, endpoint annotations and category highlighting.",
+  "width": 600,
+  "height": 360,
+  "padding": 8,
+  "autosize": {
+    "type": "pad",
+    "contains": "content"
+  },
+  "params": [
+    {
+      "name": "focusedCategory",
+      "value": ""
+    }
+  ],
+  "data": {
+    "url": "data/food-share-history.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "food_share_pct": "number"
+      }
+    }
+  },
+  "transform": [
+    {
+      "calculate": "toNumber(slice(datum.year, 0, 4))",
+      "as": "survey_start"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "survey_start",
+      "type": "quantitative",
+      "scale": {
+        "domain": [1988, 2015],
+        "nice": false,
+        "zero": false
+      },
+      "axis": {
+        "title": null,
+        "values": [1988, 1993, 1998, 2003, 2009, 2015],
+        "labelExpr": "format(datum.value, 'd') + '–' + slice(toString(datum.value + 1), 2, 4)",
+        "labelAngle": 0,
+        "labelOverlap": false,
+        "labelPadding": 12,
+        "grid": false
+      }
+    },
+    "y": {
+      "field": "food_share_pct",
+      "type": "quantitative",
+      "scale": {
+        "domain": [0, 40],
+        "nice": false
+      },
+      "axis": {
+        "title": null,
+        "values": [0, 10, 20, 30, 40],
+        "labelExpr": "datum.value + '%'",
+        "labelPadding": 8
+      }
+    },
+    "detail": {
+      "field": "category",
+      "type": "nominal"
+    },
+    "color": {
+      "condition": {
+        "test": "datum.category === 'Meals out & fast foods'",
+        "value": "#a74618"
+      },
+      "value": "#77857e"
+    },
+    "opacity": {
+      "condition": {
+        "test": "focusedCategory === '' || datum.category === focusedCategory",
+        "value": 1
+      },
+      "value": 0.18
+    },
+    "tooltip": [
+      {
+        "field": "category",
+        "type": "nominal",
+        "title": "Food group"
+      },
+      {
+        "field": "year",
+        "type": "nominal",
+        "title": "Survey"
+      },
+      {
+        "field": "food_share_pct",
+        "type": "quantitative",
+        "title": "Share (%)",
+        "format": ".1f"
+      }
+    ]
+  },
+  "layer": [
+    {
+      "transform": [
+        {
+          "filter": "datum.category === 'Meals out & fast foods' && datum.survey_start === 1988"
+        },
+        {
+          "calculate": "''",
+          "as": "category"
+        }
+      ],
+      "encoding": {
+        "y": {
+          "value": -20
+        },
+        "color": {
+          "value": "#46534d"
+        },
+        "opacity": {
+          "value": 1
+        },
+        "tooltip": null
+      },
+      "layer": [
+        {
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "bottom",
+            "fontSize": 13
+          },
+          "encoding": {
+            "x": {
+              "value": 0
+            },
+            "text": {
+              "value": "Share of total food spending (%)"
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "bottom",
+            "fontSize": 13
+          },
+          "encoding": {
+            "x": {
+              "value": {
+                "expr": "width + 30"
+              }
+            },
+            "text": {
+              "value": "Food group"
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "align": "right",
+            "baseline": "bottom",
+            "fontSize": 13
+          },
+          "encoding": {
+            "x": {
+              "value": {
+                "expr": "width + 305"
+              }
+            },
+            "text": {
+              "value": "2015–16"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "mark": {
+        "type": "line",
+        "point": {
+          "filled": true,
+          "size": 32
+        }
+      },
+      "encoding": {
+        "strokeWidth": {
+          "condition": [
+            {
+              "test": "datum.category === focusedCategory",
+              "value": 3
+            },
+            {
+              "test": "datum.category === 'Meals out & fast foods'",
+              "value": 3
+            }
+          ],
+          "value": 1.5
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.survey_start === 2015"
+        },
+        {
+          "lookup": "category",
+          "from": {
+            "data": {
+              "values": [
+                {
+                  "category": "Meals out & fast foods",
+                  "label_y": 33.9
+                },
+                {
+                  "category": "Meat, fish & seafood",
+                  "label_y": 15.5
+                },
+                {
+                  "category": "Fruit & vegetables",
+                  "label_y": 13.6
+                },
+                {
+                  "category": "Condiments, confectionery etc.",
+                  "label_y": 11.7
+                },
+                {
+                  "category": "Bakery products, flour & cereals",
+                  "label_y": 9.8
+                },
+                {
+                  "category": "Other food",
+                  "label_y": 7.9
+                },
+                {
+                  "category": "Dairy products",
+                  "label_y": 6
+                },
+                {
+                  "category": "Non-alcoholic beverages",
+                  "label_y": 4.1
+                }
+              ]
+            },
+            "key": "category",
+            "fields": ["label_y"]
+          }
+        },
+        {
+          "calculate": "format(datum.food_share_pct, '.1f') + '%'",
+          "as": "end_value"
+        }
+      ],
+      "layer": [
+        {
+          "mark": {
+            "type": "rule",
+            "strokeWidth": 1
+          },
+          "encoding": {
+            "x": {
+              "value": {
+                "expr": "width + 3"
+              }
+            },
+            "x2": {
+              "value": {
+                "expr": "width + 24"
+              }
+            },
+            "y2": {
+              "field": "label_y"
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "middle",
+            "fontSize": 13
+          },
+          "encoding": {
+            "x": {
+              "value": {
+                "expr": "width + 30"
+              }
+            },
+            "y": {
+              "field": "label_y",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "category"
+            },
+            "color": {
+              "condition": {
+                "test": "datum.category === 'Meals out & fast foods'",
+                "value": "#a74618"
+              },
+              "value": "#46534d"
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "align": "right",
+            "baseline": "middle",
+            "fontSize": 13,
+            "fontWeight": "bold"
+          },
+          "encoding": {
+            "x": {
+              "value": {
+                "expr": "width + 305"
+              }
+            },
+            "y": {
+              "field": "label_y",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "end_value"
+            },
+            "color": {
+              "condition": {
+                "test": "datum.category === 'Meals out & fast foods'",
+                "value": "#a74618"
+              },
+              "value": "#46534d"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.category === 'Meals out & fast foods' && (datum.survey_start === 1988 || datum.survey_start === 2015)"
+        },
+        {
+          "calculate": "format(datum.food_share_pct, '.1f') + '%'",
+          "as": "endpoint_label"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "align": {
+          "expr": "datum.survey_start === 1988 ? 'left' : 'right'"
+        },
+        "dy": -16,
+        "fontSize": 14,
+        "fontWeight": "bold"
+      },
+      "encoding": {
+        "text": {
+          "field": "endpoint_label"
+        }
+      }
+    }
+  ],
+  "config": {
+    "background": "#fffefa",
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFont": "Arial",
+      "labelFontSize": 13,
+      "labelColor": "#46534d",
+      "titleFont": "Arial",
+      "domain": false,
+      "ticks": false,
+      "gridColor": "#e1e5de",
+      "gridWidth": 1
+    },
+    "text": {
+      "font": "Arial"
+    }
+  }
+}

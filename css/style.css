@@ -74,3 +74,350 @@ footer {
   color: #596761;
   font-size: 13px;
 }
+
+/* Styles for the chart panels. */
+.chart-panel {
+  margin: 32px 0 0;
+  padding: 24px;
+  background-color: #fffefa;
+  border: 1px solid #d5dcd3;
+}
+
+.chart-panel h3 {
+  margin: 0 0 16px;
+  font-family: Georgia, serif;
+  font-size: 25px;
+  line-height: 1.2;
+}
+
+.chart-panel p {
+  max-width: 70ch;
+  margin: 12px 0;
+}
+
+.chart {
+  width: 100%;
+  margin: 24px 0;
+}
+
+.chart.vega-embed {
+  padding: 0;
+}
+
+.chart-panel .chart-note {
+  font-size: 13px;
+  color: #596761;
+}
+
+a {
+  color: #a74618;
+}
+
+
+/* C1 Configurations */
+
+.chart-panel.c1-panel {
+  padding: 28px;
+  border: 0;
+  background: #fffefa;
+}
+
+.c1-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(210px, 1fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.c1-panel .c1-kicker {
+  margin: 0 0 12px;
+  color: #596761;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+}
+
+.c1-panel h3 {
+  margin: 0 0 14px;
+  max-width: 26ch;
+  font-family: Georgia, serif;
+  font-size: clamp(25px, 2.5vw, 30px);
+  line-height: 1.2;
+}
+
+.c1-accent {
+  color: #a74618;
+}
+
+.c1-panel .c1-deck {
+  margin: 0;
+  max-width: 48ch;
+  font-size: 16px;
+  line-height: 1.55;
+}
+
+.c1-takeaway {
+  padding-left: 24px;
+  border-left: 2px solid #d8b9a5;
+}
+
+.c1-takeaway strong {
+  display: block;
+  color: #a74618;
+  font-size: 38px;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.c1-takeaway > span {
+  display: block;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.c1-panel .c1-takeaway p {
+  margin: 12px 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.c1-measure-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 28px;
+}
+
+.c1-panel .c1-measure-row p {
+  margin: 0;
+  color: #46534d;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.c1-label-heading {
+  width: 280px;
+  flex-shrink: 0;
+}
+
+.c1-panel .chart {
+  width: 100%;
+  min-width: 0;
+  margin: 8px 0 20px;
+}
+
+.c1-panel .chart.vega-embed {
+  display: block;
+  padding: 0;
+}
+
+.c1-panel .chart svg {
+  display: block;
+}
+
+.c1-notes {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 32px;
+  padding-top: 16px;
+  border-top: 1px solid #d5dcd3;
+}
+
+.c1-panel .c1-notes p {
+  margin: 0;
+  max-width: 55ch;
+  color: #46534d;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.c1-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 20px;
+  margin-top: 16px;
+  font-size: 13px;
+}
+
+.c1-links a:focus-visible {
+  outline: 2px solid #a74618;
+  outline-offset: 4px;
+}
+
+.c1-panel .c1-compact-note {
+  display: none;
+}
+
+/* Narrow layouts use labelled small multiples instead of squeezed labels. */
+
+.c1-panel.is-compact .c1-heading {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 20px;
+}
+
+.c1-panel.is-compact .c1-label-heading {
+  display: none;
+}
+
+.c1-panel.is-compact .c1-notes {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+}
+
+.c1-panel.is-compact .c1-compact-note {
+  display: block;
+  margin: 0 0 16px;
+  color: #46534d;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+@media (max-width: 500px) {
+  .chart-panel.c1-panel {
+    padding: 20px 12px;
+  }
+}
+
+
+/* C1 refinement: tighter hierarchy and clearer label columns. */
+
+.c1-heading {
+  gap: 28px;
+}
+
+.c1-panel h3 {
+  margin-bottom: 12px;
+}
+
+.c1-panel .c1-deck {
+  max-width: 49ch;
+}
+
+.c1-panel .c1-takeaway p {
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.c1-panel .c1-interaction-hint {
+  max-width: 90ch;
+  margin: 20px 0 12px;
+  color: #596761;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.c1-measure-row {
+  margin-top: 0;
+  align-items: baseline;
+}
+
+.c1-label-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 60px;
+  gap: 12px;
+  width: 300px;
+  margin-right: 8px;
+  flex-shrink: 0;
+  color: #46534d;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.c1-label-heading span:last-child {
+  text-align: right;
+}
+
+.c1-panel .chart {
+  margin: 8px 0 18px;
+}
+
+.c1-panel .chart:focus-visible {
+  outline: 2px solid #a74618;
+  outline-offset: 5px;
+}
+
+.c1-panel .chart .mark-text,
+.c1-panel .chart .mark-line,
+.c1-panel .chart .mark-symbol {
+  cursor: pointer;
+}
+
+#food-basket > .c1-bridge {
+  max-width: 60ch;
+  margin: 22px 0 0;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Accessible status text, without adding another visible label. */
+
+.c1-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.c1-panel.is-compact .c1-label-heading {
+  display: none;
+}
+
+/* A shorter introduction gives more space to the chart. */
+
+.c1-panel .c1-interaction-hint {
+  margin: 14px 0 4px;
+  max-width: 65ch;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #596761;
+}
+
+.c1-panel .chart {
+  margin: 0 0 12px;
+}
+
+/* Desktop measure and column headings are drawn inside the chart. */
+
+.c1-panel .c1-compact-measure {
+  display: none;
+}
+
+.c1-panel.is-compact .c1-compact-measure {
+  display: block;
+  margin: 12px 0 8px;
+  color: #46534d;
+  font-size: 13px;
+}
+
+/* Optional guidance remains available without dominating the page. */
+
+.c1-keyboard-help {
+  margin: 0 0 16px;
+  color: #596761;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.c1-keyboard-help summary {
+  width: fit-content;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.c1-panel .c1-keyboard-help p {
+  margin: 8px 0 0;
+  max-width: 65ch;
+  font-size: 12px;
+}
+
+.c1-keyboard-help summary:focus-visible {
+  outline: 2px solid #a74618;
+  outline-offset: 4px;
+}

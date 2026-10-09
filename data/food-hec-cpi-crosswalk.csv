@@ -1,0 +1,157 @@
+﻿hec_code,partition,hec_label,cpi_code,cpi_label,hes_national_weekly,mapping_status
+0300000000,p,Food and non-alcoholic beverages nfd,1.1.1,Bread,15.19,exclude_from_numeric_reweighting
+0300000000,p,Food and non-alcoholic beverages nfd,1.1.2,Cakes and biscuits,15.19,exclude_from_numeric_reweighting
+0300000000,p,Food and non-alcoholic beverages nfd,1.2.5,Other meats,15.19,exclude_from_numeric_reweighting
+0300000000,p,Food and non-alcoholic beverages nfd,1.3.3,Ice cream and other dairy products,15.19,exclude_from_numeric_reweighting
+0300000000,p,Food and non-alcoholic beverages nfd,1.4.1,Fruit,15.19,exclude_from_numeric_reweighting
+0300000000,p,Food and non-alcoholic beverages nfd,1.4.2,Vegetables,15.19,exclude_from_numeric_reweighting
+0300000000,p,Food and non-alcoholic beverages nfd,1.5.6,Other food products n.e.c.,15.19,exclude_from_numeric_reweighting
+0300000000,p,Food and non-alcoholic beverages nfd,1.6.2,"Waters, soft drinks and juices",15.19,exclude_from_numeric_reweighting
+0301010101,,Bread,1.1.1,Bread,6.88,direct
+0301020101,,Flour,1.1.4,Other cereal products,0.29,direct
+0301030101,,"Cakes, tarts and puddings (fresh or frozen)",1.1.2,Cakes and biscuits,4.12,direct
+0301030201,,Biscuits,1.1.2,Cakes and biscuits,3.87,direct
+0301030301,,"Cake, biscuit, pudding and bread mixes",1.1.2,Cakes and biscuits,0.35,direct
+0301040101,,Breakfast cereals,1.1.3,Breakfast cereals,2.11,direct
+0301040201,,Pasta,1.1.4,Other cereal products,1.02,direct
+0301040301,,Rice,1.1.4,Other cereal products,0.79,direct
+0301049999,,Cereals and pasta nec,1.1.4,Other cereal products,0.32,direct
+0302000000,p,Meat (excluding fish and seafood) nfd,1.2.1,Beef and veal,2.09,exclude_from_numeric_reweighting
+0302000000,p,Meat (excluding fish and seafood) nfd,1.2.2,Pork,2.09,exclude_from_numeric_reweighting
+0302000000,p,Meat (excluding fish and seafood) nfd,1.2.3,Lamb and goat,2.09,exclude_from_numeric_reweighting
+0302000000,p,Meat (excluding fish and seafood) nfd,1.2.4,Poultry,2.09,exclude_from_numeric_reweighting
+0302000000,p,Meat (excluding fish and seafood) nfd,1.2.5,Other meats,2.09,exclude_from_numeric_reweighting
+0302010101,,Ham (including canned),1.2.2,Pork,1.63,direct
+0302010201,,Bacon (including canned),1.2.2,Pork,1.12,direct
+0302010301,,Sausages (not continental),1.2.5,Other meats,1.31,direct
+0302010401,,Canned meat (other than bacon and ham),1.2.5,Other meats,0.08,direct
+0302010501,,Frozen processed meat,1.2.5,Other meats,0.32,direct
+0302019902,,Smallgoods,1.2.5,Other meats,1.82,direct
+0302019903,,Mince (beef),1.2.1,Beef and veal,1.79,direct
+0302019904,f,Mince (nec),1.2.2,Pork,0.62,exclude_from_numeric_reweighting
+0302019904,f,Mince (nec),1.2.3,Lamb and goat,0.62,exclude_from_numeric_reweighting
+0302019904,f,Mince (nec),1.2.4,Poultry,0.62,exclude_from_numeric_reweighting
+0302019999,,Processed meat nec,1.2.5,Other meats,0.58,direct
+0302020102,,Beef steak cuts,1.2.1,Beef and veal,3.01,direct
+0302020103,,Beef roast cuts,1.2.1,Beef and veal,0.54,direct
+0302020199,,Other beef and veal nec,1.2.1,Beef and veal,1.27,direct
+0302030102,,Lamb chops and steaks (inc cutlets etc),1.2.3,Lamb and goat,1.63,direct
+0302030103,,Lamb roast cuts,1.2.3,Lamb and goat,1.09,direct
+0302030104,,Other lamb and mutton nec,1.2.3,Lamb and goat,0.05,direct
+0302040102,,Pork chops and steaks,1.2.2,Pork,0.52,direct
+0302040103,,Pork roast cuts,1.2.2,Pork,0.44,direct
+0302040104,,Other pork (excluding bacon and ham) nec,1.2.2,Pork,0.79,direct
+0302050201,,Prepared chicken,1.2.4,Poultry,1.11,direct
+0302050202,,Other chicken nec,1.2.4,Poultry,4.37,direct
+0302050301,,Prepared other poultry,1.2.4,Poultry,0.0,direct
+0302050302,,Other poultry nec,1.2.4,Poultry,0.34,direct
+0302060101,,Game,1.2.5,Other meats,0.01,direct
+0302070101,,Offal,1.2.5,Other meats,0.32,direct
+0302999999,p,Meat (excluding fish and seafood) nec,1.2.1,Beef and veal,0.12,exclude_from_numeric_reweighting
+0302999999,p,Meat (excluding fish and seafood) nec,1.2.2,Pork,0.12,exclude_from_numeric_reweighting
+0302999999,p,Meat (excluding fish and seafood) nec,1.2.3,Lamb and goat,0.12,exclude_from_numeric_reweighting
+0302999999,p,Meat (excluding fish and seafood) nec,1.2.4,Poultry,0.12,exclude_from_numeric_reweighting
+0302999999,p,Meat (excluding fish and seafood) nec,1.2.5,Other meats,0.12,exclude_from_numeric_reweighting
+0303000000,,Fish and seafood nfd,1.2.6,Fish and other seafood,0.13,direct
+0303010101,,Fresh fish and seafood,1.2.6,Fish and other seafood,2.45,direct
+0303010201,,Frozen fish and seafood,1.2.6,Fish and other seafood,1.29,direct
+0303010301,,Canned and bottled fish and seafood,1.2.6,Fish and other seafood,1.25,direct
+0303019999,,Fish and seafood nec,1.2.6,Fish and other seafood,0.38,direct
+0304010101,,Fresh eggs,1.5.1,Eggs,1.84,direct
+0304019999,,Eggs and egg products nec,1.5.1,Eggs,0.02,direct
+0305010102,,Plain milk,1.3.1,Milk,4.15,direct
+0305010103,,Flavoured milk,1.3.1,Milk,1.21,direct
+0305010199,,Milk nfd,1.3.1,Milk,0.01,direct
+0305010201,,Fresh cream,1.3.3,Ice cream and other dairy products,0.45,direct
+0305010301,,Cheese,1.3.2,Cheese,4.77,direct
+0305010401,,Butter,1.5.4,Oils and fats,0.94,direct
+0305010501,,Powdered milk,1.3.1,Milk,0.09,direct
+0305010601,,Yoghurt,1.3.3,Ice cream and other dairy products,2.63,direct
+0305019999,,Dairy products nec,1.3.3,Ice cream and other dairy products,0.85,direct
+0306010101,,Margarine,1.5.4,Oils and fats,0.48,direct
+0306019999,,Edible oils and fats nec,1.5.4,Oils and fats,1.02,direct
+0307000000,p,Fruit and nuts nfd,1.4.1,Fruit,0.12,exclude_from_numeric_reweighting
+0307000000,p,Fruit and nuts nfd,1.5.5,Snacks and confectionery,0.12,exclude_from_numeric_reweighting
+0307010000,,Fresh fruit nfd,1.4.1,Fruit,0.88,direct
+0307010101,,Fresh citrus fruit,1.4.1,Fruit,1.17,direct
+0307010201,,Fresh stone fruit,1.4.1,Fruit,0.86,direct
+0307010301,,Fresh apples and pears,1.4.1,Fruit,1.64,direct
+0307019901,,Fresh berries,1.4.1,Fruit,1.69,direct
+0307019902,,Fresh grapes,1.4.1,Fruit,0.78,direct
+0307019903,,Fresh melons,1.4.1,Fruit,0.6,direct
+0307019904,,Fresh tropical fruit (excluding bananas),1.4.1,Fruit,1.9,direct
+0307019905,,Fresh bananas,1.4.1,Fruit,1.61,direct
+0307019999,,Fresh fruit nec,1.4.1,Fruit,0.26,direct
+0307020101,,"Canned, frozen and bottled fruit",1.4.1,Fruit,0.75,direct
+0307030100,,Dried fruit nfd,1.4.1,Fruit,0.1,direct
+0307030101,,Dried grapes,1.4.1,Fruit,0.14,direct
+0307030199,,Dried fruit nec,1.4.1,Fruit,0.39,direct
+0307030201,,Nuts,1.5.5,Snacks and confectionery,1.91,direct
+0308000000,,Vegetables nfd,1.4.2,Vegetables,0.1,direct
+0308010000,,Fresh vegetables nfd,1.4.2,Vegetables,1.21,direct
+0308010101,,Fresh potatoes,1.4.2,Vegetables,1.24,direct
+0308010201,,Fresh onions,1.4.2,Vegetables,0.47,direct
+0308010301,,Other fresh root vegetables,1.4.2,Vegetables,1.49,direct
+0308010401,,Fresh tomatoes,1.4.2,Vegetables,1.62,direct
+0308010501,,Fresh capsicum,1.4.2,Vegetables,0.5,direct
+0308010601,,Fresh cucumber (including lebanese cucumber),1.4.2,Vegetables,0.54,direct
+0308010701,,Fresh zucchini,1.4.2,Vegetables,0.25,direct
+0308019901,,Fresh flower vegetables,1.4.2,Vegetables,0.77,direct
+0308019902,,Fresh leaf vegetables,1.4.2,Vegetables,1.76,direct
+0308019903,,Fresh peas and beans,1.4.2,Vegetables,0.44,direct
+0308019904,,Fresh pumpkin,1.4.2,Vegetables,0.34,direct
+0308019905,,Fresh mushrooms,1.4.2,Vegetables,0.83,direct
+0308019999,,Fresh vegetables nec,1.4.2,Vegetables,1.02,direct
+0308020101,,Frozen vegetables,1.4.2,Vegetables,1.15,direct
+0308999999,,Other vegetables,1.4.2,Vegetables,1.57,direct
+0309010101,,Sugar,1.5.3,Food additives and condiments,0.31,direct
+0309020101,,"Marmalades, jams and conserves",1.5.2,"Jams, honey and spreads",0.23,direct
+0309020201,,Honey,1.5.2,"Jams, honey and spreads",0.44,direct
+0309020301,,Syrups,1.5.2,"Jams, honey and spreads",0.12,direct
+0309020401,f,Jellies and desserts,1.3.3,Ice cream and other dairy products,0.27,exclude_from_numeric_reweighting
+0309020401,f,Jellies and desserts,1.5.6,Other food products n.e.c.,0.27,exclude_from_numeric_reweighting
+0309030101,,Potato crisps and other savoury confectionery,1.5.5,Snacks and confectionery,2.81,direct
+0309030201,,Chocolate confectionery,1.5.5,Snacks and confectionery,4.3,direct
+0309030301,f,Ice confectionery (including ice cream),1.3.3,Ice cream and other dairy products,2.77,exclude_from_numeric_reweighting
+0309030301,f,Ice confectionery (including ice cream),1.5.5,Snacks and confectionery,2.77,exclude_from_numeric_reweighting
+0309030401,,Chewing gum,1.5.5,Snacks and confectionery,0.26,direct
+0309039999,,Confectionery nec,1.5.5,Snacks and confectionery,2.83,direct
+0309040101,,Spices and herbs,1.5.3,Food additives and condiments,0.99,direct
+0309040201,,Sauces and salad dressings,1.5.3,Food additives and condiments,1.9,direct
+0309040301,,Spreads and dips,1.5.2,"Jams, honey and spreads",1.35,direct
+0309040401,,Other food additives,1.5.3,Food additives and condiments,1.31,direct
+0309050101,,Canned spaghetti and baked beans,1.5.6,Other food products n.e.c.,0.28,direct
+0309060101,,Canned and bottled baby foods,1.5.6,Other food products n.e.c.,0.29,direct
+0309060201,,Frozen prepared meals,1.5.6,Other food products n.e.c.,2.57,direct
+0309069999,,Packaged prepared meals nec,1.5.6,Other food products n.e.c.,2.55,direct
+0310000000,,Non-alcoholic beverages nfd,1.6.2,"Waters, soft drinks and juices",0.61,direct
+0310010101,,Soft drinks,1.6.2,"Waters, soft drinks and juices",3.58,direct
+0310010102,,Packaged waters,1.6.2,"Waters, soft drinks and juices",1.35,direct
+0310010103,,Energy drinks,1.6.2,"Waters, soft drinks and juices",0.52,direct
+0310010104,,Sports drinks,1.6.2,"Waters, soft drinks and juices",0.3,direct
+0310010105,,Iced tea,1.6.2,"Waters, soft drinks and juices",0.14,direct
+0310020000,,Fruit and vegetable juice nfd,1.6.2,"Waters, soft drinks and juices",0.05,direct
+0310020101,,Fruit juice,1.6.2,"Waters, soft drinks and juices",2.18,direct
+0310020201,,Vegetable juice,1.6.2,"Waters, soft drinks and juices",0.05,direct
+0310020301,,Mixed fruit and vegetable juice,1.6.2,"Waters, soft drinks and juices",0.02,direct
+0310030101,,Tea,1.6.1,"Coffee, tea and cocoa",0.92,direct
+0310030201,,Coffee,1.6.1,"Coffee, tea and cocoa",2.37,direct
+0310040101,,Canned and packeted soup,1.5.6,Other food products n.e.c.,0.54,direct
+0310049901,,Soy and non-dairy milks,1.3.1,Milk,0.38,direct
+0310049902,,Dry beverage flavourings,1.6.1,"Coffee, tea and cocoa",0.41,direct
+0310049903,,Meal replacement beverages,1.5.6,Other food products n.e.c.,0.77,direct
+0310049999,,Food drinks nec,1.6.1,"Coffee, tea and cocoa",0.1,direct
+0310050101,,Cordials,1.6.2,"Waters, soft drinks and juices",0.36,direct
+0310050201,,Unpackaged milk-based beverages,1.7.2,Take away and fast foods,0.33,direct
+0311010101,,"Meals in restaurants, hotels, clubs and related",1.7.1,Restaurant meals,44.25,direct
+0311010102,p,Meal & alcoholic drinks out (where not separable),1.7.1,Restaurant meals,0.47,exclude_from_numeric_reweighting
+0311010102,p,Meal & alcoholic drinks out (where not separable),2.1.1,Spirits,0.47,exclude_from_numeric_reweighting
+0311010102,p,Meal & alcoholic drinks out (where not separable),2.1.2,Wine,0.47,exclude_from_numeric_reweighting
+0311010102,p,Meal & alcoholic drinks out (where not separable),2.1.3,Beer,0.47,exclude_from_numeric_reweighting
+0311010202,,Fast food and takeaway exc. coffee (not frozen),1.7.2,Take away and fast foods,31.03,direct
+0311010203,,Takeaway coffee,1.7.2,Take away and fast foods,4.2,direct
+0311010301,,School lunch money,1.7.2,Take away and fast foods,0.35,direct
+0399010101,p,Food nec,1.5.3,Food additives and condiments,0.2,exclude_from_numeric_reweighting
+0399010101,p,Food nec,1.5.6,Other food products n.e.c.,0.2,exclude_from_numeric_reweighting
+0399010101,p,Food nec,5.4.3,Other non-durable household products,0.2,exclude_from_numeric_reweighting
+0399010201,,Non-alcoholic beverages nec,1.6.2,"Waters, soft drinks and juices",0.01,direct
