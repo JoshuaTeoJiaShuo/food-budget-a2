@@ -1,0 +1,219 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "description": "Weekly expenditure on food categories other than meals out, by household type, Australia, 2015–16. Compare household averages with approximate per-person amounts calculated using average household size.",
+  "width": 756,
+  "height": 528,
+  "background": "#fffefa",
+  "padding": 12,
+  "data": {
+    "url": "data/household-food-heatmap.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "hec_code": "string",
+        "household_weekly": "number",
+        "approx_per_person_weekly": "number",
+        "rse_pct": "number"
+      }
+    }
+  },
+  "params": [
+    {
+      "name": "spendingBasis",
+      "value": "Approx. per person",
+      "bind": {
+        "input": "select",
+        "options": [
+          "Approx. per person",
+          "Per household"
+        ],
+        "name": "Compare spending: "
+      }
+    }
+  ],
+  "transform": [
+    {
+      "filter": "datum.hec_code !== '0311'"
+    },
+    {
+      "calculate": "spendingBasis === 'Per household' ? datum.household_weekly : datum.approx_per_person_weekly",
+      "as": "display_amount"
+    },
+    {
+      "calculate": "datum.hec_code === '0300' ? 'Unspecified food & drinks' : datum.hec_code === '0301' ? 'Bakery, flour & cereals' : datum.hec_code === '0302' ? 'Meat' : datum.hec_code === '0303' ? 'Fish & seafood' : datum.hec_code === '0304' ? 'Eggs' : datum.hec_code === '0305' ? 'Dairy' : datum.hec_code === '0306' ? 'Oils & fats' : datum.hec_code === '0307' ? 'Fruit & nuts' : datum.hec_code === '0308' ? 'Vegetables' : datum.hec_code === '0309' ? 'Condiments, sweets & meals' : datum.hec_code === '0310' ? 'Non-alcoholic drinks' : 'Other food & drinks'",
+      "as": "category_label"
+    },
+    {
+      "joinaggregate": [
+        {
+          "op": "max",
+          "field": "display_amount",
+          "as": "maximum_amount"
+        }
+      ]
+    },
+    {
+    "calculate": "(datum.display_amount > 0 && datum.display_amount < 0.1 ? '<0.1' : format(datum.display_amount, '.1f')) + (isValid(datum.rse_pct) && isFinite(datum.rse_pct) && datum.rse_pct >= 25 ? '*' : '')",
+    "as": "cell_label"
+    },
+    {
+    "calculate": "isValid(datum.rse_pct) && isFinite(datum.rse_pct) ? format(datum.rse_pct, '.1f') + '%' : 'Not available'",
+    "as": "rse_label"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "household_type",
+      "type": "nominal",
+      "sort": [
+        "Couple with dependent children",
+        "Couple only",
+        "Other one-family",
+        "Lone person",
+        "One parent with dependent children",
+        "Group household",
+        "Multiple-family"
+      ],
+      "scale": {
+        "paddingInner": 0.03,
+        "paddingOuter": 0
+      },
+      "axis": {
+        "title": null,
+        "orient": "top",
+        "labelAngle": 0,
+        "labelPadding": 12,
+        "labelLimit": 150,
+        "labelLineHeight": 22,
+        "labelOverlap": false,
+        "labelExpr": "datum.label === 'Couple with dependent children' ? ['Couple with', 'dependent', 'children'] : datum.label === 'Couple only' ? ['Couple', 'only'] : datum.label === 'Other one-family' ? ['Other', 'one-family'] : datum.label === 'Lone person' ? ['Lone', 'person'] : datum.label === 'One parent with dependent children' ? ['One parent', 'with dependent', 'children'] : datum.label === 'Group household' ? ['Group', 'household'] : ['Multiple-', 'family']",
+        "domain": false,
+        "ticks": false
+      }
+    },
+    "y": {
+      "field": "category_label",
+      "type": "nominal",
+      "sort": [
+        "Meat",
+        "Fish & seafood",
+        "Dairy",
+        "Eggs",
+        "Fruit & nuts",
+        "Vegetables",
+        "Bakery, flour & cereals",
+        "Oils & fats",
+        "Non-alcoholic drinks",
+        "Condiments, sweets & meals",
+        "Unspecified food & drinks",
+        "Other food & drinks"
+      ],
+      "scale": {
+        "paddingInner": 0.04,
+        "paddingOuter": 0
+      },
+      "axis": {
+        "title": null,
+        "labelPadding": 12,
+        "labelLimit": 300,
+        "domain": false,
+        "ticks": false
+      }
+    },
+    "tooltip": [
+      {
+        "field": "household_type",
+        "type": "nominal",
+        "title": "Household type"
+      },
+      {
+        "field": "category",
+        "type": "nominal",
+        "title": "Full food category"
+      },
+      {
+        "field": "household_weekly",
+        "type": "quantitative",
+        "title": "Per household / week (A$)",
+        "format": ".2f"
+      },
+      {
+        "field": "approx_per_person_weekly",
+        "type": "quantitative",
+        "title": "Approx. per person / week (A$)",
+        "format": ".2f"
+      },
+      {
+        "field": "rse_label",
+        "type": "nominal",
+        "title": "Household expenditure RSE"
+      }
+    ]
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "rect"
+      },
+      "encoding": {
+        "color": {
+          "field": "display_amount",
+          "type": "quantitative",
+          "scale": {
+            "zero": true,
+            "nice": false,
+            "range": ["#f1f5ef", "#215b48"],
+            "interpolate": "lab"
+          },
+          "legend": {
+            "title": "Weekly spending (A$)",
+            "orient": "bottom",
+            "direction": "horizontal",
+            "gradientLength": 280,
+            "gradientThickness": 14,
+            "format": ".1f",
+            "offset": 20
+          }
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "fontSize": 17,
+        "baseline": "middle"
+      },
+      "encoding": {
+        "text": {
+          "field": "cell_label",
+          "type": "nominal"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.display_amount > datum.maximum_amount * 0.6",
+            "value": "#ffffff"
+          },
+          "value": "#223b36"
+        }
+      }
+    }
+  ],
+  "config": {
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 17,
+      "labelColor": "#223b36",
+      "grid": false
+    },
+    "legend": {
+      "labelFontSize": 17,
+      "titleFontSize": 17,
+      "titleFontWeight": "normal",
+      "labelColor": "#223b36",
+      "titleColor": "#223b36"
+    }
+  }
+}
