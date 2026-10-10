@@ -1,87 +1,47 @@
-(() => {
-  "use strict";
+const STORAGE_KEY = "food-budget-a2-reading-size-v2";
+const DEFAULT_SIZE = "medium";
+const SIZES = ["small", "medium", "large"];
 
-  // A new key prevents the previous default from overriding
-  // the new Medium default.
-  const storageKey = "food-budget-a2-reading-size-v2";
-  const defaultSize = "medium";
+export function initialiseReadingSize() {
+  const selector = document.getElementById("reading-size");
+  const controls = document.getElementById("reading-controls");
 
-  // Keep using the size rules already defined in the CSS.
-  const cssSizes = {
-    small: "standard",
-    medium: "large",
-    large: "extra-large"
-  };
+  if (!selector || !controls) return;
 
-  const choices = [
-    { value: "small", label: "Small" },
-    { value: "medium", label: "Medium" },
-    { value: "large", label: "Large" }
-  ];
+  function apply(size) {
+    const selected = SIZES.includes(size)
+      ? size
+      : DEFAULT_SIZE;
 
-  function initialiseReadingSize() {
-    const controls = document.getElementById("reading-controls");
-    const selector = document.getElementById("reading-size");
+    document.documentElement.dataset.readingSize = selected;
+    selector.value = selected;
 
-    if (!controls || !selector) return;
+    return selected;
+  }
 
-    // Replace the old labels and values.
-    selector.replaceChildren();
+  let saved = DEFAULT_SIZE;
 
-    choices.forEach(({ value, label }) => {
-      const option = document.createElement("option");
-      option.value = value;
-      option.textContent = label;
-      selector.appendChild(option);
-    });
+  try {
+    saved = localStorage.getItem(STORAGE_KEY) || DEFAULT_SIZE;
+  } catch {
+    // Reading controls still work when browser storage is unavailable.
+  }
 
-    function applySize(size) {
-      const validSize = Object.prototype.hasOwnProperty.call(
-        cssSizes,
-        size
-      )
-        ? size
-        : defaultSize;
+  apply(saved);
 
-      document.documentElement.setAttribute(
-        "data-reading-size",
-        cssSizes[validSize]
-      );
-
-      selector.value = validSize;
-      return validSize;
-    }
-
-    let savedSize = defaultSize;
+  selector.addEventListener("change", () => {
+    const selected = apply(selector.value);
 
     try {
-      savedSize = localStorage.getItem(storageKey) || defaultSize;
+      localStorage.setItem(STORAGE_KEY, selected);
     } catch {
-      // Use Medium if browser storage is unavailable.
+      // Keep the selected size for this visit.
     }
 
-    applySize(savedSize);
-
-    selector.addEventListener("change", () => {
-      const selectedSize = applySize(selector.value);
-
-      try {
-        localStorage.setItem(storageKey, selectedSize);
-      } catch {
-        // The selected size still applies for this visit.
-      }
-    });
-
-    controls.hidden = false;
-  }
-
-  if (document.readyState === "loading") {
-    document.addEventListener(
-      "DOMContentLoaded",
-      initialiseReadingSize,
-      { once: true }
+    document.dispatchEvent(
+      new Event("reading-size-change")
     );
-  } else {
-    initialiseReadingSize();
-  }
-})();
+  });
+
+  controls.hidden = false;
+}

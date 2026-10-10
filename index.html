@@ -8,21 +8,13 @@
 
   <link rel="stylesheet" href="css/style.css">
 
-  <!-- Apply the saved reading size before initialising charts. -->
-  <script defer src="js/reading-size.js"></script>
-
-  <!-- Chart libraries: keep this dependency order. -->
+  <!-- Libraries load in dependency order. -->
   <script defer src="https://cdn.jsdelivr.net/npm/vega@6.4.0"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/vega-lite@6.5.0"></script>
   <script defer src="https://cdn.jsdelivr.net/npm/vega-embed@7.3.0"></script>
 
-  <!-- Chart initialisation. -->
-  <script defer src="js/main.js"></script>
-  <script defer src="js/c2.js"></script>
-  <script defer src="js/c3.js"></script>
-  <script defer src="js/c4.js"></script>
-  <script defer src="js/c5.js"></script>
-  <script defer src="js/c6.js"></script>
+  <!-- One entry point imports the reading controls and chart modules. -->
+  <script type="module" src="js/app.js"></script>
 </head>
 
 <body>
@@ -33,11 +25,11 @@
     <div id="reading-controls" class="reading-controls" hidden>
       <label for="reading-size">Reading text size</label>
 
-      <!-- Small, Medium and Large are populated by reading-size.js. -->
-      <select
-        id="reading-size"
-        aria-describedby="reading-size-help"
-      ></select>
+      <select id="reading-size" aria-describedby="reading-size-help">
+        <option value="small">Small</option>
+        <option value="medium" selected>Medium</option>
+        <option value="large">Large</option>
+      </select>
 
       <p id="reading-size-help" class="reading-controls-help">
         Adjust reading text and chart labels.
@@ -46,6 +38,13 @@
   </header>
 
   <main>
+    <noscript>
+      <p>
+        Enable JavaScript to display the interactive charts.
+        Source data links remain available below.
+      </p>
+    </noscript>
+
     <!-- SECTION 1: National food spending and state comparisons. -->
     <section id="food-basket" aria-labelledby="food-basket-title">
       <div class="section-number">01 / THE NATIONAL BASKET</div>
@@ -53,22 +52,22 @@
       <h2 id="food-basket-title">The food dollar changed shape</h2>
 
       <p>
-        How has the share of household food spending changed
-        across Australian expenditure surveys?
+        How has the share of household food spending changed across
+        Australian expenditure surveys?
       </p>
 
       <!-- C1: Food spending shares over time. -->
       <figure class="chart-panel c1-panel" aria-labelledby="c1-title">
         <figcaption class="c1-heading">
           <div>
-            <p class="c1-kicker">FOOD SPENDING · SIX SURVEY WAVES</p>
+            <p class="chart-kicker">FOOD SPENDING · SIX SURVEY WAVES</p>
 
             <h3 id="c1-title">
               <span class="c1-accent">Meals out</span> took a growing
               share of the food budget
             </h3>
 
-            <p class="c1-deck">
+            <p class="chart-deck">
               Meals out and fast foods accounted for roughly one-third
               of food spending by 2015–16.
             </p>
@@ -77,7 +76,6 @@
           <div class="c1-takeaway">
             <strong>+9.4</strong>
             <span>percentage points</span>
-
             <p>
               Meals out and fast foods<br>
               24.5% in 1988–89 → 33.9% in 2015–16
@@ -85,7 +83,7 @@
           </div>
         </figcaption>
 
-        <p id="c1-interaction-hint" class="c1-interaction-hint">
+        <p id="c1-interaction-hint" class="chart-reading">
           Hover over a line or category label to follow its trend.
         </p>
 
@@ -102,19 +100,18 @@
           aria-describedby="c1-interaction-hint"
         ></div>
 
-        <details class="c1-keyboard-help">
+        <details class="chart-help">
           <summary>Keyboard controls</summary>
-
           <p>
-            Press Tab to focus the chart. Use the left and right
-            arrow keys to highlight a category. Press Esc to
-            show all categories again.
+            Press Tab to focus the chart. Use the left and right arrow
+            keys to highlight a category. Press Esc to show all
+            categories again.
           </p>
         </details>
 
         <p
           id="c1-selection-status"
-          class="c1-sr-only"
+          class="sr-only"
           aria-live="polite"
           aria-atomic="true"
         ></p>
@@ -126,12 +123,11 @@
 
         <div class="c1-notes">
           <p>
-            Spending shares do not measure how often households ate
-            out. Points mark six survey observations; connecting
-            lines do not show annual estimates. Labels are offset
-            where needed to avoid overlap.
+            Spending shares do not measure how often households ate out.
+            Points mark six survey observations; connecting lines do not
+            show annual estimates. Labels are offset where needed to
+            avoid overlap.
           </p>
-
           <p>
             Source: ABARES,
             <em>Food demand in Australia: trends and issues 2018</em>,
@@ -140,13 +136,13 @@
           </p>
         </div>
 
-        <div class="c1-links">
+        <div class="chart-links">
           <a href="charts/c1-food-shares.vl.json">Chart specification</a>
           <a href="data/food-share-history.csv">View data</a>
         </div>
       </figure>
 
-      <p class="c1-bridge">
+      <p class="story-bridge">
         These broad groups hide different kinds of purchases.
         What makes up the rest of the food basket?
       </p>
@@ -154,46 +150,40 @@
       <!-- C2: Detailed food expenditure hierarchy. -->
       <figure class="chart-panel c2-panel" aria-labelledby="c2-title">
         <figcaption>
-          <p class="c2-kicker">
-            INSIDE THE BASKET · AUSTRALIA, 2015–16
-          </p>
+          <p class="chart-kicker">INSIDE THE BASKET · AUSTRALIA, 2015–16</p>
 
-          <h3 id="c2-title">
-            What made up the rest of the food budget?
-          </h3>
+          <h3 id="c2-title">What made up the rest of the food budget?</h3>
 
-          <p class="c2-deck">
-            About two-thirds of food spending went to categories
-            other than meals out and fast foods. Explore how those
-            groups divided into individual purchases.
+          <p class="chart-deck">
+            About two-thirds of food spending went to categories other
+            than meals out and fast foods. Explore how those groups
+            divided into individual purchases.
           </p>
         </figcaption>
 
-        <p class="c2-reading">
+        <p class="chart-reading">
           Rectangle area represents weekly spending. Tan highlights
           meals out and fast foods; green shows other food purchases.
           Group headings show combined totals where there are
           multiple categories.
         </p>
 
-        <div class="c2-controls">
+        <div class="chart-controls">
           <label for="c2-group">Explore a group</label>
 
           <select id="c2-group" aria-describedby="c2-control-help">
             <option value="">All food groups</option>
           </select>
 
-          <button id="c2-reset" type="button" disabled>
-            All groups
-          </button>
+          <button id="c2-reset" type="button" disabled>All groups</button>
         </div>
 
-        <p id="c2-control-help" class="c2-control-help">
+        <p id="c2-control-help" class="chart-reading">
           Groups with multiple categories can be enlarged.
           All categories remain available in the overview and table.
         </p>
 
-        <p id="c2-context" class="c2-context" aria-live="polite">
+        <p id="c2-context" class="chart-reading" aria-live="polite">
           Average household spending in Australian dollars per week,
           2015–16.
         </p>
@@ -206,108 +196,106 @@
           aria-describedby="c2-context"
         ></div>
 
-        <details class="c2-data">
+        <details class="chart-details">
           <summary>Read exact values and full category names</summary>
 
-          <table>
-            <caption id="c2-table-caption">
-              Average household spending in dollars per week, 2015–16
-            </caption>
-
-            <thead>
-              <tr>
-                <th scope="col">Food group</th>
-                <th scope="col">Category</th>
-                <th scope="col">$/week</th>
-              </tr>
-            </thead>
-
-            <tbody id="c2-table-body"></tbody>
-          </table>
+          <div
+            class="table-scroll"
+            role="region"
+            tabindex="0"
+            aria-label="Detailed food expenditure values"
+          >
+            <table class="data-table food-table">
+              <caption id="c2-table-caption">
+                Average household spending in dollars per week, 2015–16
+              </caption>
+              <thead>
+                <tr>
+                  <th scope="col">Food group</th>
+                  <th scope="col">Category</th>
+                  <th scope="col">$/week</th>
+                </tr>
+              </thead>
+              <tbody id="c2-table-body"></tbody>
+            </table>
+          </div>
         </details>
 
-        <p class="c2-comparison-note">
+        <p class="chart-reading">
           Compared with the preceding line chart, this view separates
           meat from seafood, and fruit and nuts from vegetables.
         </p>
 
-        <details class="c2-methods">
+        <details class="chart-details">
           <summary>About these estimates</summary>
 
-          <div class="c2-methods-content">
+          <div class="methods-content">
             <p>
-              The treemap contains 13 ABS food groups and
-              42 non-overlapping categories. Group totals are
-              calculated from their displayed categories, so
-              spending is counted once.
+              The treemap contains 13 ABS food groups and 42
+              non-overlapping categories. Group totals are calculated
+              from their displayed categories, so spending is counted once.
             </p>
-
             <p>
               These category estimates sum to $237.03 per household
-              per week. ABS publishes a separate overall total of
-              $236.97. Confidentiality adjustments and rounding mean
-              component estimates need not add exactly to published
-              totals. The values have not been rescaled to match.
+              per week. ABS publishes a separate overall total of $236.97.
+              Confidentiality adjustments and rounding mean component
+              estimates need not add exactly to published totals.
+              The values have not been rescaled to match.
             </p>
-
             <p>
-              Chart labels are shortened where necessary.
-              The table provides full category names and expands
-              the ABS abbreviations “nfd” (not further defined)
-              and “nec” (not elsewhere classified).
+              Chart labels are shortened where necessary. The table
+              provides full category names and expands the ABS
+              abbreviations “nfd” (not further defined) and “nec”
+              (not elsewhere classified).
             </p>
-
             <p>
               Selecting a group enlarges it to fill the chart.
-              Rectangle sizes then compare purchases within that
-              group, rather than across the entire food basket.
+              Rectangle sizes then compare purchases within that group,
+              rather than across the entire food basket.
             </p>
           </div>
         </details>
 
-        <p class="c2-source">
+        <p class="chart-source">
           Source:
           <a href="https://www.abs.gov.au/statistics/economy/finance/household-expenditure-survey-australia-summary-results/2015-16">ABS Household Expenditure Survey, 2015–16</a>,
-          Table 13.9A, Australia column.
-          Amounts are in 2015–16 dollars.
+          Table 13.9A, Australia column. Amounts are in 2015–16 dollars.
         </p>
 
-        <div class="c2-links">
+        <div class="chart-links">
           <a href="charts/c2-food-treemap.vg.json">Chart specification</a>
           <a href="data/food-hierarchy.csv">View data</a>
         </div>
       </figure>
 
-      <p class="c2-bridge">
+      <p class="story-bridge">
         Meals out formed the largest single food group nationally.
         Was the average weekly meals-out bill similar in every state?
       </p>
 
       <!-- C3: Average weekly meals-out expenditure by state. -->
-      <figure class="chart-panel c3-panel" aria-labelledby="c3-title">
-        <figcaption class="c3-heading">
-          <p class="c3-kicker">
-            MEALS OUT &amp; FAST FOODS · 2015–16
-          </p>
+      <figure class="chart-panel" aria-labelledby="c3-title">
+        <figcaption class="chart-heading">
+          <p class="chart-kicker">MEALS OUT &amp; FAST FOODS · 2015–16</p>
 
           <h3 id="c3-title">
             The average meals-out bill varied across Australia
           </h3>
 
-          <p class="c3-deck">
+          <p class="chart-deck">
             Weekly household spending ranged from $59.86 in Tasmania
             to $100.82 in the ACT, compared with a national average
             of $80.27.
           </p>
         </figcaption>
 
-        <p id="c3-map-help" class="c3-reading">
+        <p id="c3-map-help" class="chart-reading">
           Three circle sizes show weekly spending bands.
           Labels give the exact average per household in Australian dollars.
         </p>
 
         <div
-          class="c3-map-scroll"
+          class="chart-scroll"
           role="region"
           tabindex="0"
           aria-label="Australian state spending map"
@@ -320,45 +308,41 @@
           ></div>
         </div>
 
-        <p id="c3-scroll-help" class="c3-scroll-help">
+        <p id="c3-scroll-help" class="scroll-help">
           On narrow screens, scroll horizontally to see the whole map.
         </p>
 
-        <details class="c3-methods">
+        <details class="chart-details">
           <summary>How to read this comparison</summary>
 
-          <div class="c3-methods-content">
+          <div class="methods-content">
             <p>
               Circle sizes represent three spending bands: under $70,
               $70 to under $90, and $90 or more per household per week.
               Their areas are not proportional to dollar amounts.
-              States within a band share the same circle size;
-              use the labels to compare their exact estimates.
-              Colour does not encode another measure.
+              States within a band share the same circle size; use the
+              labels to compare their exact estimates. Colour does not
+              encode another measure.
             </p>
-
             <p>
-              Circles are placed at representative locations within
-              each state or territory. They do not show where
-              individual households or restaurants are located.
+              Circles are placed at representative locations within each
+              state or territory. They do not show where individual
+              households or restaurants are located.
             </p>
-
             <p>
-              These are survey estimates in 2015–16 dollars.
-              Differences have not been tested for statistical
-              significance. Hover over a circle to see its
-              relative standard error.
+              These are survey estimates in 2015–16 dollars. Differences
+              have not been tested for statistical significance.
+              Hover over a circle to see its relative standard error.
             </p>
-
             <p>
-              Higher spending does not necessarily mean more meals
-              eaten out. Prices, household size and the types of
-              purchases can also affect the amount spent.
+              Higher spending does not necessarily mean more meals eaten
+              out. Prices, household size and the types of purchases
+              can also affect the amount spent.
             </p>
           </div>
         </details>
 
-        <p class="c3-source">
+        <p class="chart-source">
           Spending:
           <a href="https://www.abs.gov.au/statistics/economy/finance/household-expenditure-survey-australia-summary-results/2015-16">ABS Household Expenditure Survey, 2015–16</a>.
           Boundaries:
@@ -366,45 +350,42 @@
           simplified for display.
         </p>
 
-        <div class="c3-links">
+        <div class="chart-links">
           <a href="charts/c3-state-meals.vl.json">Chart specification</a>
           <a href="data/state-spending-joined.csv">View spending data</a>
         </div>
       </figure>
 
-      <p class="c3-bridge">
+      <p class="story-bridge">
         Weekly dollars show the size of the meals-out bill.
-        Comparing that bill with total food spending reveals
-        how households divided their food budgets.
+        Comparing that bill with total food spending reveals how
+        households divided their food budgets.
       </p>
 
       <!-- C4: Meals-out spending as a share of the food budget. -->
-      <figure
-        class="chart-panel c3-panel c4-panel"
-        aria-labelledby="c4-title"
-      >
-        <figcaption class="c3-heading">
-          <p class="c3-kicker">THE MEALS-OUT SHARE · 2015–16</p>
+      <figure class="chart-panel" aria-labelledby="c4-title">
+        <figcaption class="chart-heading">
+          <p class="chart-kicker">THE MEALS-OUT SHARE · 2015–16</p>
 
           <h3 id="c4-title">
             Meals out accounted for 29.9% to 37.2% of food spending
           </h3>
 
-          <p class="c3-deck">
-            Western Australian households spent more dollars on
-            meals out than Queensland households, on average.
-            Yet meals out represented a smaller share of their
-            total food spending: 30.3% compared with 31.2%.
+          <p class="chart-deck">
+            Western Australian households spent more dollars on meals out
+            than Queensland households, on average. Yet meals out
+            represented a smaller share of their total food spending:
+            30.3% compared with 31.2%.
           </p>
         </figcaption>
 
-        <p id="c4-map-help" class="c3-reading">
+        <p id="c4-map-help" class="chart-reading">
           Darker shading indicates a larger meals-out share.
           Labels give each state or territory’s percentage.
         </p>
 
         <div
-          class="c3-map-scroll"
+          class="chart-scroll"
           role="region"
           tabindex="0"
           aria-label="Map of meals-out shares of food spending"
@@ -417,35 +398,32 @@
           ></div>
         </div>
 
-        <p id="c4-scroll-help" class="c3-scroll-help">
+        <p id="c4-scroll-help" class="scroll-help">
           On narrow screens, scroll horizontally to see the whole map.
         </p>
 
-        <details class="c3-methods">
+        <details class="chart-details">
           <summary>What does this percentage measure?</summary>
 
-          <div class="c3-methods-content">
+          <div class="methods-content">
             <p>
-              For each state or territory, average weekly spending on
-              meals out and fast foods is divided by average weekly
-              spending on all food and non-alcoholic beverages,
-              then expressed as a percentage.
+              For each state or territory, average weekly spending on meals
+              out and fast foods is divided by average weekly spending on
+              all food and non-alcoholic beverages, then expressed as
+              a percentage.
             </p>
-
             <p>
-              This is a ratio of expenditure averages, rather than
-              an average of individual households’ percentages.
-              It measures the allocation of food spending,
-              not the proportion of meals eaten outside the home.
+              This is a ratio of expenditure averages, rather than an
+              average of individual households’ percentages. It measures
+              the allocation of food spending, not the proportion of
+              meals eaten outside the home.
             </p>
-
             <p>
-              The colour scale runs from 28% to 40% to distinguish
-              the observed values. It does not start at zero.
-              These are survey estimates; differences have not
-              been tested for statistical significance.
+              The colour scale runs from 28% to 40% to distinguish the
+              observed values. It does not start at zero. These are survey
+              estimates; differences have not been tested for
+              statistical significance.
             </p>
-
             <p>
               A higher meals-out share does not, by itself, establish
               greater income, better food access or a healthier diet.
@@ -453,7 +431,7 @@
           </div>
         </details>
 
-        <p class="c3-source">
+        <p class="chart-source">
           Spending:
           <a href="https://www.abs.gov.au/statistics/economy/finance/household-expenditure-survey-australia-summary-results/2015-16">ABS Household Expenditure Survey, 2015–16</a>.
           Boundaries:
@@ -461,16 +439,15 @@
           simplified for display.
         </p>
 
-        <div class="c3-links">
+        <div class="chart-links">
           <a href="charts/c4-state-food-share.vl.json">Chart specification</a>
           <a href="data/state-spending-joined.csv">View spending data</a>
         </div>
       </figure>
 
-      <p class="c3-bridge">
+      <p class="story-bridge">
         State averages combine households of different sizes and
-        circumstances. How does the food budget vary between
-        household types?
+        circumstances. How does the food budget vary between household types?
       </p>
     </section>
 
@@ -486,41 +463,34 @@
       </h2>
 
       <!-- C5: Household contributions and meals-out shares. -->
-      <figure
-        class="chart-panel c3-panel c5-panel"
-        aria-labelledby="c5-title"
-      >
-        <figcaption class="c3-heading">
-          <p class="c3-kicker">
-            HOUSEHOLD TYPES · AUSTRALIA, 2015–16
-          </p>
+      <figure class="chart-panel c5-panel" aria-labelledby="c5-title">
+        <figcaption class="chart-heading">
+          <p class="chart-kicker">HOUSEHOLD TYPES · AUSTRALIA, 2015–16</p>
 
           <h3 id="c5-title">
-            Group households devoted over half their food spending
-            to meals out
+            Group households devoted over half their food spending to meals out
           </h3>
 
-          <p class="c3-deck">
-            Group households allocated <strong>54.5%</strong> of their
-            food spending to meals out and fast foods, but contributed
-            just <strong>3.4%</strong> of estimated total food
-            expenditure. Couples with dependent children contributed
-            the largest share, <strong>38.3%</strong>, while allocating
-            <strong>32.4%</strong> of their own food spending to meals out.
+          <p class="chart-deck">
+            Group households allocated <strong>54.5%</strong> of their food
+            spending to meals out and fast foods, but contributed just
+            <strong>3.4%</strong> of estimated total food expenditure.
+            Couples with dependent children contributed the largest share,
+            <strong>38.3%</strong>, while allocating <strong>32.4%</strong>
+            of their own food spending to meals out.
           </p>
         </figcaption>
 
-        <p id="c5-chart-help" class="c3-reading">
+        <p id="c5-chart-help" class="chart-reading">
           <strong>Column width:</strong>
-          contribution to total food spending across the seven
-          household types.<br>
+          contribution to total food spending across the seven household types.<br>
           <strong>Tan segment height:</strong>
           meals out as a percentage of that type’s food spending.<br>
           Numbers beneath the columns match the household names below.
         </p>
 
         <div
-          class="c5-chart-scroll"
+          class="chart-scroll"
           role="region"
           tabindex="0"
           aria-label="Household food expenditure mosaic chart"
@@ -533,44 +503,39 @@
           ></div>
         </div>
 
-        <p id="c5-scroll-help" class="c3-scroll-help">
-          On narrow screens, scroll horizontally to see all seven
-          columns. Household names are listed below; expand the
-          spending-shares table for exact percentages.
+        <p id="c5-scroll-help" class="scroll-help">
+          On narrow screens, scroll horizontally to see all seven columns.
+          Household names are listed below; expand the spending-shares table
+          for exact percentages.
         </p>
 
         <div class="c5-household-key">
           <p id="c5-key-heading">
             <strong>Household types — numbers match the chart</strong>
           </p>
-
-          <ol
-            id="c5-household-key"
-            aria-labelledby="c5-key-heading"
-          ></ol>
+          <ol id="c5-household-key" aria-labelledby="c5-key-heading"></ol>
         </div>
 
-        <details class="c3-methods c5-data-details">
+        <details class="chart-details">
           <summary>View exact spending shares for all household types</summary>
 
-          <div class="c3-methods-content">
+          <div class="methods-content">
             <p>
-              The first percentage compares each household type with
-              all seven types combined. The second shows meals-out
-              spending within that household type.
+              The first percentage compares each household type with all
+              seven types combined. The second shows meals-out spending
+              within that household type.
             </p>
 
             <div
-              class="c5-table-scroll"
+              class="table-scroll"
               role="region"
               tabindex="0"
               aria-label="Exact household spending shares"
             >
-              <table class="c5-key">
+              <table class="data-table household-table">
                 <caption>
                   Food expenditure by household type, 2015–16
                 </caption>
-
                 <thead>
                   <tr>
                     <th scope="col">Column</th>
@@ -583,111 +548,106 @@
                     </th>
                   </tr>
                 </thead>
-
                 <tbody id="c5-table-body"></tbody>
               </table>
             </div>
 
             <p>
-              Percentages are rounded; the shares across household
-              types may not add to exactly 100%.
+              Percentages are rounded; the shares across household types
+              may not add to exactly 100%.
             </p>
           </div>
         </details>
 
-        <details class="c3-methods">
+        <details class="chart-details">
           <summary>How are the column widths calculated?</summary>
 
-          <div class="c3-methods-content">
+          <div class="methods-content">
             <p>
               For each household type, estimated total weekly food
               expenditure equals the estimated number of households
               multiplied by their average weekly food expenditure.
-              Column widths show each type’s proportion of the
-              combined total across the seven types.
+              Column widths show each type’s proportion of the combined
+              total across the seven types.
             </p>
-
             <p>
-              Within each column, meals-out spending is divided by
-              total food spending for that household type.
-              The remaining share covers other food purchases.
-              This is a ratio of expenditure averages.
+              Within each column, meals-out spending is divided by total
+              food spending for that household type. The remaining share
+              covers other food purchases. This is a ratio of
+              expenditure averages.
             </p>
-
             <p>
-              Each rectangle’s area therefore represents its
-              contribution to estimated total food expenditure.
-              Columns are ordered from the largest contribution
-              to the smallest.
+              Each rectangle’s area therefore represents its contribution
+              to estimated total food expenditure. Columns are ordered
+              from the largest contribution to the smallest.
             </p>
-
             <p>
               Narrow columns retain their proportional widths.
-              Percentages that do not fit inside them are available
-              in the expandable table and chart tooltips.
+              Percentages that do not fit inside them are available in
+              the expandable table and chart tooltips.
             </p>
-
             <p>
-              These are survey estimates; differences have not
-              been tested for statistical significance.
-              Household types also differ in their average number
-              of people, which affects spending comparisons.
+              These are survey estimates; differences have not been
+              tested for statistical significance. Household types also
+              differ in their average number of people, which affects
+              spending comparisons.
             </p>
           </div>
         </details>
 
-        <p class="c3-source">
+        <p class="chart-source">
           Source:
           <a href="https://www.abs.gov.au/statistics/economy/finance/household-expenditure-survey-australia-summary-results/2015-16">ABS Household Expenditure Survey, 2015–16</a>.
           Estimated totals and spending shares are calculated from
           published household counts and expenditure averages.
         </p>
 
-        <div class="c3-links">
+        <div class="chart-links">
           <a href="charts/c5-household-mosaic.vl.json">Chart specification</a>
           <a href="data/household-composition-joined.csv">View household data</a>
         </div>
       </figure>
 
-      <p class="c3-bridge">
-        The meals-out split reveals one difference between household
-        types. Next, we look inside their other food purchases
-        and consider how household size affects the comparison.
+      <p class="story-bridge">
+        The meals-out split reveals one difference between household types.
+        Next, we look inside their other food purchases and consider how
+        household size affects the comparison.
       </p>
 
       <!-- C6: Food categories by household type and spending basis. -->
-      <figure
-        class="chart-panel c3-panel c6-panel"
-        aria-labelledby="c6-title"
-      >
-        <figcaption class="c3-heading">
-          <p class="c3-kicker">
-            OTHER FOOD PURCHASES · AUSTRALIA, 2015–16
-          </p>
+      <figure class="chart-panel" aria-labelledby="c6-title">
+        <figcaption class="chart-heading">
+          <p class="chart-kicker">OTHER FOOD PURCHASES · AUSTRALIA, 2015–16</p>
 
           <h3 id="c6-title">
             How does household size change the spending comparison?
           </h3>
 
-          <p class="c3-deck">
-            The green portion of the previous chart combines many
-            food categories. Here we separate them and compare
-            weekly spending. Switch between household and approximate
-            per-person amounts to see how household size changes
-            the pattern.
+          <p class="chart-deck">
+            The green portion of the previous chart combines many food
+            categories. Here we separate them and compare weekly spending.
+            Switch between household and approximate per-person amounts
+            to see how household size changes the pattern.
           </p>
         </figcaption>
 
-        <p id="c6-chart-help" class="c3-reading">
+        <p id="c6-chart-help" class="chart-reading">
           <strong>Darker green means higher weekly spending.</strong>
-          Each cell shows Australian dollars for one food category
-          and household type. The colour scale updates when you
-          change the spending measure; use the numbers and legend
-          when comparing views.
+          Each cell shows Australian dollars for one food category and
+          household type. The colour scale updates when you change the
+          spending measure; use the numbers and legend when comparing views.
         </p>
 
+        <div class="chart-controls">
+          <label for="c6-basis">Compare spending</label>
+          <select id="c6-basis" aria-describedby="c6-chart-help" disabled>
+            <option>Approx. per person</option>
+            <option>Per household</option>
+          </select>
+        </div>
+
         <div
-          class="c6-chart-scroll"
+          class="chart-scroll"
           role="region"
           tabindex="0"
           aria-label="Food spending heatmap by household type"
@@ -700,96 +660,85 @@
           ></div>
         </div>
 
-        <p id="c6-scroll-help" class="c3-scroll-help">
-          On narrow screens, scroll horizontally to see all
-          household types.
+        <p id="c6-scroll-help" class="scroll-help">
+          On narrow screens, scroll horizontally to see all household types.
         </p>
 
-        <p id="c6-estimate-note" class="c3-reading c6-note">
-          <strong>Approximate per-person spending</strong> divides
-          average household expenditure by average household size.
-          It does not adjust for differences in age or food needs.
+        <p id="c6-estimate-note" class="chart-reading chart-note">
+          <strong>Approximate per-person spending</strong> divides average
+          household expenditure by average household size. It does not
+          adjust for differences in age or food needs.
           <strong>*</strong> marks an underlying household expenditure
           estimate with a relative standard error of 25% or more;
           interpret these cells cautiously.
         </p>
 
-        <details class="c3-methods">
+        <details class="chart-details">
           <summary>What is included, and how should I compare the cells?</summary>
 
-          <div class="c3-methods-content">
+          <div class="methods-content">
             <p>
-              Meals out and fast foods are excluded because the
-              previous chart examined that category. The remaining
-              categories include prepared foods, so they should
-              not all be interpreted as ingredients for home cooking.
+              Meals out and fast foods are excluded because the previous
+              chart examined that category. The remaining categories
+              include prepared foods, so they should not all be interpreted
+              as ingredients for home cooking.
             </p>
-
             <p>
-              Household amounts are published average weekly
-              expenditures. Approximate per-person amounts divide
-              those averages by the corresponding average household
-              size.
+              Household amounts are published average weekly expenditures.
+              Approximate per-person amounts divide those averages by the
+              corresponding average household size.
             </p>
-
             <p>
-              Both views use a shared colour scale across all cells
-              within that view, starting at zero. Switching the
-              measure updates the scale because household and
-              per-person amounts have different ranges.
+              Both views use a shared colour scale across all cells within
+              that view, starting at zero. Switching the measure updates
+              the scale because household and per-person amounts have
+              different ranges.
             </p>
-
             <p>
               Spending reflects both prices and quantities purchased.
-              It does not directly measure food consumption, diet
-              quality or how much food a household needs.
+              It does not directly measure food consumption, diet quality
+              or how much food a household needs.
             </p>
-
             <p>
-              Cell values are rounded to one decimal place. Hover
-              over a cell for its full category name, both spending
-              measures and the relative standard error of the
-              household expenditure estimate. That error measure
-              is not a separately calculated uncertainty estimate
-              for the per-person ratio.
+              Positive amounts below $0.10 are shown as &lt;0.1.
+              Other cell values are rounded to one decimal place.
+              Hover over a cell for its full category name, both spending
+              measures and the relative standard error of the household
+              expenditure estimate. That error measure is not a separately
+              calculated uncertainty estimate for the per-person ratio.
             </p>
           </div>
         </details>
 
-        <p class="c3-source">
+        <p class="chart-source">
           Source:
           <a href="https://www.abs.gov.au/statistics/economy/finance/household-expenditure-survey-australia-summary-results/2015-16">ABS Household Expenditure Survey, 2015–16</a>.
           Approximate per-person amounts are calculated using average
           household size. Amounts are in 2015–16 Australian dollars.
         </p>
 
-        <div class="c3-links">
+        <div class="chart-links">
           <a href="charts/c6-household-heatmap.vl.json">Chart specification</a>
           <a href="data/household-food-heatmap.csv">View household food data</a>
         </div>
       </figure>
 
-      <p class="c3-bridge">
+      <p class="story-bridge">
         Household size changes how we compare spending amounts.
-        Income raises a different question: how much of the
-        household budget does food absorb?
+        Income raises a different question: how much of the household
+        budget does food absorb?
       </p>
     </section>
 
     <!-- SECTION 3: Income comparisons will be added here. -->
-    <section
-      id="budget-pressure"
-      aria-labelledby="budget-pressure-title"
-    >
+    <section id="budget-pressure" aria-labelledby="budget-pressure-title">
       <div class="section-number">03 / PUTTING SPENDING IN CONTEXT</div>
 
-      <h2 id="budget-pressure-title">
-        A larger bill and a heavier burden
-      </h2>
+      <h2 id="budget-pressure-title">A larger bill and a heavier burden</h2>
 
       <p>
-        Spending more dollars is different from allocating more
-        of the household budget to food.
+        Spending more dollars is different from allocating more of
+        the household budget to food.
       </p>
     </section>
 
@@ -802,8 +751,8 @@
       </h2>
 
       <p>
-        Later evidence on prices and food access adds another
-        question: can spending alone tell us who has enough food?
+        Later evidence on prices and food access adds another question:
+        can spending alone tell us who has enough food?
       </p>
     </section>
   </main>

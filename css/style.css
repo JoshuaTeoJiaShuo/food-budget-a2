@@ -1,358 +1,311 @@
-/* Include padding and borders within an element's width. */
+/* 1. Colours and reading sizes */
+
+:root {
+  --page: #f7f5ef;
+  --panel: #fffefa;
+  --ink: #223b36;
+  --muted: #46534d;
+  --subtle: #596761;
+  --border: #d5dcd3;
+  --accent: #75482d;
+  --focus: #63351f;
+  --reading-body: 1.375rem;
+  --reading-note: 1.125rem;
+  --chart-font: 18px;
+}
+
+html[data-reading-size="small"] {
+  --reading-body: 1.25rem;
+  --reading-note: 1rem;
+  --chart-font: 16px;
+}
+
+html[data-reading-size="large"] {
+  --reading-body: 1.5rem;
+  --reading-note: 1.25rem;
+  --chart-font: 20px;
+}
+
+/* 2. Page layout and typography */
+
 * {
   box-sizing: border-box;
 }
 
-/* Styles shared by the whole page. */
+[hidden] {
+  display: none !important;
+}
+
 body {
   margin: 0;
-  background-color: #f7f5ef;
-  color: #223b36;
+  background: var(--page);
+  color: var(--ink);
   font-family: Arial, sans-serif;
-  font-size: 17px;
+  font-size: var(--reading-body);
   line-height: 1.6;
 }
 
-/* Keep the content centred, with space at both edges. */
-header,
+body > header,
 main,
-footer {
+body > footer {
   width: calc(100% - 48px);
   max-width: 1080px;
-  margin: 0 auto;
+  margin-inline: auto;
 }
 
-/* The opening title area. */
-header {
-  padding: 64px 0 48px;
+body > header {
+  padding: 36px 0;
 }
 
 h1,
-h2 {
+h2,
+h3 {
   font-family: Georgia, serif;
-  line-height: 1.15;
 }
 
 h1 {
   margin: 0 0 20px;
-  font-size: clamp(38px, 6vw, 68px);
-}
-
-header p {
-  margin: 0;
-  font-size: 22px;
-}
-
-/* Each chapter receives its own space and separator. */
-section {
-  padding: 44px 0;
-  border-top: 1px solid #d5dcd3;
+  font-size: clamp(2.375rem, 5vw, 4.25rem);
+  line-height: 1.15;
 }
 
 h2 {
   margin: 0 0 20px;
-  font-size: 32px;
+  font-size: calc(var(--reading-body) + 0.875rem);
+  line-height: 1.2;
 }
 
-section p {
-  max-width: 52ch;
+p {
+  margin: 0 0 16px;
+}
+
+body > header > p {
   margin: 0;
+}
+
+main > section {
+  padding: 44px 0;
+  border-top: 1px solid var(--border);
+}
+
+main > section > p {
+  max-width: 65ch;
 }
 
 .section-number {
   margin-bottom: 12px;
-  color: #a74618;
-  font-size: 14px;
-  font-weight: bold;
-  letter-spacing: 0.12em;
+  color: var(--accent);
+  font-size: var(--reading-note);
+  font-weight: 700;
+  letter-spacing: 0.08em;
 }
 
-/* Credits and sources will go here later. */
-footer {
+body > footer {
   padding: 28px 0;
-  border-top: 1px solid #d5dcd3;
-  color: #596761;
-  font-size: 13px;
+  border-top: 1px solid var(--border);
+  color: var(--subtle);
+  font-size: var(--reading-note);
 }
 
-/* Styles for the chart panels. */
+a {
+  color: var(--accent);
+  text-underline-offset: 3px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 4px;
+}
+
+/* 3. Shared chart panels */
+
 .chart-panel {
+  min-width: 0;
   margin: 32px 0 0;
-  padding: 24px;
-  background-color: #fffefa;
-  border: 1px solid #d5dcd3;
+  padding: 28px;
+  background: var(--panel);
 }
 
 .chart-panel h3 {
+  max-width: 34ch;
   margin: 0 0 16px;
-  font-family: Georgia, serif;
-  font-size: 25px;
+  font-size: calc(var(--reading-body) + 0.625rem);
   line-height: 1.2;
 }
 
-.chart-panel p {
-  max-width: 70ch;
-  margin: 12px 0;
+.chart-kicker {
+  margin: 0 0 12px;
+  color: var(--subtle);
+  font-size: var(--reading-note);
+  font-weight: 700;
+  letter-spacing: 0.06em;
+}
+
+.chart-deck {
+  max-width: 62ch;
+  margin: 0;
+}
+
+.chart-reading,
+.chart-source,
+.chart-note {
+  max-width: 68ch;
+  margin: 20px 0 12px;
+  color: var(--muted);
+  font-size: var(--reading-note);
 }
 
 .chart {
   width: 100%;
-  margin: 24px 0;
+  min-width: 0;
+  margin: 20px 0;
 }
 
 .chart.vega-embed {
-  padding: 0;
-}
-
-.chart-panel .chart-note {
-  font-size: 13px;
-  color: #596761;
-}
-
-a {
-  color: #a74618;
-}
-
-
-/* C1 Configurations */
-
-.chart-panel.c1-panel {
-  padding: 28px;
-  border: 0;
-  background: #fffefa;
-}
-
-.c1-heading {
-  display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(210px, 1fr);
-  gap: 32px;
-  align-items: start;
-}
-
-.c1-panel .c1-kicker {
-  margin: 0 0 12px;
-  color: #596761;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.4;
-  letter-spacing: 0.08em;
-}
-
-.c1-panel h3 {
-  margin: 0 0 14px;
-  max-width: 26ch;
-  font-family: Georgia, serif;
-  font-size: clamp(25px, 2.5vw, 30px);
-  line-height: 1.2;
-}
-
-.c1-accent {
-  color: #a74618;
-}
-
-.c1-panel .c1-deck {
-  margin: 0;
-  max-width: 48ch;
-  font-size: 16px;
-  line-height: 1.55;
-}
-
-.c1-takeaway {
-  padding-left: 24px;
-  border-left: 2px solid #d8b9a5;
-}
-
-.c1-takeaway strong {
-  display: block;
-  color: #a74618;
-  font-size: 38px;
-  line-height: 1;
-  font-variant-numeric: tabular-nums;
-}
-
-.c1-takeaway > span {
-  display: block;
-  margin-top: 8px;
-  font-size: 14px;
-}
-
-.c1-panel .c1-takeaway p {
-  margin: 12px 0 0;
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-.c1-measure-row {
-  display: flex;
-  justify-content: space-between;
-  gap: 16px;
-  margin-top: 28px;
-}
-
-.c1-panel .c1-measure-row p {
-  margin: 0;
-  color: #46534d;
-  font-size: 13px;
-  line-height: 1.4;
-}
-
-.c1-label-heading {
-  width: 280px;
-  flex-shrink: 0;
-}
-
-.c1-panel .chart {
-  width: 100%;
-  min-width: 0;
-  margin: 8px 0 20px;
-}
-
-.c1-panel .chart.vega-embed {
   display: block;
   padding: 0;
 }
 
-.c1-panel .chart svg {
+.chart svg {
   display: block;
 }
 
-.c1-notes {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 32px;
-  padding-top: 16px;
-  border-top: 1px solid #d5dcd3;
+.chart-error {
+  padding: 16px;
+  border-left: 3px solid var(--accent);
+  font-size: var(--reading-note);
 }
 
-.c1-panel .c1-notes p {
-  margin: 0;
-  max-width: 55ch;
-  color: #46534d;
-  font-size: 13px;
-  line-height: 1.55;
-}
-
-.c1-links {
+.chart-links {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px 20px;
-  margin-top: 16px;
-  font-size: 13px;
+  gap: 12px 24px;
+  margin-top: 12px;
+  font-size: var(--reading-note);
 }
 
-.c1-links a:focus-visible {
-  outline: 2px solid #a74618;
-  outline-offset: 4px;
+.chart-links a {
+  padding: 6px 0;
 }
 
-.c1-panel .c1-compact-note {
-  display: none;
+.story-bridge {
+  margin: 28px 0 0;
 }
 
-/* Narrow layouts use labelled small multiples instead of squeezed labels. */
-
-.c1-panel.is-compact .c1-heading {
-  grid-template-columns: minmax(0, 1fr);
-  gap: 20px;
+.chart-scroll,
+.table-scroll {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
 }
 
-.c1-panel.is-compact .c1-label-heading {
-  display: none;
+.chart-scroll {
+  margin-top: 20px;
 }
 
-.c1-panel.is-compact .c1-notes {
-  grid-template-columns: minmax(0, 1fr);
-  gap: 14px;
+.chart-scroll .chart {
+  width: max-content;
+  max-width: none;
+  margin: 12px auto 20px;
 }
 
-.c1-panel.is-compact .c1-compact-note {
-  display: block;
-  margin: 0 0 16px;
-  color: #46534d;
-  font-size: 13px;
+.chart-scroll svg {
+  max-width: none;
+}
+
+.chart-scroll:focus-visible,
+.table-scroll:focus-visible {
+  outline-offset: -3px;
+}
+
+.scroll-help {
+  margin: 8px 0 20px;
+  color: var(--muted);
+  font-size: var(--reading-note);
+}
+
+.table-scroll {
+  margin: 16px 0;
+}
+
+/* 4. Controls and expandable explanations */
+
+.reading-controls,
+.chart-controls {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 14px;
+  margin-top: 24px;
+  font-size: var(--reading-note);
+}
+
+.reading-controls label,
+.chart-controls label {
+  font-weight: 600;
+}
+
+select,
+button {
+  min-height: 44px;
+  max-width: 100%;
+  padding: 9px 12px;
+  border: 1px solid #819383;
+  border-radius: 4px;
+  background: var(--panel);
+  color: var(--ink);
+  font: inherit;
   line-height: 1.5;
-}
-
-@media (max-width: 500px) {
-  .chart-panel.c1-panel {
-    padding: 20px 12px;
-  }
-}
-
-
-/* C1 refinement: tighter hierarchy and clearer label columns. */
-
-.c1-heading {
-  gap: 28px;
-}
-
-.c1-panel h3 {
-  margin-bottom: 12px;
-}
-
-.c1-panel .c1-deck {
-  max-width: 49ch;
-}
-
-.c1-panel .c1-takeaway p {
-  font-size: 13px;
-  line-height: 1.6;
-}
-
-.c1-panel .c1-interaction-hint {
-  max-width: 90ch;
-  margin: 20px 0 12px;
-  color: #596761;
-  font-size: 12px;
-  line-height: 1.5;
-}
-
-.c1-measure-row {
-  margin-top: 0;
-  align-items: baseline;
-}
-
-.c1-label-heading {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 60px;
-  gap: 12px;
-  width: 300px;
-  margin-right: 8px;
-  flex-shrink: 0;
-  color: #46534d;
-  font-size: 13px;
-  line-height: 1.4;
-}
-
-.c1-label-heading span:last-child {
-  text-align: right;
-}
-
-.c1-panel .chart {
-  margin: 8px 0 18px;
-}
-
-.c1-panel .chart:focus-visible {
-  outline: 2px solid #a74618;
-  outline-offset: 5px;
-}
-
-.c1-panel .chart .mark-text,
-.c1-panel .chart .mark-line,
-.c1-panel .chart .mark-symbol {
   cursor: pointer;
 }
 
-#food-basket > .c1-bridge {
-  max-width: 60ch;
-  margin: 22px 0 0;
-  font-size: 16px;
-  line-height: 1.6;
+.reading-controls select {
+  min-width: 9rem;
 }
 
-/* Accessible status text, without adding another visible label. */
+button:disabled,
+select:disabled {
+  cursor: default;
+  opacity: 0.6;
+}
 
-.c1-sr-only {
+.reading-controls-help {
+  flex-basis: 100%;
+  margin: 0;
+  color: var(--muted);
+  font-size: var(--reading-note);
+}
+
+.chart-details {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+  font-size: var(--reading-note);
+}
+
+.chart-help {
+  margin: 12px 0;
+  font-size: var(--reading-note);
+}
+
+summary {
+  width: fit-content;
+  max-width: 100%;
+  padding: 8px 0;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.methods-content p,
+.chart-help p {
+  max-width: 68ch;
+  margin: 12px 0;
+  color: var(--muted);
+}
+
+.sr-only {
   position: absolute;
   width: 1px;
   height: 1px;
@@ -364,1074 +317,163 @@ a {
   border: 0;
 }
 
-.c1-panel.is-compact .c1-label-heading {
-  display: none;
-}
+/* 5. Exact-value tables */
 
-/* A shorter introduction gives more space to the chart. */
-
-.c1-panel .c1-interaction-hint {
-  margin: 14px 0 4px;
-  max-width: 65ch;
-  font-size: 12px;
-  line-height: 1.5;
-  color: #596761;
-}
-
-.c1-panel .chart {
-  margin: 0 0 12px;
-}
-
-/* Desktop measure and column headings are drawn inside the chart. */
-
-.c1-panel .c1-compact-measure {
-  display: none;
-}
-
-.c1-panel.is-compact .c1-compact-measure {
-  display: block;
-  margin: 12px 0 8px;
-  color: #46534d;
-  font-size: 13px;
-}
-
-/* Optional guidance remains available without dominating the page. */
-
-.c1-keyboard-help {
-  margin: 0 0 16px;
-  color: #596761;
-  font-size: 12px;
-  line-height: 1.5;
-}
-
-.c1-keyboard-help summary {
-  width: fit-content;
-  cursor: pointer;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.c1-panel .c1-keyboard-help p {
-  margin: 8px 0 0;
-  max-width: 65ch;
-  font-size: 12px;
-}
-
-.c1-keyboard-help summary:focus-visible {
-  outline: 2px solid #a74618;
-  outline-offset: 4px;
-}
-
-/* C2: food expenditure treemap */
-
-.chart-panel.c2-panel {
-  margin-top: 28px;
-  padding: 28px;
-  border: 0;
-  background: #fffefa;
-}
-
-.c2-panel .c2-kicker {
-  margin: 0 0 12px;
-  color: #596761;
-  font-size: 12px;
-  font-weight: 700;
-  line-height: 1.4;
-  letter-spacing: 0.08em;
-}
-
-.c2-panel h3 {
-  margin: 0 0 12px;
-  font-family: Georgia, serif;
-  font-size: clamp(25px, 2.5vw, 30px);
-  line-height: 1.2;
-}
-
-.c2-panel .c2-deck {
-  max-width: 64ch;
-  margin: 0 0 18px;
-  font-size: 16px;
-  line-height: 1.55;
-}
-
-.c2-panel .c2-reading {
-  max-width: 85ch;
-  margin: 0 0 16px;
-  color: #46534d;
-  font-size: 13px;
-  line-height: 1.55;
-}
-
-/* Group selector and reset button */
-
-.c2-controls {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin: 18px 0 8px;
-}
-
-.c2-controls label {
-  color: #223b36;
-  font-size: 14px;
-  font-weight: 700;
-}
-
-.c2-controls select,
-.c2-controls button {
-  padding: 8px 10px;
-  border: 1px solid #aab7aa;
-  border-radius: 3px;
-  background: #fffefa;
-  color: #223b36;
-  font-family: Arial, sans-serif;
-  font-size: 14px;
-  line-height: 1.4;
-}
-
-.c2-controls select {
-  flex: 1;
-  min-width: 0;
-  max-width: 100%;
-}
-
-.c2-controls button {
-  cursor: pointer;
-}
-
-.c2-controls button:disabled {
-  opacity: 0.5;
-  cursor: default;
-}
-
-.c2-panel :is(select, button, summary, a):focus-visible {
-  outline: 2px solid #a74618;
-  outline-offset: 4px;
-}
-
-/* Context explains what the current rectangle sizes compare. */
-
-.c2-panel .c2-context {
-  max-width: none;
-  min-height: 2.8em;
-  margin: 8px 0 0;
-  color: #46534d;
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-/* Treemap container */
-
-.c2-panel .chart {
+.data-table {
   width: 100%;
-  min-width: 0;
-  margin: 0 0 18px;
-}
-
-.c2-panel .chart.vega-embed {
-  display: block;
-  padding: 0;
-}
-
-.c2-panel .chart svg {
-  display: block;
-}
-
-/* Accessible table for small rectangles and full category names */
-
-.c2-data {
-  margin: 0 0 20px;
-  font-size: 14px;
-}
-
-.c2-data summary {
-  width: fit-content;
-  cursor: pointer;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.c2-data table {
-  width: 100%;
-  table-layout: fixed;
   border-collapse: collapse;
-  margin-top: 14px;
-  font-size: 13px;
-  line-height: 1.5;
+  font-size: var(--reading-note);
+  line-height: 1.55;
 }
 
-.c2-data caption {
-  margin-bottom: 10px;
-  color: #46534d;
+.data-table caption {
+  padding: 0 0 14px;
   text-align: left;
-}
-
-.c2-data th,
-.c2-data td {
-  padding: 9px 8px;
-  border-bottom: 1px solid #d5dcd3;
-  text-align: left;
-  vertical-align: top;
-  overflow-wrap: anywhere;
-}
-
-.c2-data thead th {
-  background: #eef2e9;
   font-weight: 700;
 }
 
-.c2-data tbody th {
+.data-table th,
+.data-table td {
+  padding: 12px 10px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  text-align: left;
+}
+
+.data-table thead th {
+  background: #edf1eb;
+}
+
+.data-table tbody th {
   font-weight: 400;
 }
 
-.c2-data th:last-child,
-.c2-data td:last-child {
-  width: 85px;
-  text-align: right;
+.data-table td {
   font-variant-numeric: tabular-nums;
 }
 
-/* Method notes and source */
-
-.c2-notes {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  gap: 28px;
-  padding-top: 16px;
-  border-top: 1px solid #d5dcd3;
+.food-table {
+  min-width: 540px;
 }
 
-.c2-panel .c2-notes p {
-  max-width: 55ch;
-  margin: 0;
-  color: #46534d;
-  font-size: 13px;
-  line-height: 1.55;
-}
-
-.c2-panel .c2-source {
-  max-width: 90ch;
-  margin: 14px 0 0;
-  color: #46534d;
-  font-size: 13px;
-  line-height: 1.55;
-}
-
-.c2-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px 20px;
-  margin-top: 14px;
-  font-size: 13px;
-}
-
-#food-basket > .c2-bridge {
-  max-width: 60ch;
-  margin: 22px 0 0;
-  font-size: 16px;
-  line-height: 1.6;
-}
-
-/* Narrow-screen arrangement */
-
-@media (max-width: 600px) {
-  .chart-panel.c2-panel {
-    padding: 20px 12px;
-  }
-
-  .c2-controls label {
-    flex-basis: 100%;
-  }
-
-  .c2-controls select {
-    flex-basis: 100%;
-    width: 100%;
-  }
-
-  .c2-notes {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 14px;
-  }
-}
-
-/* C2 refinement: compact controls and clearer supporting text */
-
-.c2-panel .c2-deck {
-  max-width: 65ch;
-  margin-bottom: 14px;
-}
-
-.c2-panel .c2-reading {
-  max-width: 85ch;
-  margin-bottom: 12px;
-}
-
-/* Keep controls together without stretching across the panel. */
-
-.c2-controls {
-  justify-content: flex-start;
-  gap: 10px;
-  margin: 16px 0 0;
-}
-
-.c2-controls select {
-  flex: 0 1 380px;
-  width: 380px;
-  min-width: 0;
-  max-width: 100%;
-}
-
-.c2-controls button {
-  flex: 0 0 auto;
-}
-
-.c2-panel .c2-control-help {
-  max-width: 80ch;
-  margin: 7px 0 12px;
-  color: #596761;
-  font-size: 12px;
-  line-height: 1.5;
-}
-
-.c2-panel .c2-context {
-  max-width: 90ch;
-  min-height: 0;
-  margin: 0 0 14px;
-  color: #46534d;
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-.c2-panel .chart {
-  margin: 0 0 18px;
-}
-
-/* Table: group names appear once in the complete view.
-   The group column disappears when one group is selected. */
-
-.c2-data {
-  margin-bottom: 18px;
-}
-
-.c2-data table {
-  margin-top: 14px;
-}
-
-.c2-data caption {
-  margin-bottom: 10px;
-  color: #46534d;
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-.c2-data thead th:first-child:not([hidden]) {
-  width: 30%;
-}
-
-.c2-data th[hidden] {
-  display: none;
-}
-
-.c2-data .c2-table-group {
-  background: #f3f5ee;
-  color: #223b36;
-  font-weight: 600;
-  vertical-align: top;
-}
-
-.c2-data th,
-.c2-data td {
-  padding: 10px 8px;
-}
-
-.c2-data th:last-child,
-.c2-data td:last-child {
-  width: 85px;
-  white-space: nowrap;
-  text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-
-/* Keep the comparison with C1 visible.
-   Longer methodological details sit inside the expandable note. */
-
-.c2-panel .c2-comparison-note {
-  max-width: 85ch;
-  margin: 0;
-  padding-top: 14px;
-  border-top: 1px solid #d5dcd3;
-  color: #46534d;
-  font-size: 13px;
-  line-height: 1.55;
-}
-
-.c2-methods {
-  margin-top: 12px;
-  color: #46534d;
-  font-size: 13px;
-  line-height: 1.55;
-}
-
-.c2-methods summary {
-  width: fit-content;
-  cursor: pointer;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.c2-methods-content {
-  max-width: 78ch;
-  margin-top: 12px;
-  padding-left: 14px;
-  border-left: 2px solid #d5dcd3;
-}
-
-.c2-panel .c2-methods-content p {
-  max-width: none;
-  margin: 0 0 12px;
-  font-size: 13px;
-  line-height: 1.6;
-}
-
-.c2-panel .c2-methods-content p:last-child {
-  margin-bottom: 0;
-}
-
-.c2-panel .c2-source {
-  max-width: 90ch;
-  margin-top: 14px;
-  font-size: 13px;
-  line-height: 1.55;
-}
-
-.c2-links {
-  margin-top: 10px;
-}
-
-/* Stack controls on narrow screens. */
-
-@media (max-width: 600px) {
-  .c2-controls label {
-    flex-basis: 100%;
-  }
-
-  .c2-controls select {
-    flex: 1 1 100%;
-    width: 100%;
-  }
-
-  .c2-controls button {
-    flex: 0 0 auto;
-  }
-
-  .c2-data th,
-  .c2-data td {
-    padding: 8px 5px;
-  }
-
-  .c2-data th:last-child,
-  .c2-data td:last-child {
-    width: 72px;
-  }
-}
-
-
-/* =========================================================
-   Reading sizes
-   Standard is deliberately larger than the previous design.
-   The reading-size selector will activate the other options.
-   ========================================================= */
-
-:root {
-  --reading-body: 1.25rem;
-  --reading-note: 1rem;
-  --reading-control: 1rem;
-}
-
-html[data-reading-size="large"] {
-  --reading-body: 1.375rem;
-  --reading-note: 1.125rem;
-  --reading-control: 1.125rem;
-}
-
-html[data-reading-size="extra-large"] {
-  --reading-body: 1.5rem;
-  --reading-note: 1.25rem;
-  --reading-control: 1.25rem;
-}
-
-/* Main reading text */
-
-body {
-  font-size: var(--reading-body);
-  line-height: 1.6;
-}
-
-main section > p:not(.section-number) {
-  font-size: var(--reading-body);
-  line-height: 1.6;
-  max-width: 62ch;
-}
-
-.c1-panel .c1-deck,
-.c2-panel .c2-deck,
-#food-basket > .c1-bridge,
-#food-basket > .c2-bridge {
-  font-size: var(--reading-body);
-  line-height: 1.6;
-  max-width: 62ch;
-}
-
-/* A more compact opening leaves more room for the story. */
-
-body > header {
-  padding: 36px 0 32px;
-}
-
-body > header h1 {
-  max-width: 24ch;
-  font-size: clamp(2.25rem, 4.2vw, 3.25rem);
-  line-height: 1.15;
-  margin-bottom: 16px;
-}
-
-body > header p {
-  font-size: var(--reading-body);
-  line-height: 1.6;
-}
-
-/* Chapter headings and chart titles */
-
-.section-number {
-  font-size: var(--reading-note);
-  line-height: 1.5;
-  letter-spacing: 0.08em;
-}
-
-.c1-panel h3,
-.c2-panel h3 {
-  font-size: clamp(1.75rem, 2.7vw, 2rem);
-  line-height: 1.2;
-}
-
-/* Supporting text stays smaller than the main paragraphs,
-   but is no longer reduced to 12–13px. */
-
-.c1-panel .c1-kicker,
-.c2-panel .c2-kicker,
-.c1-panel .c1-interaction-hint,
-.c1-panel .c1-takeaway p,
-.c1-panel .c1-notes p,
-.c1-panel .c1-keyboard-help p,
-.c1-panel .c1-measure-row p,
-.c1-panel.is-compact .c1-compact-note,
-.c1-panel.is-compact .c1-compact-measure,
-.c2-panel .c2-reading,
-.c2-panel .c2-control-help,
-.c2-panel .c2-context,
-.c2-panel .c2-comparison-note,
-.c2-panel .c2-notes p,
-.c2-panel .c2-methods-content p,
-.c2-panel .c2-source,
-.chart-panel .chart-note {
-  font-size: var(--reading-note);
-  line-height: 1.6;
-}
-
-.c1-takeaway > span,
-.c1-keyboard-help,
-.c1-label-heading,
-.c1-links,
-.c2-data,
-.c2-methods,
-.c2-links,
-body > footer {
-  font-size: var(--reading-note);
-  line-height: 1.6;
-}
-
-/* Keep explanatory lines comfortable to scan. */
-
-.c1-panel .c1-interaction-hint,
-.c2-panel .c2-reading,
-.c2-panel .c2-control-help,
-.c2-panel .c2-comparison-note,
-.c2-panel .c2-source {
-  max-width: 68ch;
-}
-
-.c1-panel .c1-notes p {
-  max-width: 55ch;
-}
-
-/* Form controls */
-
-.c2-controls label,
-.c2-controls select,
-.c2-controls button {
-  font-size: var(--reading-control);
-  line-height: 1.5;
-}
-
-.c2-controls select,
-.c2-controls button {
-  min-height: 44px;
-  padding: 9px 12px;
-}
-
-.c2-controls {
-  row-gap: 12px;
-}
-
-/* Expandable guidance and source links */
-
-.c1-keyboard-help summary,
-.c2-data summary,
-.c2-methods summary {
-  padding: 4px 0;
-  line-height: 1.6;
-}
-
-.c1-links,
-.c2-links {
-  gap: 12px 24px;
-}
-
-.c1-links a,
-.c2-links a {
-  padding: 4px 0;
-  text-underline-offset: 3px;
-}
-
-/* Exact-value table */
-
-.c2-data table,
-.c2-data caption {
-  font-size: var(--reading-note);
-  line-height: 1.6;
-}
-
-.c2-data th,
-.c2-data td {
-  padding: 12px 10px;
-}
-
-.c2-data th:last-child,
-.c2-data td:last-child {
+.food-table th:last-child,
+.food-table td:last-child {
   width: 6.5em;
   white-space: nowrap;
+  text-align: right;
 }
 
-/* Preserve room for reading on small screens. */
-
-@media (max-width: 600px) {
-  body > header {
-    padding: 28px 0;
-  }
-
-  .c2-controls select {
-    flex: 1 1 100%;
-    width: 100%;
-  }
-
-  .c2-data th,
-  .c2-data td {
-    padding: 10px 6px;
-  }
-}
-
-/* Default to Medium, including before JavaScript loads. */
-
-:root {
-  --reading-body: 1.375rem;
-  --reading-note: 1.125rem;
-  --reading-control: 1.125rem;
-}
-
-/* Explicit Small option overrides the Medium default. */
-
-html[data-reading-size="standard"] {
-  --reading-body: 1.25rem;
-  --reading-note: 1rem;
-  --reading-control: 1rem;
-}
-
-/* Reading-size selector */
-
-.reading-controls {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px 14px;
-  margin-top: 24px;
-}
-
-/* Preserve hiding until the JavaScript is ready. */
-
-.reading-controls[hidden] {
-  display: none;
-}
-
-.reading-controls label {
-  font-size: var(--reading-control);
+.c2-table-group {
+  background: #f1f4ee;
   font-weight: 600;
-  line-height: 1.5;
 }
 
-.reading-controls select {
-  min-height: 44px;
-  min-width: 9rem;
-  max-width: 100%;
-  padding: 8px 36px 8px 12px;
-  border: 1px solid #819383;
-  border-radius: 4px;
-  background-color: #fffefa;
-  color: #223b36;
-  font-family: inherit;
-  font-size: var(--reading-control);
-  line-height: 1.5;
-  cursor: pointer;
-}
-
-.reading-controls select:focus-visible {
-  outline: 3px solid #63351f;
-  outline-offset: 3px;
-}
-
-body > header .reading-controls-help {
-  flex-basis: 100%;
-  max-width: 60ch;
-  margin: 0;
-  color: #46534d;
-  font-size: var(--reading-note);
-  line-height: 1.5;
-}
-
-/* C3 — Regional meals-out spending */
-
-.chart-panel.c3-panel {
-  min-width: 0;
-  margin-top: 32px;
-  padding: 28px;
-  border: 0;
-  background: #fffefa;
-  color: #223b36;
-}
-
-/* Heading and explanation */
-
-.c3-panel .c3-kicker {
-  margin: 0 0 12px;
-  color: #596761;
-  font-size: var(--reading-note, 1.125rem);
-  font-weight: 700;
-  line-height: 1.5;
-  letter-spacing: 0.06em;
-}
-
-.c3-panel h3 {
-  max-width: 34ch;
-  margin: 0 0 16px;
-  font-family: Georgia, serif;
-  font-size: calc(var(--reading-body, 1.375rem) + 0.625rem);
-  line-height: 1.2;
-}
-
-.c3-panel .c3-deck {
-  max-width: 62ch;
-  margin: 0;
-  font-size: var(--reading-body, 1.375rem);
-  line-height: 1.6;
-}
-
-.c3-panel .c3-reading {
-  max-width: 68ch;
-  margin: 22px 0 0;
-  color: #46534d;
-  font-size: var(--reading-note, 1.125rem);
-  line-height: 1.6;
-}
-
-/* Keep the map readable and contain horizontal scrolling. */
-
-.c3-map-scroll {
-  width: 100%;
-  min-width: 0;
-  max-width: 100%;
-  margin-top: 12px;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-}
-
-.c3-map-scroll:focus-visible {
-  outline: 3px solid #63351f;
-  outline-offset: -3px;
-  border-radius: 4px;
-}
-
-.c3-panel #chart-3 {
-  display: block;
-  width: max-content;
-  max-width: none;
-  margin: 12px auto 20px;
-  padding: 0;
-}
-
-.c3-panel #chart-3 svg {
-  display: block;
-  max-width: none;
-}
-
-/* Font sizes inside the map are controlled by c3.js.
-   Do not scale the SVG down to fit a narrow screen. */
-
-.c3-panel .c3-scroll-help {
-  display: none;
-  margin: 8px 0 20px;
-  color: #46534d;
-  font-size: var(--reading-note, 1.125rem);
-  line-height: 1.6;
-}
-
-/* Supporting explanation */
-
-.c3-methods {
-  margin-top: 12px;
-  padding-top: 16px;
-  border-top: 1px solid #d5dcd3;
-  font-size: var(--reading-note, 1.125rem);
-  line-height: 1.6;
-}
-
-.c3-methods summary {
-  width: fit-content;
-  max-width: 100%;
-  padding: 8px 0;
-  color: #223b36;
-  font-weight: 600;
-  cursor: pointer;
-}
-
-.c3-methods summary:focus-visible {
-  outline: 3px solid #63351f;
-  outline-offset: 4px;
-}
-
-.c3-panel .c3-methods-content p {
-  max-width: 68ch;
-  margin: 12px 0;
-  color: #46534d;
-  font-size: var(--reading-note, 1.125rem);
-  line-height: 1.65;
-}
-
-/* Sources and file links */
-
-.c3-panel .c3-source {
-  max-width: 72ch;
-  margin: 20px 0 12px;
-  color: #46534d;
-  font-size: var(--reading-note, 1.125rem);
-  line-height: 1.65;
-}
-
-.c3-links {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px 24px;
-  margin-top: 12px;
-  font-size: var(--reading-note, 1.125rem);
-  line-height: 1.6;
-}
-
-.c3-panel a {
-  color: #75482d;
-  text-underline-offset: 3px;
-}
-
-.c3-links a {
-  padding: 6px 0;
-}
-
-.c3-panel a:focus-visible {
-  outline: 3px solid #63351f;
-  outline-offset: 4px;
-}
-
-/* Transition into the household comparisons */
-
-section .c3-bridge {
-  max-width: 65ch;
-  margin: 28px 0 0;
-  font-size: var(--reading-body, 1.375rem);
-  line-height: 1.65;
-}
-
-/* Narrow screens */
-
-@media (max-width: 980px) {
-  .c3-panel .c3-scroll-help {
-    display: block;
-  }
-}
-
-@media (max-width: 600px) {
-  .chart-panel.c3-panel {
-    padding: 20px 16px;
-  }
-
-  .c3-panel h3 {
-    max-width: none;
-  }
-
-  .c3-links {
-    gap: 10px 20px;
-  }
-}
-
-/* C4 — Map sizing; typography reuses the shared C3 styles. */
-
-.c4-panel #chart-4 {
-  display: block;
-  width: max-content;
-  max-width: none;
-  margin: 12px auto 20px;
-  padding: 0;
-}
-
-.c4-panel #chart-4 svg {
-  display: block;
-  max-width: none;
-}
-
-/* C5 — Household expenditure mosaic */
-
-.c5-chart-scroll,
-.c5-table-scroll {
-  width: 100%;
-  min-width: 0;
-  max-width: 100%;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-}
-
-.c5-chart-scroll {
-  margin-top: 20px;
-}
-
-.c5-panel #chart-5 {
-  display: block;
-  width: max-content;
-  max-width: none;
-  margin: 12px auto 20px;
-  padding: 0;
-}
-
-.c5-panel #chart-5 svg {
-  display: block;
-  max-width: none;
-}
-
-.c5-chart-scroll:focus-visible,
-.c5-table-scroll:focus-visible {
-  outline: 3px solid #63351f;
-  outline-offset: -3px;
-  border-radius: 4px;
-}
-
-/* Keep the household key visible without opening a disclosure. */
-
-.c5-table-scroll {
-  margin: 24px 0;
-}
-
-.c5-key {
-  width: 100%;
+.household-table {
   min-width: 700px;
-  border-collapse: collapse;
-  color: #223b36;
-  font-size: var(--reading-note, 1.125rem);
-  line-height: 1.55;
 }
 
-.c5-key caption {
-  padding: 0 0 14px;
-  text-align: left;
-  font-size: var(--reading-note, 1.125rem);
-  font-weight: 700;
-}
-
-.c5-key th,
-.c5-key td {
-  padding: 14px 12px;
-  border-bottom: 1px solid #d5dcd3;
-  vertical-align: top;
-}
-
-.c5-key thead th {
-  background: #edf1eb;
-  text-align: left;
-  font-weight: 700;
-}
-
-/* Column numbers correspond to those beneath the chart. */
-
-.c5-key th:first-child,
-.c5-key td:first-child {
+.household-table th:first-child,
+.household-table td:first-child {
   width: 5em;
   text-align: center;
 }
 
-.c5-key tbody td:first-child {
+.household-table tbody td:first-child {
   font-weight: 700;
 }
 
-.c5-key tbody th {
-  text-align: left;
-  font-weight: 400;
-}
-
-/* Align percentages for easier comparison. */
-
-.c5-key thead th:nth-child(3),
-.c5-key thead th:nth-child(4) {
+.household-table th:nth-child(n + 3),
+.household-table td:nth-child(n + 3) {
   width: 23%;
   text-align: right;
 }
 
-.c5-key tbody td:nth-child(3),
-.c5-key tbody td:nth-child(4) {
-  text-align: right;
+.household-table td:nth-child(n + 3) {
   white-space: nowrap;
+}
+
+/* 6. Features unique to individual charts */
+
+.c1-heading {
+  display: grid;
+  grid-template-columns: minmax(0, 2fr) minmax(210px, 1fr);
+  gap: 32px;
+  align-items: start;
+}
+
+.c1-panel h3 {
+  max-width: 26ch;
+}
+
+.c1-accent {
+  color: var(--accent);
+}
+
+.c1-takeaway {
+  padding-left: 24px;
+  border-left: 2px solid #d8b9a5;
+  font-size: var(--reading-note);
+}
+
+.c1-takeaway strong {
+  display: block;
+  color: var(--accent);
+  font-size: 2.75rem;
+  line-height: 1;
   font-variant-numeric: tabular-nums;
 }
 
-.c5-key tbody tr:last-child th,
-.c5-key tbody tr:last-child td {
-  border-bottom: 2px solid #b9c5b8;
+.c1-takeaway > span {
+  display: block;
+  margin-top: 8px;
 }
 
-@media (max-width: 600px) {
-  .c5-key th,
-  .c5-key td {
-    padding: 12px 10px;
-  }
+.c1-takeaway p {
+  margin: 12px 0 0;
 }
 
-/* C5 — Compact, permanently visible household-name key */
+.c1-panel .chart {
+  margin: 8px 0 20px;
+}
+
+.c1-notes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: var(--reading-note);
+}
+
+.c1-notes p {
+  margin: 0;
+}
+
+.c1-compact-note,
+.c1-compact-measure {
+  display: none;
+  color: var(--muted);
+  font-size: var(--reading-note);
+}
+
+.c1-panel.is-compact .c1-compact-note,
+.c1-panel.is-compact .c1-compact-measure {
+  display: block;
+}
+
+.c5-panel .chart {
+  margin-bottom: 0;
+}
 
 .c5-household-key {
-  margin: 20px 0 24px;
-  color: #223b36;
-  font-size: var(--reading-note, 1.125rem);
+  margin: 8px 0 20px;
+  font-size: var(--reading-note);
   line-height: 1.5;
 }
 
-.c5-panel #c5-key-heading {
+#c5-key-heading {
   margin: 0 0 14px;
-  font-size: inherit;
-  line-height: inherit;
 }
 
 #c5-household-key {
@@ -1440,137 +482,66 @@ section .c3-bridge {
   gap: 12px 36px;
   margin: 0;
   padding-left: 1.8em;
-  list-style: decimal outside;
 }
 
 #c5-household-key > li {
   min-width: 0;
-  margin: 0;
   padding-left: 0.3em;
   overflow-wrap: break-word;
 }
 
 #c5-household-key > li::marker {
-  color: #223b36;
   font-weight: 700;
   font-variant-numeric: tabular-nums;
 }
 
-/* The detailed table keeps its existing responsive scrolling. */
-
-.c5-data-details .c5-table-scroll {
-  margin: 16px 0;
+#c5-household-key > .is-highlighted,
+#c5-household-key > .is-highlighted::marker {
+  color: var(--focus);
+  font-weight: 700;
 }
 
-/* Stack names on narrower screens. */
+/* 7. Responsive layout */
 
 @media (max-width: 760px) {
+  .c1-heading,
+  .c1-notes {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
   #c5-household-key {
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: 1fr;
     row-gap: 10px;
   }
 }
 
-/* C5 — Bring the household key closer to the chart. */
+@media (max-width: 600px) {
+  body > header,
+  main,
+  body > footer {
+    width: calc(100% - 24px);
+  }
 
-.c5-panel #chart-5 {
-  margin-bottom: 0;
-}
+  body > header {
+    padding: 28px 0;
+  }
 
-.c5-panel .c5-household-key {
-  margin-top: 8px;
-  margin-bottom: 20px;
-}
+  .chart-panel {
+    padding: 20px 16px;
+  }
 
-/* Column 6 is Group household in the current expenditure order. */
+  .chart-panel h3 {
+    max-width: none;
+  }
 
-#c5-household-key > li:nth-child(6),
-#c5-household-key > li:nth-child(6)::marker {
-  color: #63351f;
-  font-weight: 700;
-}
+  .chart-controls select {
+    flex: 1 1 100%;
+    width: 100%;
+  }
 
-/* C6 — Household food expenditure heatmap */
-
-.c6-chart-scroll {
-  width: 100%;
-  min-width: 0;
-  max-width: 100%;
-  margin-top: 24px;
-  overflow-x: auto;
-  overscroll-behavior-x: contain;
-}
-
-.c6-chart-scroll:focus-visible {
-  outline: 3px solid #63351f;
-  outline-offset: -3px;
-  border-radius: 4px;
-}
-
-/* Keep the chart readable; contain overflow within its panel. */
-
-.c6-panel #chart-6 {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  width: max-content;
-  max-width: none;
-  margin: 0 auto;
-  padding: 0;
-}
-
-.c6-panel #chart-6 > svg {
-  display: block;
-  flex: none;
-  max-width: none;
-}
-
-/* Place Vega's spending-measure selector above the heatmap. */
-
-.c6-panel #chart-6 .vega-bindings {
-  order: -1;
-  align-self: stretch;
-  margin: 0 0 24px;
-  padding: 12px 0;
-  color: #223b36;
-  font-family: Arial, sans-serif;
-  font-size: var(--reading-note, 1.125rem);
-  line-height: 1.5;
-}
-
-.c6-panel .vega-bindings label {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 10px 14px;
-}
-
-.c6-panel .vega-bind-name {
-  font-weight: 700;
-}
-
-.c6-panel .vega-bindings select {
-  min-height: 44px;
-  max-width: 100%;
-  padding: 8px 36px 8px 12px;
-  border: 1px solid #89988f;
-  border-radius: 4px;
-  background-color: #fffefa;
-  color: #223b36;
-  font: inherit;
-  cursor: pointer;
-}
-
-.c6-panel .vega-bindings select:focus-visible {
-  outline: 3px solid #63351f;
-  outline-offset: 3px;
-}
-
-/* Supporting explanation follows the reading-size setting. */
-
-.c6-panel .c6-note {
-  max-width: 72ch;
-  margin: 20px 0;
-  font-size: var(--reading-note, 1.125rem);
-  line-height: 1.65;
+  .data-table th,
+  .data-table td {
+    padding: 10px 8px;
+  }
 }

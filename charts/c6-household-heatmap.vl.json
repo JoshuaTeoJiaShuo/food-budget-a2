@@ -20,15 +20,7 @@
   "params": [
     {
       "name": "spendingBasis",
-      "value": "Approx. per person",
-      "bind": {
-        "input": "select",
-        "options": [
-          "Approx. per person",
-          "Per household"
-        ],
-        "name": "Compare spending: "
-      }
+      "value": "Approx. per person"
     }
   ],
   "transform": [
@@ -53,12 +45,12 @@
       ]
     },
     {
-    "calculate": "(datum.display_amount > 0 && datum.display_amount < 0.1 ? '<0.1' : format(datum.display_amount, '.1f')) + (isValid(datum.rse_pct) && isFinite(datum.rse_pct) && datum.rse_pct >= 25 ? '*' : '')",
-    "as": "cell_label"
+      "calculate": "(datum.display_amount > 0 && datum.display_amount < 0.1 ? '<0.1' : format(datum.display_amount, '.1f')) + (isValid(datum.rse_pct) && isFinite(datum.rse_pct) && datum.rse_pct >= 25 ? '*' : '')",
+      "as": "cell_label"
     },
     {
-    "calculate": "isValid(datum.rse_pct) && isFinite(datum.rse_pct) ? format(datum.rse_pct, '.1f') + '%' : 'Not available'",
-    "as": "rse_label"
+      "calculate": "isValid(datum.rse_pct) && isFinite(datum.rse_pct) ? format(datum.rse_pct, '.1f') + '%' : 'Not available'",
+      "as": "rse_label"
     }
   ],
   "encoding": {
@@ -86,7 +78,7 @@
         "labelLimit": 150,
         "labelLineHeight": 22,
         "labelOverlap": false,
-        "labelExpr": "datum.label === 'Couple with dependent children' ? ['Couple with', 'dependent', 'children'] : datum.label === 'Couple only' ? ['Couple', 'only'] : datum.label === 'Other one-family' ? ['Other', 'one-family'] : datum.label === 'Lone person' ? ['Lone', 'person'] : datum.label === 'One parent with dependent children' ? ['One parent', 'with dependent', 'children'] : datum.label === 'Group household' ? ['Group', 'household'] : ['Multiple-', 'family']",
+        "labelExpr": "datum.label === 'Couple with dependent children' ? ['Couple with', 'dependent', 'children'] : datum.label === 'Couple only' ? ['Couple', 'only'] : datum.label === 'Other one-family' ? ['Other', 'one-family'] : datum.label === 'Lone person' ? ['Lone', 'person'] : datum.label === 'One parent with dependent children' ? ['One parent', 'with', 'dependent', 'children'] : datum.label === 'Group household' ? ['Group', 'household'] : ['Multiple-', 'family']",
         "domain": false,
         "ticks": false
       }
@@ -117,7 +109,8 @@
         "labelPadding": 12,
         "labelLimit": 300,
         "domain": false,
-        "ticks": false
+        "ticks": false,
+        "labelExpr": "datum.label === 'Condiments, sweets & meals' ? ['Condiments,', 'sweets & meals'] : datum.label === 'Unspecified food & drinks' ? ['Unspecified', 'food & drinks'] : datum.label === 'Bakery, flour & cereals' ? ['Bakery, flour', '& cereals'] : datum.label"
       }
     },
     "tooltip": [
@@ -152,9 +145,7 @@
   },
   "layer": [
     {
-      "mark": {
-        "type": "rect"
-      },
+      "mark": {"type": "rect"},
       "encoding": {
         "color": {
           "field": "display_amount",
@@ -200,9 +191,7 @@
   ],
   "config": {
     "font": "Arial",
-    "view": {
-      "stroke": null
-    },
+    "view": {"stroke": null},
     "axis": {
       "labelFontSize": 17,
       "labelColor": "#223b36",
@@ -213,7 +202,8 @@
       "titleFontSize": 17,
       "titleFontWeight": "normal",
       "labelColor": "#223b36",
-      "titleColor": "#223b36"
+      "titleColor": "#223b36",
+      "titleLimit": 400
     }
   }
 }
