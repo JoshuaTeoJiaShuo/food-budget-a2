@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>C4 — Dot-density preview</title>
+
+  <script src="https://cdn.jsdelivr.net/npm/vega@6.4.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-lite@6.5.0"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vega-embed@7.3.0"></script>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f5f3ed;
+      color: #223b36;
+      font-family: Arial, sans-serif;
+      font-size: 20px;
+      line-height: 1.6;
+    }
+
+    main {
+      max-width: 1080px;
+      margin: 32px auto;
+      padding: 32px;
+      background: #fffefa;
+    }
+
+    h1 {
+      max-width: 850px;
+      margin: 8px 0 16px;
+      font-family: Georgia, serif;
+      font-size: clamp(28px, 4vw, 38px);
+      line-height: 1.2;
+    }
+
+    p {
+      max-width: 850px;
+    }
+
+    .kicker {
+      margin: 0;
+      font-size: 15px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .key {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: bold;
+    }
+
+    .key-dot {
+      width: 8px;
+      height: 8px;
+      flex: 0 0 8px;
+      border-radius: 50%;
+      background: #845c46;
+    }
+
+    .chart-scroll {
+      overflow-x: auto;
+    }
+
+    .note {
+      font-size: 17px;
+    }
+
+    table {
+      width: 100%;
+      margin-top: 24px;
+      border-collapse: collapse;
+      font-size: 18px;
+    }
+
+    caption {
+      text-align: left;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    th,
+    td {
+      padding: 10px 12px;
+      border-bottom: 1px solid #d5ddd4;
+      text-align: right;
+    }
+
+    th:first-child,
+    td:first-child {
+      text-align: left;
+    }
+
+    a {
+      color: #75482d;
+    }
+
+    @media (max-width: 600px) {
+      main {
+        margin: 0;
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <p class="kicker">C4 preview · Meals out and fast foods · 2015–16</p>
+
+    <h1>A higher household bill did not mean a larger state total</h1>
+
+    <p>
+      ACT households spent more on average, but New South Wales
+      accounted for a much larger estimated total because it had
+      many more households.
+    </p>
+
+    <p class="key">
+      <span class="key-dot" aria-hidden="true"></span>
+      One dot ≈ A$5 million per week
+    </p>
+
+    <div
+      class="chart-scroll"
+      tabindex="0"
+      aria-label="Map preview; scroll horizontally on narrow screens"
+    >
+      <div id="map"></div>
+    </div>
+
+    <p class="note">
+      Dot counts are rounded separately for each state and territory.
+      Dots are distributed illustratively within boundaries; they do
+      not show restaurants, households or actual purchase locations.
+      Overlapping dots may obscure the ACT at this scale.
+    </p>
+
+    <div class="chart-scroll">
+      <table>
+        <caption>Values behind the map</caption>
+        <thead>
+          <tr>
+            <th scope="col">State</th>
+            <th scope="col">Average household / week</th>
+            <th scope="col">Estimated total / week</th>
+            <th scope="col">Dots</th>
+          </tr>
+        </thead>
+        <tbody id="values"></tbody>
+      </table>
+    </div>
+
+    <p class="note">
+      Estimated totals = estimated household count × average weekly
+      household spending. These describe spending by resident
+      households, including purchases outside their home state.
+      They are not estimates of restaurant revenue within each state.
+    </p>
+
+    <p class="note">
+      Source: ABS Household Expenditure Survey, 2015–16,
+      using the project's
+      <a href="data/state-spending-joined.csv">state spending data</a>
+      and ABS state boundaries.
+    </p>
+
+    <p id="status" role="status"></p>
+  </main>
+
+  <script>
+    const DOT_VALUE = 5_000_000;
+
+    // A fixed seed keeps the illustrative dot positions stable.
+    function seededRandom(seed) {
+      let state = seed >>> 0;
+
+      return function () {
+        state = (
+          Math.imul(1664525, state) + 1013904223
+        ) >>> 0;
+
+        return state / 4294967296;
+      };
+    }
+
+    function pointInRing([x, y], ring) {
+      let inside = false;
+
+      for (let i = 0, j = ring.length - 1; i < ring.length; j = i++) {
+        const [xi, yi] = ring[i];
+        const [xj, yj] = ring[j];
+
+        if (
+          (yi > y) !== (yj > y) &&
+          x < ((xj - xi) * (y - yi)) / (yj - yi) + xi
+        ) {
+          inside = !inside;
+        }
+      }
+
+      return inside;
+    }
+
+    function pointInPolygon(point, polygon) {
+      return (
+        pointInRing(point, polygon[0]) &&
+        !polygon.slice(1).some((hole) => pointInRing(point, hole))
+      );
+    }
+
+    function generateDots(feature, row) {
+      const polygons = feature.geometry.type === "Polygon"
+        ? [feature.geometry.coordinates]
+        : feature.geometry.coordinates;
+
+      let minX = Infinity;
+      let minY = Infinity;
+      let maxX = -Infinity;
+      let maxY = -Infinity;
+
+      for (const polygon of polygons) {
+        for (const [x, y] of polygon[0]) {
+          minX = Math.min(minX, x);
+          minY = Math.min(minY, y);
+          maxX = Math.max(maxX, x);
+          maxY = Math.max(maxY, y);
+        }
+      }
+
+      const count = Math.round(row.aggregate_meals_weekly / DOT_VALUE);
+      const random = seededRandom(Number(row.state_code) * 9137);
+      const points = [];
+      const radians = Math.PI / 180;
+      const sinMin = Math.sin(minY * radians);
+      const sinMax = Math.sin(maxY * radians);
+
+      // Sampling in sine(latitude) avoids favouring northern land area.
+      for (let attempt = 0; points.length < count; attempt++) {
+        if (attempt >= 200000) {
+          throw new Error(`Could not place all dots for ${row.state}.`);
+        }
+
+        const longitude = minX + random() * (maxX - minX);
+        const latitude = Math.asin(
+          sinMin + random() * (sinMax - sinMin)
+        ) / radians;
+
+        const point = [longitude, latitude];
+
+        if (polygons.some((polygon) => pointInPolygon(point, polygon))) {
+          points.push({
+            longitude,
+            latitude,
+            state: row.state,
+            estimated_total: row.aggregate_meals_weekly
+          });
+        }
+      }
+
+      return points;
+    }
+
+    async function getText(url) {
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error(`Cannot load ${url}: ${response.status}`);
+      }
+
+      return response.text();
+    }
+
+    async function initialise() {
+      const [topologyText, spendingText] = await Promise.all([
+        getText("data/australia-states.topojson"),
+        getText("data/state-spending-joined.csv")
+      ]);
+
+      const features = vega.read(JSON.parse(topologyText), {
+        type: "topojson",
+        feature: "states"
+      });
+
+      const rows = vega.read(spendingText, {
+        type: "csv",
+        parse: "auto"
+      });
+
+      const byCode = new Map(
+        rows.map((row) => [Number(row.state_code), row])
+      );
+
+      const dots = [];
+
+      for (const feature of features) {
+        const row = byCode.get(Number(feature.properties.STE_CODE16));
+
+        if (!row) {
+          throw new Error("A state boundary has no matching spending row.");
+        }
+
+        Object.assign(feature.properties, {
+          state: row.state,
+          average: row.meals_weekly,
+          estimated_total: row.aggregate_meals_weekly
+        });
+
+        dots.push(...generateDots(feature, row));
+      }
+
+      const tooltip = [
+        {
+          field: "properties.state",
+          type: "nominal",
+          title: "State or territory"
+        },
+        {
+          field: "properties.average",
+          type: "quantitative",
+          title: "Average household / week (A$)",
+          format: ",.2f"
+        },
+        {
+          field: "properties.estimated_total",
+          type: "quantitative",
+          title: "Estimated total / week (A$)",
+          format: ",.0f"
+        }
+      ];
+
+      await vegaEmbed("#map", {
+        $schema: "https://vega.github.io/schema/vega-lite/v6.json",
+        description:
+          "Estimated aggregate household spending on meals out by state. " +
+          "Each illustratively positioned dot represents about A$5 million.",
+        width: 860,
+        height: 600,
+        background: "#fffefa",
+        projection: { type: "mercator" },
+        layer: [
+          {
+            data: { values: features },
+            mark: {
+              type: "geoshape",
+              fill: "#e8ede7",
+              stroke: "#819383",
+              strokeWidth: 0.8
+            },
+            encoding: { tooltip }
+          },
+          {
+            data: { values: dots },
+            mark: {
+              type: "circle",
+              size: 36,
+              color: "#845c46",
+              opacity: 0.85
+            },
+            encoding: {
+              longitude: {
+                field: "longitude",
+                type: "quantitative"
+              },
+              latitude: {
+                field: "latitude",
+                type: "quantitative"
+              },
+              tooltip: [
+                {
+                  field: "state",
+                  type: "nominal",
+                  title: "State or territory"
+                },
+                {
+                  field: "estimated_total",
+                  type: "quantitative",
+                  title: "Estimated state total / week (A$)",
+                  format: ",.0f"
+                }
+              ]
+            }
+          }
+        ],
+        config: {
+          view: { stroke: null },
+          font: "Arial"
+        }
+      }, {
+        actions: false,
+        renderer: "svg"
+      });
+
+      const currency = new Intl.NumberFormat("en-AU", {
+        style: "currency",
+        currency: "AUD",
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+
+      const tbody = document.querySelector("#values");
+
+      rows.sort(
+        (a, b) => b.aggregate_meals_weekly - a.aggregate_meals_weekly
+      );
+
+      for (const row of rows) {
+        const tr = document.createElement("tr");
+        const values = [
+          row.state,
+          currency.format(row.meals_weekly),
+          `${currency.format(row.aggregate_meals_weekly / 1_000_000)} million`,
+          Math.round(row.aggregate_meals_weekly / DOT_VALUE)
+        ];
+
+        values.forEach((value, index) => {
+          const cell = document.createElement(index === 0 ? "th" : "td");
+          if (index === 0) cell.scope = "row";
+          cell.textContent = value;
+          tr.appendChild(cell);
+        });
+
+        tbody.appendChild(tr);
+      }
+    }
+
+    initialise().catch((error) => {
+      document.querySelector("#status").textContent =
+        `Preview could not load: ${error.message}`;
+      console.error(error);
+    });
+  </script>
+</body>
+</html>

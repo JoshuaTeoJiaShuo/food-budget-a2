@@ -1,0 +1,267 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "description": "Annual food CPI changes, September 2016 to June 2026. Each horizon strip folds successive five-percentage-point bands onto a common height. Brown indicates increases; blue indicates decreases. This measures price change, not household expenditure.",
+  "background": "#fffefa",
+
+  "data": {
+    "url": "data/food-price-quarterly.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "annual_change_pct": "number"
+      }
+    }
+  },
+
+  "transform": [
+    {
+      "calculate": "isValid(datum.category) ? datum.category : datum['\\ufeffcategory']",
+      "as": "category"
+    },
+    {
+      "calculate": "utcParse(datum.quarter, '%Y-%m')",
+      "as": "date"
+    },
+    {
+      "calculate": "datum.annual_change_pct",
+      "as": "rise0"
+    },
+    {
+      "calculate": "datum.annual_change_pct - 5",
+      "as": "rise5"
+    },
+    {
+      "calculate": "datum.annual_change_pct - 10",
+      "as": "rise10"
+    },
+    {
+      "calculate": "datum.annual_change_pct - 15",
+      "as": "rise15"
+    },
+    {
+      "calculate": "-datum.annual_change_pct",
+      "as": "fall0"
+    },
+    {
+      "calculate": "-datum.annual_change_pct - 5",
+      "as": "fall5"
+    },
+    {
+      "calculate": "-datum.annual_change_pct - 10",
+      "as": "fall10"
+    },
+    {
+      "calculate": "-datum.annual_change_pct - 15",
+      "as": "fall15"
+    },
+    {
+      "fold": [
+        "rise0",
+        "rise5",
+        "rise10",
+        "rise15",
+        "fall0",
+        "fall5",
+        "fall10",
+        "fall15"
+      ],
+      "as": ["band", "band_value"]
+    }
+  ],
+
+  "facet": {
+    "row": {
+      "field": "category",
+      "type": "nominal",
+      "sort": [
+        "Meals out and take away foods",
+        "Bread and cereal products",
+        "Meat and seafoods",
+        "Dairy and related products",
+        "Fruit and vegetables",
+        "Non-alcoholic beverages",
+        "Food products n.e.c."
+      ],
+      "header": {
+        "title": null,
+        "labelOrient": "top",
+        "labelAnchor": "start",
+        "labelAlign": "left",
+        "labelAngle": 0,
+        "labelFontSize": 18,
+        "labelFontWeight": 600,
+        "labelColor": "#223b36",
+        "labelPadding": 8,
+        "labelLimit": 0
+      }
+    }
+  },
+
+  "spacing": 18,
+
+  "spec": {
+    "width": 850,
+    "height": 44,
+
+    "encoding": {
+      "x": {
+        "field": "date",
+        "type": "temporal",
+        "scale": {
+          "type": "utc"
+        },
+        "axis": {
+          "title": null,
+          "format": "%Y",
+          "values": [
+            "2017-01-01",
+            "2019-01-01",
+            "2021-01-01",
+            "2023-01-01",
+            "2025-01-01"
+          ],
+          "labelAngle": 0,
+          "labelPadding": 8,
+          "grid": false
+        }
+      }
+    },
+
+    "layer": [
+      {
+        "mark": {
+          "type": "area",
+          "clip": true,
+          "interpolate": "linear",
+          "opacity": 1
+        },
+        "encoding": {
+          "y": {
+            "field": "band_value",
+            "type": "quantitative",
+            "stack": null,
+            "scale": {
+              "domain": [0, 5],
+              "nice": false,
+              "zero": true
+            },
+            "axis": null
+          },
+          "y2": {
+            "datum": 0
+          },
+          "color": {
+            "field": "band",
+            "type": "nominal",
+            "scale": {
+              "domain": [
+                "rise0",
+                "rise5",
+                "rise10",
+                "rise15",
+                "fall0",
+                "fall5",
+                "fall10",
+                "fall15"
+              ],
+              "range": [
+                "#e8d9ca",
+                "#c6a68b",
+                "#9a7053",
+                "#65442f",
+                "#dce8ee",
+                "#abc9d8",
+                "#689bb5",
+                "#34617b"
+              ]
+            },
+            "legend": {
+              "title": "Annual price change · successive 5-percentage-point bands",
+              "orient": "top",
+              "direction": "horizontal",
+              "columns": 4,
+              "columnPadding": 18,
+              "rowPadding": 8,
+              "symbolType": "square",
+              "symbolSize": 180,
+              "labelExpr": "(indexof(datum.label, 'rise') === 0 ? 'Rise: ' : 'Fall: ') + (indexof(datum.label, '15') > -1 ? '15–20%' : indexof(datum.label, '10') > -1 ? '10–15%' : indexof(datum.label, '5') > -1 ? '5–10%' : '0–5%')",
+              "labelLimit": 0,
+              "titleLimit": 0,
+              "titlePadding": 12,
+              "offset": 22
+            }
+          }
+
+        }
+      },
+      {
+        "transform": [
+          {
+            "filter": "datum.band === 'rise0'"
+          }
+        ],
+        "mark": {
+          "type": "rule",
+          "strokeWidth": 16,
+          "opacity": 0
+        },
+        "encoding": {
+          "y": {
+            "datum": 0
+          },
+          "y2": {
+            "datum": 5
+          },
+          "tooltip": [
+            {
+              "field": "category",
+              "type": "nominal",
+              "title": "Food category"
+            },
+            {
+              "field": "date",
+              "type": "temporal",
+              "title": "Quarter ending",
+              "format": "%b %Y"
+            },
+            {
+              "field": "annual_change_pct",
+              "type": "quantitative",
+              "title": "Change from same quarter a year earlier (%)",
+              "format": ".1f"
+            }
+          ]
+        }
+      }
+    ]
+  },
+
+  "resolve": {
+    "scale": {
+      "x": "shared",
+      "y": "shared",
+      "color": "shared"
+    }
+  },
+
+  "config": {
+    "font": "Arial",
+    "view": {
+      "stroke": "#d5ddd4",
+      "fill": "#f6f7f3"
+    },
+    "axis": {
+      "labelFontSize": 17,
+      "labelColor": "#223b36",
+      "domainColor": "#aab8ae",
+      "tickColor": "#aab8ae"
+    },
+    "legend": {
+      "labelFontSize": 16,
+      "titleFontSize": 17,
+      "titleFontWeight": "normal",
+      "labelColor": "#223b36",
+      "titleColor": "#223b36"
+    }
+  }
+}
