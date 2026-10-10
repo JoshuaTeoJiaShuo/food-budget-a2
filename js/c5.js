@@ -103,6 +103,21 @@
       });
 
       tableBody.replaceChildren(fragment);
+
+        // Build the visible household-name key in chart-column order.
+        const householdKey = document.getElementById("c5-household-key");
+
+        if (householdKey) {
+        const keyFragment = document.createDocumentFragment();
+
+        households.forEach(household => {
+            const item = document.createElement("li");
+            item.textContent = household.name;
+            keyFragment.appendChild(item);
+        });
+
+        householdKey.replaceChildren(keyFragment);
+        }
     }
 
     function prepareSpecification(width, fontSize) {
@@ -148,37 +163,39 @@
 
           // Narrow columns still need room for their numbers.
           // Small screens will scroll within the chart wrapper.
-          const width = Math.max(
+          
+        const axisAllowance = Math.ceil(fontSize * 6.5 + 30);
+
+            const width = Math.max(
             860,
-            Math.min(1100, availableWidth - 100)
-          );
+            Math.min(1100, availableWidth - axisAllowance)
+            );
+            const layoutKey = `${width}:${fontSize}`;
 
-          const layoutKey = `${width}:${fontSize}`;
+            if (layoutKey === previousLayout) continue;
 
-          if (layoutKey === previousLayout) continue;
+            const specification = prepareSpecification(
+                width,
+                fontSize
+            );
 
-          const specification = prepareSpecification(
-            width,
-            fontSize
-          );
+            container.setAttribute("aria-busy", "true");
 
-          container.setAttribute("aria-busy", "true");
-
-          if (embeddedChart) {
-            embeddedChart.finalize();
-            embeddedChart = null;
-          }
-
-          embeddedChart = await vegaEmbed(
-            container,
-            specification,
-            {
-              actions: false,
-              renderer: "svg"
+            if (embeddedChart) {
+                embeddedChart.finalize();
+                embeddedChart = null;
             }
-          );
 
-          previousLayout = layoutKey;
+            embeddedChart = await vegaEmbed(
+                container,
+                specification,
+                {
+                actions: false,
+                renderer: "svg"
+                }
+            );
+
+        previousLayout = layoutKey;
         }
       } catch (error) {
         previousLayout = "";

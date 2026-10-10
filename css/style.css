@@ -1304,3 +1304,188 @@ section .c3-bridge {
   display: block;
   max-width: none;
 }
+
+/* C5 — Household expenditure mosaic */
+
+.c5-chart-scroll,
+.c5-table-scroll {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.c5-chart-scroll {
+  margin-top: 20px;
+}
+
+.c5-panel #chart-5 {
+  display: block;
+  width: max-content;
+  max-width: none;
+  margin: 12px auto 20px;
+  padding: 0;
+}
+
+.c5-panel #chart-5 svg {
+  display: block;
+  max-width: none;
+}
+
+.c5-chart-scroll:focus-visible,
+.c5-table-scroll:focus-visible {
+  outline: 3px solid #63351f;
+  outline-offset: -3px;
+  border-radius: 4px;
+}
+
+/* Keep the household key visible without opening a disclosure. */
+
+.c5-table-scroll {
+  margin: 24px 0;
+}
+
+.c5-key {
+  width: 100%;
+  min-width: 700px;
+  border-collapse: collapse;
+  color: #223b36;
+  font-size: var(--reading-note, 1.125rem);
+  line-height: 1.55;
+}
+
+.c5-key caption {
+  padding: 0 0 14px;
+  text-align: left;
+  font-size: var(--reading-note, 1.125rem);
+  font-weight: 700;
+}
+
+.c5-key th,
+.c5-key td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #d5dcd3;
+  vertical-align: top;
+}
+
+.c5-key thead th {
+  background: #edf1eb;
+  text-align: left;
+  font-weight: 700;
+}
+
+/* Column numbers correspond to those beneath the chart. */
+
+.c5-key th:first-child,
+.c5-key td:first-child {
+  width: 5em;
+  text-align: center;
+}
+
+.c5-key tbody td:first-child {
+  font-weight: 700;
+}
+
+.c5-key tbody th {
+  text-align: left;
+  font-weight: 400;
+}
+
+/* Align percentages for easier comparison. */
+
+.c5-key thead th:nth-child(3),
+.c5-key thead th:nth-child(4) {
+  width: 23%;
+  text-align: right;
+}
+
+.c5-key tbody td:nth-child(3),
+.c5-key tbody td:nth-child(4) {
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.c5-key tbody tr:last-child th,
+.c5-key tbody tr:last-child td {
+  border-bottom: 2px solid #b9c5b8;
+}
+
+@media (max-width: 600px) {
+  .c5-key th,
+  .c5-key td {
+    padding: 12px 10px;
+  }
+}
+
+/* C5 — Compact, permanently visible household-name key */
+
+.c5-household-key {
+  margin: 20px 0 24px;
+  color: #223b36;
+  font-size: var(--reading-note, 1.125rem);
+  line-height: 1.5;
+}
+
+.c5-panel #c5-key-heading {
+  margin: 0 0 14px;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+#c5-household-key {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px 36px;
+  margin: 0;
+  padding-left: 1.8em;
+  list-style: decimal outside;
+}
+
+#c5-household-key > li {
+  min-width: 0;
+  margin: 0;
+  padding-left: 0.3em;
+  overflow-wrap: break-word;
+}
+
+#c5-household-key > li::marker {
+  color: #223b36;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* The detailed table keeps its existing responsive scrolling. */
+
+.c5-data-details .c5-table-scroll {
+  margin: 16px 0;
+}
+
+/* Stack names on narrower screens. */
+
+@media (max-width: 760px) {
+  #c5-household-key {
+    grid-template-columns: minmax(0, 1fr);
+    row-gap: 10px;
+  }
+}
+
+/* C5 — Bring the household key closer to the chart. */
+
+.c5-panel #chart-5 {
+  margin-bottom: 0;
+}
+
+.c5-panel .c5-household-key {
+  margin-top: 8px;
+  margin-bottom: 20px;
+}
+
+/* Column 6 is Group household in the current expenditure order. */
+
+#c5-household-key > li:nth-child(6),
+#c5-household-key > li:nth-child(6)::marker {
+  color: #63351f;
+  font-weight: 700;
+}

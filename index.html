@@ -519,19 +519,23 @@
           </h3>
 
           <p class="c3-deck">
-            Meals out and fast foods accounted for 54.5% of
-            group households’ food spending. However, this household
-            type contributed only 3.4% of estimated total food
-            expenditure across the seven types shown.
+              Group households allocated <strong>54.5%</strong> of their food
+              spending to meals out and fast foods, but contributed just
+              <strong>3.4%</strong> of estimated total food expenditure.
+              Couples with dependent children contributed the largest share
+              of total expenditure, <strong>38.3%</strong>, while allocating
+              <strong>32.4%</strong> of their own food spending to meals out.
           </p>
         </figcaption>
 
         <p id="c5-chart-help" class="c3-reading">
-          <strong>Column width</strong> shows each household type’s
-          share of estimated total food expenditure.
-          <strong>Segment height</strong> shows how that type
-          divided its food spending.
-          Match the column numbers to the household key below.
+          <strong>Column width:</strong>
+          contribution to total food spending across the seven household types.
+          <br>
+          <strong>Tan segment height:</strong>
+          meals out as a percentage of that household type’s food spending.
+          <br>
+          Numbers beneath the columns match the household names below.
         </p>
 
         <div
@@ -549,37 +553,69 @@
         </div>
 
         <p id="c5-scroll-help" class="c3-scroll-help">
-          On narrow screens, scroll horizontally to see all seven
-          columns. Full names and percentages appear below.
+          On narrow screens, scroll horizontally to see all seven columns.
+          Household names are listed below; expand the spending-shares
+          table for exact percentages.
         </p>
 
-        <div
-          class="c5-table-scroll"
-          role="region"
-          tabindex="0"
-          aria-label="Household key and exact percentages"
-        >
-          <table class="c5-key">
-            <caption>
-              Household key — column numbers match the chart
-            </caption>
+        <!-- Keep household names visible beneath the chart. -->
+        <div class="c5-household-key">
+          <p id="c5-key-heading">
+            <strong>Household types — numbers match the chart</strong>
+          </p>
 
-            <thead>
-              <tr>
-                <th scope="col">Column</th>
-                <th scope="col">Household type</th>
-                <th scope="col">
-                  Share of estimated total food spending
-                </th>
-                <th scope="col">
-                  Meals-out share within this type
-                </th>
-              </tr>
-            </thead>
-
-            <tbody id="c5-table-body"></tbody>
-          </table>
+          <ol
+            id="c5-household-key"
+            aria-labelledby="c5-key-heading"
+          ></ol>
         </div>
+
+        <!-- Exact values remain available without dominating the page. -->
+        <details class="c3-methods c5-data-details">
+          <summary>View exact spending shares for all household types</summary>
+
+          <div class="c3-methods-content">
+            <p>
+              The first percentage compares each household type with all
+              seven types combined. The second shows meals-out spending
+              within that household type.
+            </p>
+
+            <div
+              class="c5-table-scroll"
+              role="region"
+              tabindex="0"
+              aria-label="Exact household spending shares"
+            >
+              <table class="c5-key">
+                <caption>
+                  Food expenditure by household type, 2015–16
+                </caption>
+
+                <thead>
+                  <tr>
+                    <th scope="col">Column</th>
+                    <th scope="col">Household type</th>
+                    <th scope="col">
+                      Share of total food spending across all types
+                    </th>
+                    <th scope="col">
+                      Meals-out share within this type
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody id="c5-table-body"></tbody>
+              </table>
+            </div>
+
+            <p>
+              Total spending is estimated from household counts and average
+              weekly expenditure. Percentages are rounded; the shares across
+              household types may not add to exactly 100%.
+            </p>
+          </div>
+        </details>
 
         <details class="c3-methods">
           <summary>How are the column widths calculated?</summary>
