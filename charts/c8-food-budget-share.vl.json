@@ -1,0 +1,108 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "description": "Published food and non-alcoholic beverage expenditure as a percentage of total goods and services expenditure, by equivalised disposable household income quintile, Australia, 2015–16.",
+  "width": 640,
+  "height": 320,
+  "background": "#fffefa",
+  "padding": 12,
+  "data": {
+    "url": "data/income-spending-joined.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "published_food_budget_share_pct": "number"
+      }
+    }
+  },
+  "transform": [
+    {
+      "calculate": "format(datum.published_food_budget_share_pct, '.1f') + '%'",
+      "as": "share_label"
+    }
+  ],
+  "encoding": {
+    "y": {
+      "field": "income_quintile",
+      "type": "ordinal",
+      "sort": ["Lowest", "Second", "Third", "Fourth", "Highest"],
+      "axis": {
+        "title": null,
+        "labelPadding": 12,
+        "labelLimit": 160,
+        "domain": false,
+        "ticks": false
+      }
+    },
+    "x": {
+      "field": "published_food_budget_share_pct",
+      "type": "quantitative",
+      "scale": {
+        "domain": [0, 22],
+        "zero": true,
+        "nice": false
+      },
+      "axis": {
+        "title": "Share of total goods and services spending (%)",
+        "titlePadding": 18,
+        "values": [0, 5, 10, 15, 20],
+        "labelExpr": "datum.value + '%'",
+        "labelPadding": 8,
+        "domain": false,
+        "ticks": false,
+        "grid": true
+      }
+    },
+    "tooltip": [
+      {
+        "field": "income_quintile",
+        "type": "ordinal",
+        "title": "Income quintile"
+      },
+      {
+        "field": "published_food_budget_share_pct",
+        "type": "quantitative",
+        "title": "Food share of total spending (%)",
+        "format": ".1f"
+      }
+    ]
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "size": 32,
+        "color": "#819a84"
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "dx": 8,
+        "fontSize": 18,
+        "color": "#223b36"
+      },
+      "encoding": {
+        "text": {
+          "field": "share_label",
+          "type": "nominal"
+        }
+      }
+    }
+  ],
+  "config": {
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 18,
+      "titleFontSize": 18,
+      "titleFontWeight": "normal",
+      "labelColor": "#223b36",
+      "titleColor": "#223b36",
+      "gridColor": "#e1e5de"
+    }
+  }
+}

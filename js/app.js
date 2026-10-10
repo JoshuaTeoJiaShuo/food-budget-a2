@@ -6,6 +6,7 @@ import { initialiseC3 } from "./c3.js";
 import { initialiseC4 } from "./c4.js";
 import { initialiseC5 } from "./c5.js";
 import { initialiseC6 } from "./c6.js";
+import { initialiseC7 } from "./c7.js";
 
 async function start() {
   initialiseReadingSize();
@@ -17,6 +18,7 @@ async function start() {
     initialiseC4,
     initialiseC5,
     initialiseC6,
+    initialiseC7,
   ];
 
   const controllers = [];

@@ -1,0 +1,159 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "description": "Average weekly household spending on meals out and other food purchases, by equivalised disposable household income quintile, Australia, 2015–16.",
+  "width": 640,
+  "height": 380,
+  "background": "#fffefa",
+  "padding": 12,
+  "data": {
+    "url": "data/income-spending-joined.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "meals_weekly": "number",
+        "other_food_weekly": "number"
+      }
+    }
+  },
+  "transform": [
+    {
+      "fold": ["meals_weekly", "other_food_weekly"],
+      "as": ["spending_component", "weekly"]
+    },
+    {
+      "calculate": "datum.spending_component === 'meals_weekly' ? 'Meals out & fast foods' : 'Other food purchases'",
+      "as": "purchase_type"
+    },
+    {
+      "calculate": "format(datum.weekly, '$,.2f')",
+      "as": "value_label"
+    }
+  ],
+  "encoding": {
+    "y": {
+      "field": "income_quintile",
+      "type": "ordinal",
+      "sort": ["Lowest", "Second", "Third", "Fourth", "Highest"],
+      "scale": {
+        "paddingInner": 0.3,
+        "paddingOuter": 0.15
+      },
+      "axis": {
+        "title": null,
+        "labelPadding": 12,
+        "labelLimit": 160,
+        "domain": false,
+        "ticks": false
+      }
+    },
+    "yOffset": {
+      "field": "purchase_type",
+      "type": "nominal",
+      "sort": ["Meals out & fast foods", "Other food purchases"]
+    },
+    "x": {
+      "field": "weekly",
+      "type": "quantitative",
+      "scale": {
+        "domain": [0, 230],
+        "zero": true,
+        "nice": false
+      },
+      "axis": {
+        "title": "Average weekly spending per household (A$)",
+        "titlePadding": 18,
+        "values": [0, 50, 100, 150, 200],
+        "format": "$.0f",
+        "labelPadding": 8,
+        "domain": false,
+        "ticks": false,
+        "grid": true
+      }
+    },
+    "tooltip": [
+      {
+        "field": "income_quintile",
+        "type": "ordinal",
+        "title": "Income quintile"
+      },
+      {
+        "field": "purchase_type",
+        "type": "nominal",
+        "title": "Food purchases"
+      },
+      {
+        "field": "weekly",
+        "type": "quantitative",
+        "title": "Per household / week (A$)",
+        "format": ".2f"
+      }
+    ]
+  },
+  "layer": [
+    {
+      "mark": {
+        "type": "bar",
+        "stroke": "#819383",
+        "strokeWidth": 0.6
+      },
+      "encoding": {
+        "color": {
+          "field": "purchase_type",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Meals out & fast foods",
+              "Other food purchases"
+            ],
+            "range": ["#e8c8ad", "#c5d4c5"]
+          },
+          "legend": {
+            "title": null,
+            "orient": "top",
+            "direction": "horizontal",
+            "columns": 2,
+            "columnPadding": 24,
+            "labelLimit": 0,
+            "symbolType": "square",
+            "symbolSize": 140,
+            "offset": 20
+          }
+        }
+      }
+    },
+    {
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "baseline": "middle",
+        "dx": 8,
+        "fontSize": 18,
+        "color": "#223b36"
+      },
+      "encoding": {
+        "text": {
+          "field": "value_label",
+          "type": "nominal"
+        }
+      }
+    }
+  ],
+  "config": {
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 18,
+      "titleFontSize": 18,
+      "titleFontWeight": "normal",
+      "labelColor": "#223b36",
+      "titleColor": "#223b36",
+      "gridColor": "#e1e5de"
+    },
+    "legend": {
+      "labelFontSize": 18,
+      "labelColor": "#223b36"
+    }
+  }
+}
