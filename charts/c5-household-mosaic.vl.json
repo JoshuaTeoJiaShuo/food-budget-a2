@@ -1,0 +1,312 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "description": "Marimekko chart of estimated household food expenditure by household type, Australia, 2015–16. Column width represents each type's share of estimated total food expenditure. Segment height represents meals out or other food purchases within that household type. Numbered columns correspond to the household key accompanying the chart.",
+  "width": 860,
+  "height": 400,
+  "padding": {
+    "left": 10,
+    "right": 10,
+    "top": 10,
+    "bottom": 40
+  },
+  "background": "#fffefa",
+  "data": {
+    "url": "data/household-composition-joined.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "households": "number",
+        "food_weekly": "number",
+        "meals_weekly": "number",
+        "other_food_weekly": "number"
+      }
+    }
+  },
+  "transform": [
+    {
+      "calculate": "toNumber(datum.households) * toNumber(datum.food_weekly)",
+      "as": "estimated_food_total"
+    },
+    {
+      "window": [
+        {
+          "op": "row_number",
+          "as": "household_number"
+        }
+      ],
+      "sort": [
+        {
+          "field": "estimated_food_total",
+          "order": "descending"
+        }
+      ]
+    },
+    {
+      "stack": "estimated_food_total",
+      "groupby": [],
+      "sort": [
+        {
+          "field": "household_number",
+          "order": "ascending"
+        }
+      ],
+      "offset": "normalize",
+      "as": ["x_start", "x_end"]
+    },
+    {
+      "calculate": "(datum.x_start + datum.x_end) / 2",
+      "as": "x_middle"
+    },
+    {
+      "calculate": "datum.x_end - datum.x_start",
+      "as": "food_expenditure_share"
+    },
+    {
+      "fold": [
+        "meals_weekly",
+        "other_food_weekly"
+      ],
+      "as": [
+        "purchase_field",
+        "weekly_amount"
+      ]
+    },
+    {
+      "calculate": "datum.purchase_field === 'meals_weekly' ? 'Meals out and fast foods' : 'Other food purchases'",
+      "as": "purchase_type"
+    },
+    {
+      "calculate": "datum.purchase_field === 'meals_weekly' ? 0 : 1",
+      "as": "purchase_order"
+    },
+    {
+      "calculate": "toNumber(datum.weekly_amount) / toNumber(datum.food_weekly)",
+      "as": "purchase_share"
+    },
+    {
+      "stack": "purchase_share",
+      "groupby": ["household_type"],
+      "sort": [
+        {
+          "field": "purchase_order",
+          "order": "ascending"
+        }
+      ],
+      "offset": "normalize",
+      "as": ["y_start", "y_end"]
+    },
+    {
+      "calculate": "(datum.y_start + datum.y_end) / 2",
+      "as": "y_middle"
+    },
+    {
+      "calculate": "format(datum.purchase_share, '.1%')",
+      "as": "percentage_label"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "rect",
+        "stroke": "#fffefa",
+        "strokeWidth": 2
+      },
+      "encoding": {
+        "x": {
+          "field": "x_start",
+          "type": "quantitative",
+          "scale": {
+            "domain": [0, 1],
+            "nice": false
+          },
+          "axis": null
+        },
+        "x2": {
+          "field": "x_end"
+        },
+        "y": {
+          "field": "y_start",
+          "type": "quantitative",
+          "scale": {
+            "domain": [0, 1],
+            "nice": false
+          },
+          "axis": {
+            "title": "Share within each household type",
+            "format": ".0%",
+            "values": [0, 0.25, 0.5, 0.75, 1],
+            "grid": false,
+            "domain": false,
+            "tickSize": 0,
+            "labelPadding": 10,
+            "titlePadding": 18
+          }
+        },
+        "y2": {
+          "field": "y_end"
+        },
+        "color": {
+          "field": "purchase_type",
+          "type": "nominal",
+          "scale": {
+            "domain": [
+              "Meals out and fast foods",
+              "Other food purchases"
+            ],
+            "range": [
+              "#e8c8ad",
+              "#c5d4c5"
+            ]
+          },
+          "legend": {
+            "title": null,
+            "orient": "top",
+            "direction": "horizontal",
+            "columns": 2,
+            "columnPadding": 24,
+            "labelLimit": 350,
+            "symbolType": "square",
+            "symbolSize": 180,
+            "offset": 20
+          }
+        },
+        "tooltip": [
+          {
+            "field": "household_type",
+            "type": "nominal",
+            "title": "Household type"
+          },
+          {
+            "field": "purchase_type",
+            "type": "nominal",
+            "title": "Purchases"
+          },
+          {
+            "field": "purchase_share",
+            "type": "quantitative",
+            "title": "Share within this household type",
+            "format": ".1%"
+          },
+          {
+            "field": "weekly_amount",
+            "type": "quantitative",
+            "title": "Average per household / week",
+            "format": "$.2f"
+          },
+          {
+            "field": "food_expenditure_share",
+            "type": "quantitative",
+            "title": "Column share of estimated food expenditure",
+            "format": ".1%"
+          },
+          {
+            "field": "households",
+            "type": "quantitative",
+            "title": "Estimated households",
+            "format": ",.0f"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.food_expenditure_share >= 0.08"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 18,
+        "fontWeight": 600,
+        "align": "center",
+        "baseline": "middle",
+        "color": "#223b36"
+      },
+      "encoding": {
+        "x": {
+          "field": "x_middle",
+          "type": "quantitative",
+          "scale": {
+            "domain": [0, 1],
+            "nice": false
+          },
+          "axis": null
+        },
+        "y": {
+          "field": "y_middle",
+          "type": "quantitative",
+          "scale": {
+            "domain": [0, 1],
+            "nice": false
+          },
+          "axis": {
+            "title": "Share within each household type",
+            "format": ".0%",
+            "values": [0, 0.25, 0.5, 0.75, 1],
+            "grid": false,
+            "domain": false,
+            "tickSize": 0,
+            "labelPadding": 10,
+            "titlePadding": 18
+          }
+        },
+        "text": {
+          "field": "percentage_label",
+          "type": "nominal"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.purchase_field === 'meals_weekly'"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 18,
+        "fontWeight": 700,
+        "align": "center",
+        "baseline": "top",
+        "color": "#223b36"
+      },
+      "encoding": {
+        "x": {
+          "field": "x_middle",
+          "type": "quantitative",
+          "scale": {
+            "domain": [0, 1],
+            "nice": false
+          },
+          "axis": null
+        },
+        "y": {
+          "value": {
+            "expr": "height + 12"
+          }
+        },
+        "text": {
+          "field": "household_number",
+          "type": "ordinal"
+        }
+      }
+    }
+  ],
+  "config": {
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 18,
+      "titleFontSize": 18,
+      "titleFontWeight": "normal",
+      "labelColor": "#223b36",
+      "titleColor": "#223b36"
+    },
+    "legend": {
+      "labelFontSize": 18,
+      "labelColor": "#223b36"
+    }
+  }
+}

@@ -1289,3 +1289,18 @@ section .c3-bridge {
     gap: 10px 20px;
   }
 }
+
+/* C4 — Map sizing; typography reuses the shared C3 styles. */
+
+.c4-panel #chart-4 {
+  display: block;
+  width: max-content;
+  max-width: none;
+  margin: 12px auto 20px;
+  padding: 0;
+}
+
+.c4-panel #chart-4 svg {
+  display: block;
+  max-width: none;
+}

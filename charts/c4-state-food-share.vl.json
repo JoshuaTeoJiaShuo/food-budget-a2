@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-  "description": "Share of household food spending allocated to meals out and fast foods by Australian state and territory, 2015–16. Adapted from the FIT3179 Week 8 choropleth tutorial using TopoJSON, CSV lookups and a calculated proportion.",
+  "description": "Share of household food spending allocated to meals out and fast foods by Australian state and territory, 2015–16. Adapted from the FIT3179 Week 8 choropleth tutorial using TopoJSON, CSV lookups and a calculated proportion. A leader line connects the ACT to its external label.",
   "width": 740,
   "height": 560,
   "padding": 24,
@@ -70,6 +70,10 @@
     {
       "calculate": "datum.state + '  ' + format(datum.meals_share, '.1%')",
       "as": "map_label"
+    },
+    {
+      "calculate": "toNumber(datum.longitude) + 2.5",
+      "as": "label_longitude"
     }
   ],
   "layer": [
@@ -170,17 +174,46 @@
         }
       ],
       "mark": {
+        "type": "rule",
+        "color": "#223b36",
+        "strokeWidth": 1.5,
+        "aria": false
+      },
+      "encoding": {
+        "longitude": {
+          "field": "longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "latitude",
+          "type": "quantitative"
+        },
+        "longitude2": {
+          "field": "label_longitude"
+        },
+        "latitude2": {
+          "field": "latitude"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.state === 'ACT'"
+        }
+      ],
+      "mark": {
         "type": "text",
         "fontSize": 18,
         "fontWeight": 600,
         "align": "left",
         "baseline": "middle",
-        "dx": 24,
+        "dx": 8,
         "color": "#223b36"
       },
       "encoding": {
         "longitude": {
-          "field": "longitude",
+          "field": "label_longitude",
           "type": "quantitative"
         },
         "latitude": {

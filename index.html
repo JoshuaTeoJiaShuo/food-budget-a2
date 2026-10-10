@@ -8,6 +8,8 @@
   <script defer src="js/main.js"></script>
   <script defer src="js/c2.js"></script>
   <script defer src="js/c3.js"></script>
+  <script defer src="js/c4.js"></script>
+  <script defer src="js/c5.js"></script>
   <script defer src="js/reading-size.js"></script>
 
   <meta charset="UTF-8">
@@ -380,19 +382,271 @@
         </figure>
 
         <p class="c3-bridge">
-          Geography shows where average spending differs.
-          To understand what those averages combine, we next compare
-          households of different sizes and types.
+          Weekly dollars show the size of the meals-out bill.
+          Comparing that bill with total food spending reveals
+          how households divided their food budgets.
+        </p>
+
+        <figure
+          class="chart-panel c3-panel c4-panel"
+          aria-labelledby="c4-title"
+        >
+          <figcaption class="c3-heading">
+            <p class="c3-kicker">
+              THE MEALS-OUT SHARE · 2015–16
+            </p>
+
+            <h3 id="c4-title">
+              Meals out accounted for 29.9% to 37.2% of food spending
+            </h3>
+
+            <p class="c3-deck">
+              Western Australian households spent more dollars on
+              meals out than Queensland households, on average.
+              Yet meals out represented a smaller share of their
+              total food spending: 30.3% compared with 31.2%.
+            </p>
+          </figcaption>
+
+          <p id="c4-map-help" class="c3-reading">
+            Darker shading indicates a larger meals-out share.
+            Labels give each state or territory’s percentage.
+          </p>
+
+          <div
+            class="c3-map-scroll"
+            role="region"
+            tabindex="0"
+            aria-label="Map of meals-out shares of food spending"
+            aria-describedby="c4-map-help c4-scroll-help"
+          >
+            <div
+              id="chart-4"
+              class="chart"
+              aria-label="Choropleth map showing meals out and fast foods as a percentage of household food spending in 2015–16"
+            ></div>
+          </div>
+
+          <p id="c4-scroll-help" class="c3-scroll-help">
+            On narrow screens, scroll horizontally to see the whole map.
+          </p>
+
+          <details class="c3-methods">
+            <summary>What does this percentage measure?</summary>
+
+            <div class="c3-methods-content">
+              <p>
+                For each state or territory, we divide average weekly
+                spending on meals out and fast foods by average weekly
+                spending on all food and non-alcoholic beverages,
+                then express the result as a percentage.
+              </p>
+
+              <p>
+                This is a ratio of expenditure averages, rather than
+                an average of each individual household’s percentage.
+                It measures the allocation of food spending, not the
+                proportion of meals eaten outside the home.
+              </p>
+
+              <p>
+                The colour scale runs from 28% to 40% to distinguish
+                the observed values. It does not start at zero.
+                These are survey estimates; differences have not
+                been tested for statistical significance.
+              </p>
+
+              <p>
+                A higher meals-out share does not, by itself, establish
+                greater income, better food access or a healthier diet.
+              </p>
+            </div>
+          </details>
+
+          <p class="c3-source">
+            Spending:
+            <a
+              href="https://www.abs.gov.au/statistics/economy/finance/household-expenditure-survey-australia-summary-results/2015-16"
+            >ABS Household Expenditure Survey, 2015–16</a>.
+            Boundaries:
+            <a href="https://www.abs.gov.au/ausstats/abs@.nsf/mf/1270.0.55.001">
+              ABS Australian Statistical Geography Standard, July 2016</a>,
+            simplified for display.
+          </p>
+
+          <div class="c3-links">
+            <a href="charts/c4-state-food-share.vl.json">
+              Chart specification
+            </a>
+
+            <a href="data/state-spending-joined.csv">
+              View spending data
+            </a>
+          </div>
+        </figure>
+
+        <p class="c3-bridge">
+          These state averages combine households of different sizes
+          and circumstances. Next, we compare household types to see
+          how their food spending differs.
         </p>
     </section>
 
     <section id="household-differences">
-        <div class="section-number">02 / BEHIND THE AVERAGE</div>
-        <h2>The households behind those dollars</h2>
-        <p>
+      <div class="section-number">
+        02 / BEHIND THE AVERAGE
+      </div>
+
+      <h2>The households behind those dollars</h2>
+
+      <p>
         A national average combines households of different sizes
         and circumstances. How do their food baskets differ?
+      </p>
+
+      <figure
+        class="chart-panel c3-panel c5-panel"
+        aria-labelledby="c5-title"
+      >
+        <figcaption class="c3-heading">
+          <p class="c3-kicker">
+            HOUSEHOLD TYPES · AUSTRALIA, 2015–16
+          </p>
+
+          <h3 id="c5-title">
+            Group households devoted over half their food spending
+            to meals out
+          </h3>
+
+          <p class="c3-deck">
+            Meals out and fast foods accounted for 54.5% of
+            group households’ food spending. However, this household
+            type contributed only 3.4% of estimated total food
+            expenditure across the seven types shown.
+          </p>
+        </figcaption>
+
+        <p id="c5-chart-help" class="c3-reading">
+          <strong>Column width</strong> shows each household type’s
+          share of estimated total food expenditure.
+          <strong>Segment height</strong> shows how that type
+          divided its food spending.
+          Match the column numbers to the household key below.
         </p>
+
+        <div
+          class="c5-chart-scroll"
+          role="region"
+          tabindex="0"
+          aria-label="Household food expenditure mosaic chart"
+          aria-describedby="c5-chart-help c5-scroll-help"
+        >
+          <div
+            id="chart-5"
+            class="chart"
+            aria-label="Marimekko chart comparing meals out and other food purchases across seven household types"
+          ></div>
+        </div>
+
+        <p id="c5-scroll-help" class="c3-scroll-help">
+          On narrow screens, scroll horizontally to see all seven
+          columns. Full names and percentages appear below.
+        </p>
+
+        <div
+          class="c5-table-scroll"
+          role="region"
+          tabindex="0"
+          aria-label="Household key and exact percentages"
+        >
+          <table class="c5-key">
+            <caption>
+              Household key — column numbers match the chart
+            </caption>
+
+            <thead>
+              <tr>
+                <th scope="col">Column</th>
+                <th scope="col">Household type</th>
+                <th scope="col">
+                  Share of estimated total food spending
+                </th>
+                <th scope="col">
+                  Meals-out share within this type
+                </th>
+              </tr>
+            </thead>
+
+            <tbody id="c5-table-body"></tbody>
+          </table>
+        </div>
+
+        <details class="c3-methods">
+          <summary>How are the column widths calculated?</summary>
+
+          <div class="c3-methods-content">
+            <p>
+              For each household type, estimated total weekly food
+              expenditure equals the estimated number of households
+              multiplied by their average weekly food expenditure.
+              Column widths show each type’s proportion of the
+              combined total across the seven types.
+            </p>
+
+            <p>
+              Within each column, meals-out spending is divided by
+              total food spending for that household type.
+              The remaining share covers other food purchases.
+              This is a ratio of expenditure averages.
+            </p>
+
+            <p>
+              A rectangle’s area therefore represents its contribution
+              to estimated total food expenditure. Columns are ordered
+              from the largest contribution to the smallest.
+            </p>
+
+            <p>
+              Narrow columns retain their proportional widths.
+              Percentages that do not fit inside them are available
+              in the household key and chart tooltips.
+            </p>
+
+            <p>
+              These are survey estimates, and differences have not
+              been tested for statistical significance.
+              Household types also differ in their average number
+              of people, which affects comparisons of spending.
+            </p>
+          </div>
+        </details>
+
+        <p class="c3-source">
+          Source:
+          <a
+            href="https://www.abs.gov.au/statistics/economy/finance/household-expenditure-survey-australia-summary-results/2015-16"
+          >ABS Household Expenditure Survey, 2015–16</a>.
+          Estimated totals and spending shares are calculated
+          from the published household counts and expenditure
+          averages.
+        </p>
+
+        <div class="c3-links">
+          <a href="charts/c5-household-mosaic.vl.json">
+            Chart specification
+          </a>
+
+          <a href="data/household-composition-joined.csv">
+            View household data
+          </a>
+        </div>
+      </figure>
+
+      <p class="c3-bridge">
+        The meals-out split reveals one difference between household
+        types. Next, we look inside their other food purchases
+        and consider how household size affects the comparison.
+      </p>
     </section>
 
     <section id="budget-pressure">
