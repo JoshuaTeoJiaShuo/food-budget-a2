@@ -7,6 +7,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/vega-embed@7.3.0"></script>
   <script defer src="js/main.js"></script>
   <script defer src="js/c2.js"></script>
+  <script defer src="js/c3.js"></script>
   <script defer src="js/reading-size.js"></script>
 
   <meta charset="UTF-8">
@@ -280,6 +281,108 @@
         <p class="c2-bridge">
           Meals out formed the largest single food group nationally.
           Was the average weekly meals-out bill similar in every state?
+        </p>
+
+        <figure class="chart-panel c3-panel" aria-labelledby="c3-title">
+          <figcaption class="c3-heading">
+            <p class="c3-kicker">
+              MEALS OUT &amp; FAST FOODS · 2015–16
+            </p>
+
+            <h3 id="c3-title">
+              The average meals-out bill varied across Australia
+            </h3>
+
+            <p class="c3-deck">
+              Weekly household spending ranged from $59.86 in Tasmania
+              to $100.82 in the ACT. The national average of $80.27
+              masks these regional differences.
+            </p>
+          </figcaption>
+
+          <p id="c3-map-help" class="c3-reading">
+            Three circle sizes show weekly spending bands.
+            Labels give the exact average per household in Australian dollars.
+          </p>
+
+          <div
+            class="c3-map-scroll"
+            role="region"
+            tabindex="0"
+            aria-label="Australian state spending map"
+            aria-describedby="c3-map-help c3-scroll-help"
+          >
+            <div
+              id="chart-3"
+              class="chart"
+              aria-label="Graduated-symbol map of average weekly household spending on meals out and fast foods in 2015–16"
+            ></div>
+          </div>
+
+          <p id="c3-scroll-help" class="c3-scroll-help">
+            On narrow screens, scroll horizontally to see the whole map.
+          </p>
+
+          <details class="c3-methods">
+            <summary>How to read this comparison</summary>
+
+            <div class="c3-methods-content">
+              <p>
+                Circle sizes represent three spending bands: under $70,
+                $70 to under $90, and $90 or more per household per week.
+                Sizes distinguish these bands; their areas are not proportional
+                to dollar amounts. States within a band share the same circle
+                size, so use the labels to compare their exact estimates.
+                Colour does not encode another measure.
+              </p>
+
+              <p>
+                Circles are placed at representative locations within
+                each state or territory. They do not show where
+                individual households or restaurants are located.
+              </p>
+
+              <p>
+                These are survey estimates in 2015–16 dollars.
+                Differences between estimates have not been tested
+                for statistical significance. Hover over a circle
+                to see its relative standard error.
+              </p>
+
+              <p>
+                Higher spending does not necessarily mean more meals
+                eaten out. Prices, household size and the types of
+                purchases can also affect the amount spent.
+              </p>
+            </div>
+          </details>
+
+          <p class="c3-source">
+            Spending:
+            <a
+              href="https://www.abs.gov.au/statistics/economy/finance/household-expenditure-survey-australia-summary-results/2015-16"
+            >ABS Household Expenditure Survey, 2015–16</a>.
+            Boundaries:
+            <a href="https://www.abs.gov.au/ausstats/abs@.nsf/mf/1270.0.55.001">
+              ABS Australian Statistical Geography Standard, July 2016</a>,
+            simplified for display.
+          </p>
+
+          <div class="c3-links">
+            <a href="charts/c3-state-meals.vl.json">
+              Chart specification
+            </a>
+
+            <a href="data/state-spending-joined.csv">
+              View spending data
+            </a>
+          </div>
+        </figure>
+
+        <p class="c3-bridge">
+          Geography shows where average spending differs.
+          To understand what those averages combine, we next compare
+          households of different sizes and types.
         </p>
     </section>
 

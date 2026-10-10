@@ -1,0 +1,224 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "description": "Graduated-symbol map of average weekly household spending on meals out and fast foods by Australian state and territory, 2015–16. Three circle sizes represent spending bands, not proportional dollar amounts. Labels show exact estimates. Adapted from the FIT3179 symbol-map example using ABS boundaries.",  "width": 740,
+  "height": 560,
+  "padding": 24,
+  "background": "#fffefa",
+  "projection": {
+    "type": "mercator"
+  },
+  "layer": [
+    {
+      "data": {
+        "url": "data/australia-states.topojson",
+        "format": {
+          "type": "topojson",
+          "feature": "states"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#e8ede7",
+        "stroke": "#fffefa",
+        "strokeWidth": 1.5
+      },
+      "encoding": {
+        "tooltip": [
+          {
+            "field": "properties.STE_NAME16",
+            "type": "nominal",
+            "title": "State or territory"
+          }
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "data/state-map-positions.csv",
+        "format": {
+          "type": "csv",
+          "parse": {
+            "state_code": "number",
+            "longitude": "number",
+            "latitude": "number"
+          }
+        }
+      },
+      "transform": [
+        {
+          "lookup": "state_code",
+          "from": {
+            "data": {
+              "url": "data/state-spending-joined.csv",
+              "format": {
+                "type": "csv",
+                "parse": {
+                  "state_code": "number",
+                  "meals_weekly": "number",
+                  "meals_share_pct": "number",
+                  "meals_rse_pct": "number"
+                }
+              }
+            },
+            "key": "state_code",
+            "fields": [
+              "meals_weekly",
+              "meals_share_pct",
+              "meals_rse_pct"
+            ]
+          }
+        },
+        {
+        "calculate": "datum.state_abbr + '  ' + format(datum.meals_weekly, '$.2f')",
+        "as": "map_label"
+        },
+        {
+        "calculate": "datum.meals_weekly < 70 ? 'Under $70' : datum.meals_weekly < 90 ? '$70–under $90' : '$90 and over'",
+        "as": "spending_band"
+        }
+      ],
+      "encoding": {
+        "longitude": {
+          "field": "longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "latitude",
+          "type": "quantitative"
+        }
+      },
+      "layer": [
+        {
+          "mark": {
+            "type": "circle",
+            "color": "#c58e67",
+            "opacity": 0.85,
+            "stroke": "#75482d",
+            "strokeWidth": 1.3
+          },
+          "encoding": {
+            "size": {
+            "field": "spending_band",
+            "type": "ordinal",
+            "sort": [
+                "Under $70",
+                "$70–under $90",
+                "$90 and over"
+            ],
+            "scale": {
+                "domain": [
+                "Under $70",
+                "$70–under $90",
+                "$90 and over"
+                ],
+                "range": [250, 900, 2000]
+            },
+            "legend": {
+                "title": "Average weekly household spending",
+                "orient": "bottom",
+                "direction": "horizontal",
+                "values": [
+                "Under $70",
+                "$70–under $90",
+                "$90 and over"
+                ],
+                "titlePadding": 14,
+                "offset": 24,
+                "columnPadding": 28,
+                "labelOffset": 10,
+                "symbolStrokeColor": "#75482d",
+                "symbolFillColor": "#c58e67"
+            }
+            },
+            "tooltip": [
+              {
+                "field": "state_name",
+                "type": "nominal",
+                "title": "State or territory"
+              },
+              {
+                "field": "meals_weekly",
+                "type": "quantitative",
+                "title": "Meals out and fast foods / week",
+                "format": "$.2f"
+              },
+              {
+                "field": "meals_share_pct",
+                "type": "quantitative",
+                "title": "Share of food spending (%)",
+                "format": ".1f"
+              },
+              {
+                "field": "meals_rse_pct",
+                "type": "quantitative",
+                "title": "Relative standard error (%)",
+                "format": ".1f"
+              }
+            ]
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum.state_abbr !== 'ACT'"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "font": "Arial",
+            "fontSize": 18,
+            "fontWeight": 600,
+            "color": "#223b36",
+            "align": "center",
+            "baseline": "middle",
+            "dy": {
+              "expr": "datum.state_abbr === 'VIC' || datum.state_abbr === 'TAS' ? 38 : -34"
+            }
+          },
+          "encoding": {
+            "text": {
+              "field": "map_label",
+              "type": "nominal"
+            }
+          }
+        },
+        {
+          "transform": [
+            {
+              "filter": "datum.state_abbr === 'ACT'"
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "font": "Arial",
+            "fontSize": 18,
+            "fontWeight": 600,
+            "color": "#223b36",
+            "align": "left",
+            "baseline": "middle",
+            "dx": 32
+          },
+          "encoding": {
+            "text": {
+              "field": "map_label",
+              "type": "nominal"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "config": {
+    "view": {
+      "stroke": null
+    },
+    "font": "Arial",
+    "legend": {
+      "labelFontSize": 16,
+      "titleFontSize": 16,
+      "titleFontWeight": "normal",
+      "labelColor": "#223b36",
+      "titleColor": "#223b36"
+    }
+  }
+}

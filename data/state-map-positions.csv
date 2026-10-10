@@ -1,0 +1,9 @@
+state_code,state_name,state_abbr,longitude,latitude
+1,New South Wales,NSW,147.0,-32.0
+2,Victoria,VIC,144.5,-37.0
+3,Queensland,QLD,144.5,-22.5
+4,South Australia,SA,135.5,-30.0
+5,Western Australia,WA,122.0,-25.0
+6,Tasmania,TAS,146.7,-42.0
+7,Northern Territory,NT,133.5,-19.5
+8,Australian Capital Territory,ACT,149.13,-35.28

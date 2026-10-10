@@ -1107,3 +1107,185 @@ body > header .reading-controls-help {
   font-size: var(--reading-note);
   line-height: 1.5;
 }
+
+/* C3 — Regional meals-out spending */
+
+.chart-panel.c3-panel {
+  min-width: 0;
+  margin-top: 32px;
+  padding: 28px;
+  border: 0;
+  background: #fffefa;
+  color: #223b36;
+}
+
+/* Heading and explanation */
+
+.c3-panel .c3-kicker {
+  margin: 0 0 12px;
+  color: #596761;
+  font-size: var(--reading-note, 1.125rem);
+  font-weight: 700;
+  line-height: 1.5;
+  letter-spacing: 0.06em;
+}
+
+.c3-panel h3 {
+  max-width: 34ch;
+  margin: 0 0 16px;
+  font-family: Georgia, serif;
+  font-size: calc(var(--reading-body, 1.375rem) + 0.625rem);
+  line-height: 1.2;
+}
+
+.c3-panel .c3-deck {
+  max-width: 62ch;
+  margin: 0;
+  font-size: var(--reading-body, 1.375rem);
+  line-height: 1.6;
+}
+
+.c3-panel .c3-reading {
+  max-width: 68ch;
+  margin: 22px 0 0;
+  color: #46534d;
+  font-size: var(--reading-note, 1.125rem);
+  line-height: 1.6;
+}
+
+/* Keep the map readable and contain horizontal scrolling. */
+
+.c3-map-scroll {
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  margin-top: 12px;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+}
+
+.c3-map-scroll:focus-visible {
+  outline: 3px solid #63351f;
+  outline-offset: -3px;
+  border-radius: 4px;
+}
+
+.c3-panel #chart-3 {
+  display: block;
+  width: max-content;
+  max-width: none;
+  margin: 12px auto 20px;
+  padding: 0;
+}
+
+.c3-panel #chart-3 svg {
+  display: block;
+  max-width: none;
+}
+
+/* Font sizes inside the map are controlled by c3.js.
+   Do not scale the SVG down to fit a narrow screen. */
+
+.c3-panel .c3-scroll-help {
+  display: none;
+  margin: 8px 0 20px;
+  color: #46534d;
+  font-size: var(--reading-note, 1.125rem);
+  line-height: 1.6;
+}
+
+/* Supporting explanation */
+
+.c3-methods {
+  margin-top: 12px;
+  padding-top: 16px;
+  border-top: 1px solid #d5dcd3;
+  font-size: var(--reading-note, 1.125rem);
+  line-height: 1.6;
+}
+
+.c3-methods summary {
+  width: fit-content;
+  max-width: 100%;
+  padding: 8px 0;
+  color: #223b36;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.c3-methods summary:focus-visible {
+  outline: 3px solid #63351f;
+  outline-offset: 4px;
+}
+
+.c3-panel .c3-methods-content p {
+  max-width: 68ch;
+  margin: 12px 0;
+  color: #46534d;
+  font-size: var(--reading-note, 1.125rem);
+  line-height: 1.65;
+}
+
+/* Sources and file links */
+
+.c3-panel .c3-source {
+  max-width: 72ch;
+  margin: 20px 0 12px;
+  color: #46534d;
+  font-size: var(--reading-note, 1.125rem);
+  line-height: 1.65;
+}
+
+.c3-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin-top: 12px;
+  font-size: var(--reading-note, 1.125rem);
+  line-height: 1.6;
+}
+
+.c3-panel a {
+  color: #75482d;
+  text-underline-offset: 3px;
+}
+
+.c3-links a {
+  padding: 6px 0;
+}
+
+.c3-panel a:focus-visible {
+  outline: 3px solid #63351f;
+  outline-offset: 4px;
+}
+
+/* Transition into the household comparisons */
+
+section .c3-bridge {
+  max-width: 65ch;
+  margin: 28px 0 0;
+  font-size: var(--reading-body, 1.375rem);
+  line-height: 1.65;
+}
+
+/* Narrow screens */
+
+@media (max-width: 980px) {
+  .c3-panel .c3-scroll-help {
+    display: block;
+  }
+}
+
+@media (max-width: 600px) {
+  .chart-panel.c3-panel {
+    padding: 20px 16px;
+  }
+
+  .c3-panel h3 {
+    max-width: none;
+  }
+
+  .c3-links {
+    gap: 10px 20px;
+  }
+}

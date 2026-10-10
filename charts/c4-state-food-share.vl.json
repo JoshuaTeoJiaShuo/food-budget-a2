@@ -1,0 +1,210 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "description": "Share of household food spending allocated to meals out and fast foods by Australian state and territory, 2015–16. Adapted from the FIT3179 Week 8 choropleth tutorial using TopoJSON, CSV lookups and a calculated proportion.",
+  "width": 740,
+  "height": 560,
+  "padding": 24,
+  "background": "#fffefa",
+  "projection": {
+    "type": "mercator"
+  },
+  "data": {
+    "url": "data/australia-states.topojson",
+    "format": {
+      "type": "topojson",
+      "feature": "states"
+    }
+  },
+  "transform": [
+    {
+      "calculate": "toNumber(datum.properties.STE_CODE16)",
+      "as": "state_code"
+    },
+    {
+      "lookup": "state_code",
+      "from": {
+        "data": {
+          "url": "data/state-spending-joined.csv",
+          "format": {
+            "type": "csv",
+            "parse": {
+              "state_code": "number",
+              "meals_weekly": "number",
+              "food_weekly": "number"
+            }
+          }
+        },
+        "key": "state_code",
+        "fields": [
+          "state",
+          "meals_weekly",
+          "food_weekly"
+        ]
+      }
+    },
+    {
+      "calculate": "datum.meals_weekly / datum.food_weekly",
+      "as": "meals_share"
+    },
+    {
+      "lookup": "state_code",
+      "from": {
+        "data": {
+          "url": "data/state-map-positions.csv",
+          "format": {
+            "type": "csv",
+            "parse": {
+              "state_code": "number",
+              "longitude": "number",
+              "latitude": "number"
+            }
+          }
+        },
+        "key": "state_code",
+        "fields": [
+          "longitude",
+          "latitude"
+        ]
+      }
+    },
+    {
+      "calculate": "datum.state + '  ' + format(datum.meals_share, '.1%')",
+      "as": "map_label"
+    }
+  ],
+  "layer": [
+    {
+      "mark": {
+        "type": "geoshape",
+        "stroke": "#fffefa",
+        "strokeWidth": 1.5
+      },
+      "encoding": {
+        "color": {
+          "field": "meals_share",
+          "type": "quantitative",
+          "scale": {
+            "type": "linear",
+            "domain": [0.28, 0.40],
+            "range": ["#f4e8dc", "#75482d"],
+            "clamp": true
+          },
+          "legend": {
+            "title": "Meals out as a share of food spending",
+            "orient": "bottom",
+            "direction": "horizontal",
+            "format": ".0%",
+            "values": [0.28, 0.31, 0.34, 0.37, 0.40],
+            "gradientLength": 360,
+            "gradientThickness": 16,
+            "titlePadding": 12,
+            "offset": 24
+          }
+        },
+        "tooltip": [
+          {
+            "field": "properties.STE_NAME16",
+            "type": "nominal",
+            "title": "State or territory"
+          },
+          {
+            "field": "meals_share",
+            "type": "quantitative",
+            "title": "Meals-out share of food spending",
+            "format": ".1%"
+          },
+          {
+            "field": "meals_weekly",
+            "type": "quantitative",
+            "title": "Meals out per household / week",
+            "format": "$.2f"
+          },
+          {
+            "field": "food_weekly",
+            "type": "quantitative",
+            "title": "All food per household / week",
+            "format": "$.2f"
+          }
+        ]
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.state !== 'ACT'"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 18,
+        "fontWeight": 600,
+        "align": "center",
+        "baseline": "middle"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "latitude",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "map_label",
+          "type": "nominal"
+        },
+        "color": {
+          "condition": {
+            "test": "datum.meals_share >= 0.35",
+            "value": "#fffefa"
+          },
+          "value": "#223b36"
+        }
+      }
+    },
+    {
+      "transform": [
+        {
+          "filter": "datum.state === 'ACT'"
+        }
+      ],
+      "mark": {
+        "type": "text",
+        "fontSize": 18,
+        "fontWeight": 600,
+        "align": "left",
+        "baseline": "middle",
+        "dx": 24,
+        "color": "#223b36"
+      },
+      "encoding": {
+        "longitude": {
+          "field": "longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "latitude",
+          "type": "quantitative"
+        },
+        "text": {
+          "field": "map_label",
+          "type": "nominal"
+        }
+      }
+    }
+  ],
+  "config": {
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "legend": {
+      "labelFontSize": 18,
+      "titleFontSize": 18,
+      "titleFontWeight": "normal",
+      "labelColor": "#223b36",
+      "titleColor": "#223b36"
+    }
+  }
+}
