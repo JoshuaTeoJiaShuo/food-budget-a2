@@ -86,11 +86,11 @@ export function applyTextSize(spec, fontSize) {
 }
 
 export function mapLayout(availableWidth) {
-  const width = Math.max(300, Math.min(520, availableWidth - 48));
+  const width = Math.max(300, Math.min(680, availableWidth - 48));
 
   return {
     width,
-    height: Math.round(width * 0.68),
+    height: Math.round(width * 0.74),
   };
 }
 

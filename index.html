@@ -653,7 +653,7 @@
               <div class="figure-footer">
 <p id="c4-chart-help" class="chart-reading">Click a bar or origin dot to highlight it. Double-click or Esc resets; arrow keys cycle origins.</p>
 
-              <p id="c4-scope-note" class="chart-reading">Trade connections, not shipping routes. * Includes additional territories. Other origins and domestic production are not shown.</p>
+              <p id="c4-scope-note" class="chart-reading">Trade connections, not shipping routes. Dashed guides connect labels to origin markers. * Includes additional territories. An arrow appears on the selected connection.</p>
             </div>
 <div class="figure-status">
 <p id="c4-selection-status" class="sr-only" aria-live="polite" aria-atomic="true"></p>
@@ -915,33 +915,24 @@
             
 
             <!-- C11: Geographical context -->
-            <figure class="story-frame side-frame" aria-labelledby="c11-title"><div class="support-body">
-<div class="support-copy">
-<figcaption class="figure-heading"><div class="figure-title">
+            <figure class="story-frame wide-frame" aria-labelledby="c11-title"><figcaption class="figure-heading"><div class="figure-title">
 <p class="figure-scope">Foodbank · 2025 household survey</p>
 <h3 id="c11-title">Food insecurity across the country</h3>
               </div>
-<p class="chart-finding">Seven estimates were between <strong>30% and 35%</strong>. The Northern Territory’s <strong>46%</strong> estimate came from a small sample.</p></figcaption><p id="c11-chart-help" class="chart-reading">Darker purple means a higher estimate. Hover for percentages and samples.</p>
-
-              <details class="chart-help"><summary>Survey sample limits</summary><p id="c11-sample-note" class="chart-reading">
-                <strong>† Small samples:</strong> Northern Territory:
-                102 respondents; ACT: 69 respondents. Small differences
-                should not be treated as a reliable ranking. Statistical
-                significance has not been tested here.
-              </p></details>
-</div>
-<div class="support-visual">
-<div class="chart-scroll" role="region" tabindex="0" aria-label="Food insecurity by Australian state and territory" aria-describedby="c11-chart-help c11-sample-note c11-scroll-help">
-                <div id="chart-11" class="chart" aria-label="Moderate or severe food insecurity: NSW 33%, Victoria 32%, Queensland 35%, South Australia 30%, Western Australia 32%, Tasmania 33%, Northern Territory 46% and ACT 31%."></div>
+<p class="chart-finding">Seven estimates were between <strong>30% and 35%</strong>. The Northern Territory’s <strong>46%</strong> estimate came from a small sample.</p></figcaption><div class="chart-scroll" role="region" tabindex="0" aria-label="Food insecurity by Australian state and territory" aria-describedby="c11-chart-help c11-sample-note c11-scroll-help">
+                <div id="chart-11" class="chart" aria-label="Linked choropleth and state-comparison bars for moderate or severe food insecurity, Foodbank 2025. NT and ACT have small samples."></div>
               </div>
 
-              </div>
+              <div class="figure-footer">
+<p id="c11-chart-help" class="chart-reading">Click a state on the map or bars to highlight it in both views. Double-click or Esc resets; arrow keys cycle states.</p>
+
+              <p id="c11-sample-note" class="chart-reading">† Small samples: NT 102 respondents; ACT 69. Small differences are not a reliable ranking; significance has not been tested.</p>
 </div>
-<div class="figure-status">
+<p id="c11-selection-status" class="sr-only" aria-live="polite" aria-atomic="true"></p>
 <p id="c11-scroll-help" class="scroll-help" hidden="hidden">This chart adapts to the available width.</p>
 
               
-            </div></figure>
+            </figure>
 
             
 
@@ -1068,10 +1059,9 @@
                     <a href="data/foodbank-state-2025.csv">
                       State estimates and sample sizes
                     </a>
-                    <a href="charts/c11-state-food-security.vl.json">
-                      C11 specification
-                    </a>
-                  </div>
+                    <a href="charts/c11-state-food-security.vl.json">C11 map template</a>
+                  <a href="js/c11.js">Map and state-bars implementation</a>
+</div>
 
                   <div class="chart-links">
                     <a href="data/foodbank-parental-status-2025.csv">

@@ -35,7 +35,7 @@ export function initialiseC3() {
       // Preserve the agreed graduated bands; exact amounts stay in tooltips.
       walkLayers(spec, (layer) => {
         if (layer.encoding?.size?.field === "spending_band") {
-          layer.encoding.size.scale.range = [200, 720, 2560];
+          layer.encoding.size.scale.range = [250, 900, 3200];
           Object.assign(layer.encoding.size.legend, {
             columns: 3,
             direction: "horizontal",
