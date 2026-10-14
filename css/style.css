@@ -260,39 +260,8 @@ a {
   margin: 28px 0 0;
 }
 /* Section introductions sit on the page background. */
-#food-basket,
-.household-story {
-  padding: 44px 0;
-  background: transparent;
-}
 
 /* Related charts share one continuous panel. */
-.chapter-body {
-  margin-top: 28px;
-  padding: 28px;
-  background: var(--panel);
-}
-
-#food-basket .chapter-body > .chart-panel:first-child,
-.household-story .chapter-body > .chart-panel:first-child {
-  margin-top: 0;
-}
-
-.chapter > h2 {
-  max-width: 38ch;
-  margin: 0 0 12px;
-}
-
-@media (max-width: 700px) {
-  #food-basket,
-  .household-story {
-    padding: 32px 0;
-  }
-
-  .chapter-body {
-    padding: 20px 16px;
-  }
-}
 
 /* Scrolling preserves readable chart and table sizes */
 
@@ -741,10 +710,7 @@ summary {
   }
 }
 
-
 /* Section 1: a continuous story, rather than separate chart cards */
-
-
 
 #food-basket .chart-panel {
   margin: 32px 0 0;
@@ -791,25 +757,6 @@ summary {
 
 /* Chart and interpretation share a row where space permits */
 
-#food-basket .basket-row {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 24px;
-  align-items: start;
-}
-
-#food-basket .basket-visual {
-  min-width: 0;
-}
-
-#food-basket .basket-copy {
-  max-width: 65ch;
-}
-
-#food-basket .basket-copy p:last-child {
-  margin-bottom: 0;
-}
-
 #food-basket .basket-transition {
   max-width: 65ch;
   margin: 36px 0 20px;
@@ -837,17 +784,7 @@ summary {
   margin-bottom: 0;
 }
 
-@media (min-width: 1100px) {
-  #food-basket .basket-row {
-    grid-template-columns: minmax(0, 1fr) 256px;
-    gap: 32px;
-  }
-}
-
 @media (max-width: 700px) {
-  #food-basket {
-    padding: 24px 16px;
-  }
 
   #food-basket .basket-intro {
     grid-template-columns: minmax(0, 1fr);
@@ -856,7 +793,6 @@ summary {
 }
 
 /* Section 2: shared narrative and supporting notes */
-
 
 .household-story .chart-panel {
   margin: 28px 0 0;
@@ -895,8 +831,68 @@ summary {
   font-size: var(--reading-note);
 }
 
+/* Shared section layout: introductions on the page, charts on a panel. */
+#food-basket,
+.household-story {
+  padding: 44px 0;
+  background: transparent;
+}
+
+.chapter-body {
+  margin-top: 28px;
+  padding: 28px;
+  background: var(--panel);
+}
+
+.chapter-body,
+.income-panel {
+  border-radius: 16px;
+}
+
+#food-basket .chapter-body > .chart-panel:first-child,
+.household-story .chapter-body > .chart-panel:first-child {
+  margin-top: 0;
+}
+
+.chapter > h2 {
+  max-width: 38ch;
+  margin: 0 0 12px;
+}
+
 @media (max-width: 700px) {
+  #food-basket,
   .household-story {
-    padding: 24px 16px;
+    padding: 32px 0;
+  }
+
+  .chapter-body {
+    padding: 20px 16px;
   }
 }
+
+
+:root,
+:root[data-reading-size="medium"] {
+  --reading-body: 1.375rem;
+  --reading-note: 1.125rem;
+  --chart-font: 18px;
+}
+
+:root[data-reading-size="extra-small"] {
+  --reading-body: 1.125rem;
+  --reading-note: 0.9375rem;
+  --chart-font: 14px;
+}
+
+:root[data-reading-size="small"] {
+  --reading-body: 1.25rem;
+  --reading-note: 1rem;
+  --chart-font: 16px;
+}
+
+:root[data-reading-size="large"] {
+  --reading-body: 1.5rem;
+  --reading-note: 1.25rem;
+  --chart-font: 20px;
+}
+

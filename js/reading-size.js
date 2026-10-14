@@ -1,6 +1,12 @@
 const STORAGE_KEY = "food-budget-a2-reading-size-v2";
 const DEFAULT_SIZE = "medium";
-const SIZES = ["small", "medium", "large"];
+const SIZES = [
+  "extra-small",
+  "small",
+  "medium",
+  "large",
+  "extra-large",
+];
 
 export function initialiseReadingSize() {
   const selector = document.getElementById("reading-size");
@@ -9,9 +15,7 @@ export function initialiseReadingSize() {
   if (!selector || !controls) return;
 
   function apply(size) {
-    const selected = SIZES.includes(size)
-      ? size
-      : DEFAULT_SIZE;
+    const selected = SIZES.includes(size) ? size : DEFAULT_SIZE;
 
     document.documentElement.dataset.readingSize = selected;
     selector.value = selected;
@@ -24,7 +28,7 @@ export function initialiseReadingSize() {
   try {
     saved = localStorage.getItem(STORAGE_KEY) || DEFAULT_SIZE;
   } catch {
-    // Reading controls still work when browser storage is unavailable.
+    // Controls still work without browser storage.
   }
 
   apply(saved);
@@ -38,9 +42,7 @@ export function initialiseReadingSize() {
       // Keep the selected size for this visit.
     }
 
-    document.dispatchEvent(
-      new Event("reading-size-change")
-    );
+    document.dispatchEvent(new Event("reading-size-change"));
   });
 
   controls.hidden = false;
