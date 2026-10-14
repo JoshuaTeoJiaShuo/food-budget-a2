@@ -66,7 +66,7 @@ export function makeCompactC1(
     params: template.params,
 
     padding: 8,
-    spacing: 26,
+    spacing: 14,
 
     vconcat: CATEGORY_ORDER.map((category) => ({
       title: {
@@ -77,13 +77,13 @@ export function makeCompactC1(
         lineHeight: fontSize + 5,
         color:
           category === "Meals out & fast foods"
-            ? "#a74618"
+            ? "#63351f"
             : "#46534d",
         offset: 14,
       },
 
       width,
-      height: Math.max(120, fontSize * 8),
+      height: Math.max(90, fontSize * 6),
 
       transform: [
         {

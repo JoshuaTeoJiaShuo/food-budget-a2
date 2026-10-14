@@ -17,7 +17,7 @@ export function initialiseC8() {
       );
 
       // Match C7's plot height and row positions.
-      spec.height = Math.max(320, Math.round(fontSize * 18));
+      spec.height = Math.max(220, Math.round(fontSize * 15));
 
       applyTextSize(spec, fontSize);
 

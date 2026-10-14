@@ -12,11 +12,11 @@ export function initialiseC7() {
       const axisAllowance = Math.ceil(fontSize * 4.5 + 40);
 
       spec.width = Math.max(
-        360,
+        270,
         Math.min(820, availableWidth - axisAllowance)
       );
 
-      spec.height = Math.max(320, Math.round(fontSize * 18));
+      spec.height = Math.max(220, Math.round(fontSize * 15));
 
       applyTextSize(spec, fontSize);
 

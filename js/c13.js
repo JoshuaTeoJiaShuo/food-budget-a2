@@ -11,9 +11,9 @@ export function initialiseC13() {
     prepare(spec, { availableWidth, fontSize }) {
       applyTextSize(spec, fontSize);
 
-      const paired = availableWidth >= 960;
+      const paired = availableWidth >= 800;
       const columns = paired ? 2 : 1;
-      const gap = 36;
+      const gap = 20;
 
       // Reserve the same district-label space in each panel.
       const labelWidth = Math.ceil(fontSize * 7);
@@ -26,7 +26,7 @@ export function initialiseC13() {
         panelWidth - labelWidth - 24
       );
 
-      const plotHeight = Math.max(340, fontSize * 18);
+      const plotHeight = Math.max(240, fontSize * 16);
       const districts = [
         "Barkly",
         "Big Rivers",
@@ -45,7 +45,7 @@ export function initialiseC13() {
 
         panel.title = {
           text: basket,
-          anchor: "middle",
+          anchor: "start",
           font: "Arial",
           fontSize,
           fontWeight: "bold",

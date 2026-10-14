@@ -5,8 +5,8 @@ function treemapLayout({ availableWidth, fontSize }) {
     width: availableWidth,
     height: Math.round(
       availableWidth < 500
-        ? Math.max(720, fontSize * 40)
-        : Math.max(620, fontSize * 36)
+        ? Math.max(560, fontSize * 34)
+        : Math.max(460, fontSize * 33)
     ),
   };
 }
@@ -40,7 +40,7 @@ export async function initialiseC2() {
 
       spec.signals.find(
         (signal) => signal.name === "labelSize"
-      ).value = layout.fontSize;
+      ).value = layout.fontSize - 1;
 
       return spec;
     },
@@ -51,7 +51,7 @@ export async function initialiseC2() {
       await view
         .width(width)
         .height(height)
-        .signal("labelSize", layout.fontSize)
+        .signal("labelSize", layout.fontSize - 1)
         .runAsync();
     },
   });

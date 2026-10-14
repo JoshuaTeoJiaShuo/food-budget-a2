@@ -1,4 +1,3 @@
-import { initialiseReadingSize } from "./reading-size.js";
 import { showChartError } from "./chart-utils.js";
 import { initialiseC1 } from "./c1.js";
 import { initialiseC2 } from "./c2.js";
@@ -15,7 +14,6 @@ import { initialiseC12 } from "./c12.js";
 import { initialiseC13 } from "./c13.js";
 
 async function start() {
-  initialiseReadingSize();
 
   const charts = [
     initialiseC1,

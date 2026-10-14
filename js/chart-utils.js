@@ -86,14 +86,11 @@ export function applyTextSize(spec, fontSize) {
 }
 
 export function mapLayout(availableWidth) {
-  const width = Math.max(
-    740,
-    Math.min(920, availableWidth - 80)
-  );
+  const width = Math.max(300, Math.min(520, availableWidth - 48));
 
   return {
     width,
-    height: Math.round((width * 560) / 740),
+    height: Math.round(width * 0.68),
   };
 }
 
@@ -134,7 +131,7 @@ export async function mountChart({
     return {
       availableWidth: Math.floor(wrapper.clientWidth),
       fontSize:
-        parseFloat(styles.getPropertyValue("--chart-font")) || 18,
+        parseFloat(styles.getPropertyValue("--chart-font")) || 14,
     };
   }
 
@@ -274,12 +271,6 @@ export async function mountChart({
 
   const observer = new ResizeObserver(schedule);
   observer.observe(wrapper);
-
-  document.addEventListener(
-    "reading-size-change",
-    schedule,
-    { signal: events.signal }
-  );
 
   function dispose() {
     disposed = true;

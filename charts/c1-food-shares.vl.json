@@ -75,7 +75,7 @@
     "color": {
       "condition": {
         "test": "datum.category === 'Meals out & fast foods'",
-        "value": "#a74618"
+        "value": "#63351f"
       },
       "value": "#77857e"
     },
@@ -305,7 +305,7 @@
             "color": {
               "condition": {
                 "test": "datum.category === 'Meals out & fast foods'",
-                "value": "#a74618"
+                "value": "#63351f"
               },
               "value": "#46534d"
             }
@@ -335,7 +335,7 @@
             "color": {
               "condition": {
                 "test": "datum.category === 'Meals out & fast foods'",
-                "value": "#a74618"
+                "value": "#63351f"
               },
               "value": "#46534d"
             }

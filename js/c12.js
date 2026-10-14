@@ -10,16 +10,16 @@ export function initialiseC12() {
 
     prepare(spec, { availableWidth, fontSize }) {
       // Reserve space for household labels and chart padding.
-      const labelAllowance = Math.ceil(fontSize * 13 + 64);
+      const labelAllowance = Math.ceil(fontSize * 11 + 48);
 
       spec.width = Math.max(
-        360,
+        200,
         Math.min(760, availableWidth - labelAllowance)
       );
 
       spec.height = Math.max(
-        300,
-        Math.round(fontSize * 16)
+        200,
+        Math.round(fontSize * 14)
       );
 
       applyTextSize(spec, fontSize);
@@ -32,7 +32,7 @@ export function initialiseC12() {
       if (comparison) {
         const axis = comparison.encoding.y.axis;
 
-        axis.labelLimit = Math.ceil(fontSize * 12);
+        axis.labelLimit = Math.ceil(fontSize * 11);
         axis.labelLineHeight = Math.ceil(fontSize * 1.3);
 
         const labels = comparison.layer.find(

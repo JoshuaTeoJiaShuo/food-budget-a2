@@ -12,7 +12,7 @@ export function initialiseC9() {
       applyTextSize(spec, fontSize);
 
       const plot = spec.spec;
-      const minimumWidth = Math.max(800, fontSize * 42);
+      const minimumWidth = Math.max(420, fontSize * 28);
 
       plot.width = Math.max(
         minimumWidth,
@@ -20,12 +20,12 @@ export function initialiseC9() {
       );
 
       plot.height = Math.max(
-        44,
-        Math.round(fontSize * 2.4)
+        30,
+        Math.round(fontSize * 2.1)
       );
 
       // Bring each heading closer to its strip.
-      spec.spacing = 8;
+      spec.spacing = 4;
 
       Object.assign(spec.facet.row.header, {
         labelFontSize: fontSize,

@@ -28,8 +28,8 @@ export async function initialiseC1() {
     prepare(spec, { availableWidth, fontSize }) {
       applyTextSize(spec, fontSize);
 
-      const labelRail = Math.ceil(fontSize * 18 + 76);
-      const minimumPlotWidth = Math.ceil(fontSize * 25);
+      const labelRail = Math.ceil(fontSize * 18 + 56);
+      const minimumPlotWidth = Math.ceil(fontSize * 22);
 
       const compact =
         availableWidth < labelRail + 80 + minimumPlotWidth;
@@ -45,7 +45,7 @@ export async function initialiseC1() {
       }
 
       spec.width = availableWidth - labelRail - 80;
-      spec.height = Math.round(fontSize * 22 + 80);
+      spec.height = Math.round(fontSize * 20 + 30);
 
       return spec;
     },

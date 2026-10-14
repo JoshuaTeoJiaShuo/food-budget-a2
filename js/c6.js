@@ -18,12 +18,12 @@ export async function initialiseC6() {
 
     prepare(spec, { availableWidth, fontSize }) {
       const labelAllowance = Math.ceil(
-        fontSize * 10 + 40
+        fontSize * 10 + 24
       );
 
       // Preserve readable cells; narrow screens scroll horizontally.
       const minimumWidth =
-        Math.ceil(fontSize * 5.7) * 7;
+        Math.ceil(fontSize * 4.3) * 7;
 
       spec.width = Math.max(
         minimumWidth,
@@ -31,7 +31,7 @@ export async function initialiseC6() {
       );
 
       spec.height =
-        12 * Math.max(44, Math.ceil(fontSize * 2.6));
+        12 * Math.max(34, Math.ceil(fontSize * 2.5));
 
       applyTextSize(spec, fontSize);
 
@@ -40,7 +40,7 @@ export async function initialiseC6() {
 
       Object.assign(spec.encoding.x.axis, {
         labelLineHeight: lineHeight,
-        labelPadding: lineHeight * 3 + 16,
+        labelPadding: lineHeight * 3 + 8,
         labelLimit: Math.floor(spec.width / 7),
       });
 

@@ -11,10 +11,10 @@ export function initialiseC10() {
     prepare(spec, { availableWidth, fontSize }) {
       applyTextSize(spec, fontSize);
 
-      const stacked = availableWidth < 900;
+      const stacked = availableWidth < 550;
       const size = stacked
-        ? Math.max(280, Math.min(360, availableWidth - 32))
-        : 360;
+        ? Math.max(220, Math.min(240, availableWidth - 24))
+        : 240;
 
       const house =
         "M-1,-0.15L0,-1L1,-0.15L0.75,-0.15" +
@@ -22,6 +22,11 @@ export function initialiseC10() {
 
       spec.width = size;
       spec.height = size;
+      spec.title = {
+        text: "33% moderate or severe food insecurity",
+        anchor: "start", font: "Arial", fontSize: fontSize + 1,
+        fontWeight: "bold", color: "#223b36", offset: 10,
+      };
 
       spec.description =
         "Foodbank 2025 food-security estimates. Each house symbol " +

@@ -32,13 +32,13 @@ export async function initialiseC5() {
       );
 
       spec.width = Math.max(
-        860,
+        480,
         Math.min(1100, availableWidth - axisAllowance)
       );
 
       spec.height = Math.max(
-        400,
-        Math.round(fontSize * 22)
+        260,
+        Math.round(fontSize * 18)
       );
 
       applyTextSize(spec, fontSize);
