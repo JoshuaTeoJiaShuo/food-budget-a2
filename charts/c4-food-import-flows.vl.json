@@ -1,0 +1,460 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "description": "Six leading reported origins for the selected Australian food import category, December 2025. Line width represents import value in A$ million. Connections show origin and destination, not shipping routes.",
+  "width": 920,
+  "height": 470,
+  "background": "#fffefa",
+  "padding": 12,
+
+  "params": [
+    {
+      "name": "foodCategory",
+      "value": "Dairy products"
+    }
+  ],
+
+  "projection": {
+    "type": "equalEarth",
+    "rotate": [-150, 0, 0]
+  },
+
+  "layer": [
+    {
+      "data": {
+        "url": "data/world-countries.topojson",
+        "format": {
+          "type": "topojson",
+          "feature": "ne_110m_admin_0_countries"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "stroke": "#fffefa",
+        "strokeWidth": 0.6
+      },
+      "encoding": {
+        "fill": {
+          "condition": {
+            "test": "datum.properties.ADMIN === 'Australia'",
+            "value": "#c7d8cd"
+          },
+          "value": "#e0e5df"
+        }
+      }
+    },
+
+    {
+      "data": {
+        "url": "data/oceans.topojson",
+        "format": {
+          "type": "topojson",
+          "feature": "oceans"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#edf3f5",
+        "stroke": null
+      }
+    },
+
+    {
+      "data": {
+        "url": "data/WorldMapWithGraticules.topojson",
+        "format": {
+          "type": "topojson",
+          "feature": "ne_110m_graticules_30"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": null,
+        "stroke": "#c8d2d3",
+        "strokeWidth": 0.5,
+        "opacity": 0.65
+      }
+    },
+
+    {
+      "data": {
+        "url": "data/food-import-flows.csv",
+        "format": {
+          "type": "csv",
+          "parse": {
+            "import_value_aud_million": "number",
+            "source_row": "number"
+          }
+        }
+      },
+
+      "transform": [
+        {
+          "filter": "datum.category === foodCategory"
+        },
+        {
+          "lookup": "origin",
+          "from": {
+            "data": {
+              "url": "data/food-trade-locations.csv",
+              "format": {
+                "type": "csv",
+                "parse": {
+                  "longitude": "number",
+                  "latitude": "number"
+                }
+              }
+            },
+            "key": "origin",
+            "fields": ["label", "longitude", "latitude"]
+          }
+        },
+        {
+          "calculate": "'Australia'",
+          "as": "destination"
+        },
+        {
+          "lookup": "destination",
+          "from": {
+            "data": {
+              "url": "data/food-trade-locations.csv",
+              "format": {
+                "type": "csv",
+                "parse": {
+                  "longitude": "number",
+                  "latitude": "number"
+                }
+              }
+            },
+            "key": "origin",
+            "fields": ["longitude", "latitude"]
+          },
+          "as": [
+            "destination_longitude",
+            "destination_latitude"
+          ]
+        },
+        {
+          "filter": "isValid(datum.longitude) && isValid(datum.latitude) && isValid(datum.destination_longitude) && isValid(datum.destination_latitude)"
+        },
+        {
+          "calculate": "{'type': 'LineString', 'coordinates': [[datum.longitude, datum.latitude], [datum.destination_longitude, datum.destination_latitude]]}",
+          "as": "connection"
+        },
+        {
+          "calculate": "datum.label + ' · ' + format(datum.import_value_aud_million, '.1f')",
+          "as": "label"
+        }
+      ],
+
+      "encoding": {
+        "color": {
+          "field": "label",
+          "type": "nominal",
+          "scale": {
+            "range": [
+              "#39778b",
+              "#86648f",
+              "#6b8248",
+              "#9b6954",
+              "#546ba0",
+              "#a06179"
+            ]
+          },
+          "legend": {
+            "title": "Reported origin",
+            "labelExpr": "split(datum.label, ' · ')[0]",
+            "orient": "bottom",
+            "direction": "horizontal",
+            "columns": 2,
+            "symbolType": "circle",
+            "symbolSize": 100,
+            "labelLimit": 360,
+            "columnPadding": 24,
+            "rowPadding": 10,
+            "offset": 18
+          }
+        },
+
+        "opacity": {
+          "condition": {
+            "param": "originFocus",
+            "empty": true,
+            "value": 1
+          },
+          "value": 0.12
+        },
+
+        "tooltip": [
+          {
+            "field": "origin",
+            "type": "nominal",
+            "title": "Reported origin"
+          },
+          {
+            "field": "destination",
+            "type": "nominal",
+            "title": "Destination"
+          },
+          {
+            "field": "category",
+            "type": "nominal",
+            "title": "Food category"
+          },
+          {
+            "field": "month",
+            "type": "nominal",
+            "title": "Month"
+          },
+          {
+            "field": "import_value_aud_million",
+            "type": "quantitative",
+            "title": "Import value (A$ million)",
+            "format": ".1f"
+          }
+        ]
+      },
+
+      "layer": [
+        {
+          "params": [
+            {
+              "name": "originFocus",
+              "select": {
+                "type": "point",
+                "fields": ["label"],
+                "on": "click[event.item && event.item.datum && event.item.datum.label]",
+                "toggle": false,
+                "clear": "dblclick, #c4-food-category:change"
+              },
+              "bind": "legend"
+            }
+          ],
+
+          "mark": {
+            "type": "geoshape",
+            "filled": false,
+            "strokeCap": "round",
+            "strokeJoin": "round"
+          },
+
+          "encoding": {
+            "shape": {
+              "field": "connection",
+              "type": "geojson"
+            },
+            "strokeWidth": {
+              "field": "import_value_aud_million",
+              "type": "quantitative",
+              "scale": {
+                "type": "linear",
+                "domain": [0, 120],
+                "range": [0, 14],
+                "zero": true,
+                "nice": false
+              },
+              "legend": {
+                "title": "Import value (A$ million)",
+                "orient": "bottom",
+                "direction": "horizontal",
+                "values": [20, 60, 120],
+                "format": ".0f",
+                "symbolType": "stroke",
+                "symbolStrokeColor": "#64716b",
+                "symbolSize": 1600,
+                "offset": 18
+              }
+            }
+          }
+        },
+
+        {
+          "mark": {
+            "type": "circle",
+            "size": 95,
+            "stroke": "#fffefa",
+            "strokeWidth": 1.2
+          },
+          "encoding": {
+            "longitude": {
+              "field": "longitude",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "latitude",
+              "type": "quantitative"
+            }
+          }
+        },
+
+        {
+          "transform": [
+            {
+              "filter": {
+                "param": "originFocus",
+                "empty": false
+              }
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": {
+              "expr": "datum.longitude > 150 ? 'right' : 'left'"
+            },
+            "baseline": {
+              "expr": "datum.longitude > 150 ? 'top' : 'bottom'"
+            },
+            "dx": {
+              "expr": "datum.longitude > 150 ? -10 : 10"
+            },
+            "dy": {
+              "expr": "datum.longitude > 150 ? 12 : -10"
+            },
+            "fontSize": 18,
+            "fontWeight": "bold",
+            "stroke": "#fffefa",
+            "strokeWidth": 4
+          },
+          "encoding": {
+            "longitude": {
+              "field": "longitude",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "latitude",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "label"
+            },
+            "color": {
+              "value": "#fffefa"
+            },
+            "opacity": {
+              "value": 1
+            },
+            "tooltip": null
+          }
+        },
+
+        {
+          "transform": [
+            {
+              "filter": {
+                "param": "originFocus",
+                "empty": false
+              }
+            }
+          ],
+          "mark": {
+            "type": "text",
+            "align": {
+              "expr": "datum.longitude > 150 ? 'right' : 'left'"
+            },
+            "baseline": {
+              "expr": "datum.longitude > 150 ? 'top' : 'bottom'"
+            },
+            "dx": {
+              "expr": "datum.longitude > 150 ? -10 : 10"
+            },
+            "dy": {
+              "expr": "datum.longitude > 150 ? 12 : -10"
+            },
+            "fontSize": 18,
+            "fontWeight": "bold"
+          },
+          "encoding": {
+            "longitude": {
+              "field": "longitude",
+              "type": "quantitative"
+            },
+            "latitude": {
+              "field": "latitude",
+              "type": "quantitative"
+            },
+            "text": {
+              "field": "label"
+            },
+            "color": {
+              "value": "#223b36"
+            },
+            "opacity": {
+              "value": 1
+            },
+            "tooltip": null
+          }
+        }
+      ]
+    },
+
+    {
+      "data": {
+        "url": "data/food-trade-locations.csv",
+        "format": {
+          "type": "csv",
+          "parse": {
+            "longitude": "number",
+            "latitude": "number"
+          }
+        }
+      },
+      "transform": [
+        {
+          "filter": "datum.origin === 'Australia'"
+        }
+      ],
+      "encoding": {
+        "longitude": {
+          "field": "longitude",
+          "type": "quantitative"
+        },
+        "latitude": {
+          "field": "latitude",
+          "type": "quantitative"
+        }
+      },
+      "layer": [
+        {
+          "mark": {
+            "type": "circle",
+            "size": 210,
+            "color": "#223b36",
+            "stroke": "#fffefa",
+            "strokeWidth": 2,
+            "opacity": 1
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "align": "center",
+            "baseline": "top",
+            "dy": 18,
+            "fontSize": 18,
+            "fontWeight": "bold",
+            "color": "#223b36"
+          },
+          "encoding": {
+            "text": {
+              "value": "To Australia"
+            }
+          }
+        }
+      ]
+    }
+  ],
+
+  "config": {
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "legend": {
+      "labelFontSize": 18,
+      "titleFontSize": 18,
+      "titleFontWeight": "normal",
+      "labelColor": "#223b36",
+      "titleColor": "#223b36",
+      "titlePadding": 10
+    }
+  }
+}

@@ -6,12 +6,26 @@
   "padding": 0,
   "autosize": "none",
   "background": "#fffefa",
+
   "signals": [
-    {"name": "selectedGroup", "value": ""},
-    {"name": "labelSize", "value": 18},
-    {"name": "lineSpacing", "update": "labelSize + 4"},
-    {"name": "headerSpace", "update": "2 * lineSpacing + 16"}
+    {
+      "name": "selectedGroup",
+      "value": ""
+    },
+    {
+      "name": "labelSize",
+      "value": 18
+    },
+    {
+      "name": "lineSpacing",
+      "update": "labelSize + 4"
+    },
+    {
+      "name": "headerSpace",
+      "update": "2 * lineSpacing + 16"
+    }
   ],
+
   "data": [
     {
       "name": "raw",
@@ -25,6 +39,7 @@
         }
       }
     },
+
     {
       "name": "foodRoot",
       "values": [
@@ -36,6 +51,7 @@
         }
       ]
     },
+
     {
       "name": "groupNodes",
       "source": "raw",
@@ -47,38 +63,96 @@
           "fields": ["weekly", null],
           "as": ["total", "childCount"]
         },
-        {"type": "formula", "as": "id", "expr": "datum.parent"},
-        {"type": "formula", "as": "parentId", "expr": "'food'"},
-        {"type": "formula", "as": "group", "expr": "datum.parent"},
-        {"type": "formula", "as": "name", "expr": "datum.parent_label"},
+        {
+          "type": "formula",
+          "as": "id",
+          "expr": "datum.parent"
+        },
+        {
+          "type": "formula",
+          "as": "parentId",
+          "expr": "'food'"
+        },
+        {
+          "type": "formula",
+          "as": "group",
+          "expr": "datum.parent"
+        },
+        {
+          "type": "formula",
+          "as": "name",
+          "expr": "datum.parent_label"
+        },
         {
           "type": "formula",
           "as": "label",
           "expr": "({'0300':'Unspecified food','0301':'Bakery, flour & cereals','0302':'Meat','0303':'Fish & seafood','0304':'Eggs','0305':'Dairy','0306':'Oils & fats','0307':'Fruit & nuts','0308':'Vegetables','0309':'Condiments, sweets & meals','0310':'Non-alcoholic drinks','0311':'Meals out & fast foods','0399':'Other food & drinks'})[datum.parent]"
         },
-        {"type": "formula", "as": "kind", "expr": "'group'"},
-        {"type": "formula", "as": "amount", "expr": "0"}
+        {
+          "type": "formula",
+          "as": "kind",
+          "expr": "'group'"
+        },
+        {
+          "type": "formula",
+          "as": "amount",
+          "expr": "0"
+        }
       ]
     },
+
     {
       "name": "itemNodes",
       "source": "raw",
       "transform": [
-        {"type": "formula", "as": "id", "expr": "datum.hec_code"},
-        {"type": "formula", "as": "parentId", "expr": "datum.parent"},
-        {"type": "formula", "as": "group", "expr": "datum.parent"},
-        {"type": "formula", "as": "name", "expr": "datum.category"},
+        {
+          "type": "formula",
+          "as": "id",
+          "expr": "datum.hec_code"
+        },
+        {
+          "type": "formula",
+          "as": "parentId",
+          "expr": "datum.parent"
+        },
+        {
+          "type": "formula",
+          "as": "group",
+          "expr": "datum.parent"
+        },
+        {
+          "type": "formula",
+          "as": "name",
+          "expr": "datum.category"
+        },
         {
           "type": "formula",
           "as": "label",
           "expr": "({'030103':'Cakes, biscuits|& puddings','030200':'Meat not further|defined','030201':'Processed meat','030204':'Pork (excludes|bacon & ham)','030299':'Other meat','030702':'Canned, frozen|& bottled fruit','030703':'Dried fruit|& nuts','030902':'Syrups, honey,|jams & desserts','030904':'Spices, sauces|& other additives','030905':'Canned spaghetti|& baked beans','030906':'Packaged|prepared meals','031001':'Soft drinks &|packaged water','031002':'Fruit &|vegetable juice','031005':'Cordials & milk-|based drinks','0306019999':'Other edible|oils & fats'})[datum.hec_code] || replace(replace(datum.category, /\\bnfd\\b/g, '(not further defined)'), /\\bnec\\b/g, '(not elsewhere classified)')"
         },
-        {"type": "formula", "as": "groupName", "expr": "datum.parent_label"},
-        {"type": "formula", "as": "kind", "expr": "'item'"},
-        {"type": "formula", "as": "amount", "expr": "datum.weekly"},
-        {"type": "formula", "as": "total", "expr": "datum.weekly"}
+        {
+          "type": "formula",
+          "as": "groupName",
+          "expr": "datum.parent_label"
+        },
+        {
+          "type": "formula",
+          "as": "kind",
+          "expr": "'item'"
+        },
+        {
+          "type": "formula",
+          "as": "amount",
+          "expr": "datum.weekly"
+        },
+        {
+          "type": "formula",
+          "as": "total",
+          "expr": "datum.weekly"
+        }
       ]
     },
+
     {
       "name": "tree",
       "source": ["foodRoot", "groupNodes", "itemNodes"],
@@ -95,12 +169,17 @@
         {
           "type": "treemap",
           "field": "amount",
-          "sort": {"field": "value", "order": "descending"},
+          "sort": {
+            "field": "value",
+            "order": "descending"
+          },
           "method": "squarify",
           "round": false,
           "paddingInner": 2,
           "paddingOuter": 3,
-          "paddingTop": {"signal": "headerSpace"},
+          "paddingTop": {
+            "signal": "headerSpace"
+          },
           "size": [
             {"signal": "width"},
             {"signal": "height + headerSpace"}
@@ -108,25 +187,38 @@
         }
       ]
     },
+
     {
       "name": "groups",
       "source": "tree",
       "transform": [
-        {"type": "filter", "expr": "datum.kind === 'group'"}
+        {
+          "type": "filter",
+          "expr": "datum.kind === 'group'"
+        }
       ]
     },
+
     {
       "name": "leaves",
       "source": "tree",
       "transform": [
-        {"type": "filter", "expr": "datum.kind === 'item'"},
+        {
+          "type": "filter",
+          "expr": "datum.kind === 'item'"
+        },
         {
           "type": "lookup",
           "from": "groups",
           "key": "id",
           "fields": ["group"],
           "values": ["x0", "x1", "y0", "y1"],
-          "as": ["parentX0", "parentX1", "parentY0", "parentY1"]
+          "as": [
+            "parentX0",
+            "parentX1",
+            "parentY0",
+            "parentY1"
+          ]
         },
         {
           "type": "formula",
@@ -150,6 +242,7 @@
         }
       ]
     },
+
     {
       "name": "groupLabels",
       "source": "groups",
@@ -160,6 +253,7 @@
         }
       ]
     },
+
     {
       "name": "groupTotals",
       "source": "groups",
@@ -170,6 +264,7 @@
         }
       ]
     },
+
     {
       "name": "leafLabels",
       "source": "leaves",
@@ -181,6 +276,7 @@
       ]
     }
   ],
+
   "marks": [
     {
       "type": "rect",
@@ -198,6 +294,7 @@
         }
       }
     },
+
     {
       "type": "rect",
       "name": "foodCells",
@@ -223,6 +320,7 @@
         }
       }
     },
+
     {
       "type": "text",
       "from": {"data": "groupLabels"},
@@ -230,7 +328,9 @@
         "update": {
           "x": {"signal": "datum.x0 + 8"},
           "y": {"signal": "datum.y0 - headerSpace + 8"},
-          "limit": {"signal": "max(0, datum.x1 - datum.x0 - 16)"},
+          "limit": {
+            "signal": "max(0, datum.x1 - datum.x0 - 16)"
+          },
           "text": {"field": "label"},
           "font": {"value": "Arial"},
           "fontSize": {"signal": "labelSize"},
@@ -243,6 +343,7 @@
         }
       }
     },
+
     {
       "type": "text",
       "from": {"data": "groupTotals"},
@@ -250,9 +351,15 @@
       "encode": {
         "update": {
           "x": {"signal": "datum.x0 + 8"},
-          "y": {"signal": "datum.y0 - headerSpace + 8 + lineSpacing"},
-          "limit": {"signal": "max(0, datum.x1 - datum.x0 - 16)"},
-          "text": {"signal": "format(datum.total, '$,.2f')"},
+          "y": {
+            "signal": "datum.y0 - headerSpace + 8 + lineSpacing"
+          },
+          "limit": {
+            "signal": "max(0, datum.x1 - datum.x0 - 16)"
+          },
+          "text": {
+            "signal": "format(datum.total, '$,.2f')"
+          },
           "font": {"value": "Arial"},
           "fontSize": {"signal": "labelSize"},
           "baseline": {"value": "top"},
@@ -260,6 +367,7 @@
         }
       }
     },
+
     {
       "type": "text",
       "from": {"data": "leafLabels"},
@@ -283,6 +391,7 @@
         }
       }
     },
+
     {
       "type": "text",
       "from": {"data": "leafLabels"},
@@ -298,7 +407,9 @@
           "limit": {
             "signal": "max(0, datum.right - datum.left - (datum.group === '0311' ? 32 : 16))"
           },
-          "text": {"signal": "format(datum.amount, '$,.2f')"},
+          "text": {
+            "signal": "format(datum.amount, '$,.2f')"
+          },
           "font": {"value": "Arial"},
           "fontSize": {
             "signal": "datum.group === '0311' ? min(labelSize * 2.8, max(labelSize + 6, (datum.right - datum.left) / 7.5)) : labelSize + 2"

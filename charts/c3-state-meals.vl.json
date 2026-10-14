@@ -1,13 +1,48 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-  "description": "Graduated-symbol map of average weekly household spending on meals out and fast foods by Australian state and territory, 2015–16. Three circle sizes represent spending bands, not proportional dollar amounts. Labels show exact estimates. Adapted from the FIT3179 symbol-map example using ABS boundaries.",  "width": 740,
+  "description": "Graduated-symbol map of average weekly household spending on meals out and fast foods by Australian state and territory, 2015–16. Three circle sizes represent spending bands, not proportional dollar amounts. Labels show exact estimates. Adapted from the FIT3179 symbol-map example using ABS boundaries.",
+  "width": 740,
   "height": 560,
   "padding": 24,
   "background": "#fffefa",
+
   "projection": {
     "type": "mercator"
   },
+
   "layer": [
+    {
+      "data": {
+        "url": "data/australia-ocean.topojson",
+        "format": {
+          "type": "topojson",
+          "feature": "australia_ocean"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#edf3f5",
+        "stroke": null
+      }
+    },
+
+    {
+      "data": {
+        "url": "data/australia_graticules.topojson",
+        "format": {
+          "type": "topojson",
+          "feature": "australia_graticules"
+        }
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": null,
+        "stroke": "#c8d2d3",
+        "strokeWidth": 0.5,
+        "opacity": 0.65
+      }
+    },
+
     {
       "data": {
         "url": "data/australia-states.topojson",
@@ -32,6 +67,7 @@
         ]
       }
     },
+
     {
       "data": {
         "url": "data/state-map-positions.csv",
@@ -44,6 +80,7 @@
           }
         }
       },
+
       "transform": [
         {
           "lookup": "state_code",
@@ -69,14 +106,15 @@
           }
         },
         {
-        "calculate": "datum.state_abbr + '  ' + format(datum.meals_weekly, '$.2f')",
-        "as": "map_label"
+            "calculate": "datum.state_abbr + (datum.state_abbr === 'ACT' || datum.state_abbr === 'TAS' ? '  ' + format(datum.meals_weekly, '$.2f') : '')",
+            "as": "map_label"
         },
         {
-        "calculate": "datum.meals_weekly < 70 ? 'Under $70' : datum.meals_weekly < 90 ? '$70–under $90' : '$90 and over'",
-        "as": "spending_band"
+          "calculate": "datum.meals_weekly < 70 ? 'Under $70' : datum.meals_weekly < 90 ? '$70–under $90' : '$90 and over'",
+          "as": "spending_band"
         }
       ],
+
       "encoding": {
         "longitude": {
           "field": "longitude",
@@ -87,6 +125,7 @@
           "type": "quantitative"
         }
       },
+
       "layer": [
         {
           "mark": {
@@ -98,29 +137,29 @@
           },
           "encoding": {
             "size": {
-            "field": "spending_band",
-            "type": "ordinal",
-            "sort": [
+              "field": "spending_band",
+              "type": "ordinal",
+              "sort": [
                 "Under $70",
                 "$70–under $90",
                 "$90 and over"
-            ],
-            "scale": {
+              ],
+              "scale": {
                 "domain": [
-                "Under $70",
-                "$70–under $90",
-                "$90 and over"
+                  "Under $70",
+                  "$70–under $90",
+                  "$90 and over"
                 ],
                 "range": [250, 900, 2000]
-            },
-            "legend": {
+              },
+              "legend": {
                 "title": "Average weekly household spending",
                 "orient": "bottom",
                 "direction": "horizontal",
                 "values": [
-                "Under $70",
-                "$70–under $90",
-                "$90 and over"
+                  "Under $70",
+                  "$70–under $90",
+                  "$90 and over"
                 ],
                 "titlePadding": 14,
                 "offset": 24,
@@ -128,7 +167,7 @@
                 "labelOffset": 10,
                 "symbolStrokeColor": "#75482d",
                 "symbolFillColor": "#c58e67"
-            }
+              }
             },
             "tooltip": [
               {
@@ -157,6 +196,7 @@
             ]
           }
         },
+
         {
           "transform": [
             {
@@ -182,6 +222,7 @@
             }
           }
         },
+
         {
           "transform": [
             {
@@ -208,6 +249,7 @@
       ]
     }
   ],
+
   "config": {
     "view": {
       "stroke": null

@@ -1,4 +1,4 @@
-/* 1. Colours and reading sizes */
+/* Theme and reading sizes */
 
 :root {
   --page: #f7f5ef;
@@ -26,7 +26,7 @@ html[data-reading-size="large"] {
   --chart-font: 20px;
 }
 
-/* 2. Page layout and typography */
+/* Page and Pure.css layout */
 
 * {
   box-sizing: border-box;
@@ -45,21 +45,62 @@ body {
   line-height: 1.6;
 }
 
-body > header,
-main,
-body > footer {
+.page {
   width: calc(100% - 48px);
   max-width: 1080px;
   margin-inline: auto;
 }
 
-body > header {
+.pure-g {
+  font-family: inherit;
+}
+
+.pure-g > [class*="pure-u"] {
+  min-width: 0;
+  font-family: inherit;
+  font-size: var(--reading-body);
+  letter-spacing: normal;
+  word-spacing: normal;
+}
+
+.page-header {
   padding: 36px 0;
 }
 
-h1,
-h2,
-h3 {
+.page-header p {
+  max-width: 65ch;
+}
+
+.chapter {
+  padding: 44px 0;
+  border-top: 1px solid var(--border);
+}
+
+.chapter-heading {
+  align-items: flex-start;
+  row-gap: 4px;
+}
+
+.chapter-heading h2 {
+  max-width: 38ch;
+  margin: 0 0 12px;
+}
+
+.chapter-heading p {
+  max-width: 65ch;
+  margin: 0;
+}
+
+.page-footer {
+  padding: 28px 0;
+  border-top: 1px solid var(--border);
+  color: var(--subtle);
+  font-size: var(--reading-note);
+}
+
+/* Typography and accessibility */
+
+h1, h2, h3 {
   font-family: Georgia, serif;
 }
 
@@ -79,32 +120,12 @@ p {
   margin: 0 0 16px;
 }
 
-body > header > p {
-  margin: 0;
-}
-
-main > section {
-  padding: 44px 0;
-  border-top: 1px solid var(--border);
-}
-
-main > section > p {
-  max-width: 65ch;
-}
-
 .section-number {
   margin-bottom: 12px;
   color: var(--accent);
   font-size: var(--reading-note);
   font-weight: 700;
   letter-spacing: 0.08em;
-}
-
-body > footer {
-  padding: 28px 0;
-  border-top: 1px solid var(--border);
-  color: var(--subtle);
-  font-size: var(--reading-note);
 }
 
 a {
@@ -117,7 +138,33 @@ a {
   outline-offset: 4px;
 }
 
-/* 3. Shared chart panels */
+.skip-link {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  z-index: 10;
+  padding: 8px 12px;
+  background: var(--panel);
+  transform: translateY(-200%);
+}
+
+.skip-link:focus {
+  transform: translateY(0);
+}
+
+.sr-only, .income-chart-heading h3 {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Shared chart styles */
 
 .chart-panel {
   min-width: 0;
@@ -127,10 +174,10 @@ a {
 }
 
 .chart-panel h3 {
-  max-width: 34ch;
-  margin: 0 0 16px;
-  font-size: calc(var(--reading-body) + 0.625rem);
-  line-height: 1.2;
+  max-width: 38ch;
+  margin: 0 0 14px;
+  font-size: calc(var(--reading-body) + 0.375rem);
+  line-height: 1.25;
 }
 
 .chart-kicker {
@@ -146,9 +193,11 @@ a {
   margin: 0;
 }
 
-.chart-reading,
-.chart-source,
-.chart-note {
+.chart-deck + .chart-deck {
+  margin-top: 20px;
+}
+
+.chart-reading, .chart-source {
   max-width: 68ch;
   margin: 20px 0 12px;
   color: var(--muted);
@@ -189,11 +238,13 @@ a {
 }
 
 .story-bridge {
+  max-width: 65ch;
   margin: 28px 0 0;
 }
 
-.chart-scroll,
-.table-scroll {
+/* Scrolling preserves readable chart and table sizes */
+
+.chart-scroll, .table-scroll {
   width: 100%;
   min-width: 0;
   max-width: 100%;
@@ -215,8 +266,7 @@ a {
   max-width: none;
 }
 
-.chart-scroll:focus-visible,
-.table-scroll:focus-visible {
+.chart-scroll:focus-visible, .table-scroll:focus-visible {
   outline-offset: -3px;
 }
 
@@ -230,10 +280,9 @@ a {
   margin: 16px 0;
 }
 
-/* 4. Controls and expandable explanations */
+/* Controls and expandable explanations */
 
-.reading-controls,
-.chart-controls {
+.reading-controls, .chart-controls {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -242,13 +291,11 @@ a {
   font-size: var(--reading-note);
 }
 
-.reading-controls label,
-.chart-controls label {
+.reading-controls label, .chart-controls label {
   font-weight: 600;
 }
 
-select,
-button {
+select, button {
   min-height: 44px;
   max-width: 100%;
   padding: 9px 12px;
@@ -265,8 +312,7 @@ button {
   min-width: 9rem;
 }
 
-button:disabled,
-select:disabled {
+button:disabled, select:disabled {
   cursor: default;
   opacity: 0.6;
 }
@@ -298,26 +344,13 @@ summary {
   cursor: pointer;
 }
 
-.methods-content p,
-.chart-help p {
+.methods-content p, .chart-help p {
   max-width: 68ch;
   margin: 12px 0;
   color: var(--muted);
 }
 
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip-path: inset(50%);
-  white-space: nowrap;
-  border: 0;
-}
-
-/* 5. Exact-value tables */
+/* Exact-value tables */
 
 .data-table {
   width: 100%;
@@ -332,8 +365,7 @@ summary {
   font-weight: 700;
 }
 
-.data-table th,
-.data-table td {
+.data-table th, .data-table td {
   padding: 12px 10px;
   border-bottom: 1px solid var(--border);
   vertical-align: top;
@@ -356,8 +388,7 @@ summary {
   min-width: 540px;
 }
 
-.food-table th:last-child,
-.food-table td:last-child {
+.food-table th:last-child, .food-table td:last-child {
   width: 6.5em;
   white-space: nowrap;
   text-align: right;
@@ -372,8 +403,7 @@ summary {
   min-width: 700px;
 }
 
-.household-table th:first-child,
-.household-table td:first-child {
+.household-table th:first-child, .household-table td:first-child {
   width: 5em;
   text-align: center;
 }
@@ -382,8 +412,7 @@ summary {
   font-weight: 700;
 }
 
-.household-table th:nth-child(n + 3),
-.household-table td:nth-child(n + 3) {
+.household-table th:nth-child(n + 3), .household-table td:nth-child(n + 3) {
   width: 23%;
   text-align: right;
 }
@@ -392,24 +421,25 @@ summary {
   white-space: nowrap;
 }
 
-/* 6. Features unique to individual charts */
+/* C1 heading, callout and compact display */
 
 .c1-heading {
-  display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(210px, 1fr);
-  gap: 32px;
-  align-items: start;
+  align-items: flex-start;
+}
+
+.c1-heading > .description-left {
+  padding-right: 32px;
 }
 
 .c1-panel h3 {
-  max-width: 26ch;
+  max-width: 32ch;
 }
 
 .c1-accent {
   color: var(--accent);
 }
 
-.c1-takeaway {
+.c1-heading > .c1-takeaway {
   padding-left: 24px;
   border-left: 2px solid #d8b9a5;
   font-size: var(--reading-note);
@@ -437,21 +467,25 @@ summary {
 }
 
 .c1-notes {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 32px;
   padding-top: 16px;
   border-top: 1px solid var(--border);
   color: var(--muted);
+}
+
+.c1-notes > .pure-u-1-2 {
+  margin: 0;
   font-size: var(--reading-note);
 }
 
-.c1-notes p {
-  margin: 0;
+.c1-notes > p:first-child {
+  padding-right: 16px;
 }
 
-.c1-compact-note,
-.c1-compact-measure {
+.c1-notes > p:last-child {
+  padding-left: 16px;
+}
+
+.c1-compact-note, .c1-compact-measure {
   display: none;
   color: var(--muted);
   font-size: var(--reading-note);
@@ -461,6 +495,8 @@ summary {
 .c1-panel.is-compact .c1-compact-measure {
   display: block;
 }
+
+/* Household key */
 
 .c5-panel .chart {
   margin-bottom: 0;
@@ -501,13 +537,119 @@ summary {
   font-weight: 700;
 }
 
-/* 7. Responsive layout */
+/* Income comparison */
+
+.income-panel {
+  container-name: income-panel;
+  container-type: inline-size;
+}
+
+.income-comparison {
+  margin: 24px -14px 0;
+}
+
+.income-comparison > .income-chart {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding: 0 14px;
+}
+
+.income-chart + .income-chart {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.income-chart-heading {
+  font-size: var(--reading-note);
+}
+
+.income-chart-heading .chart-reading {
+  margin: 0;
+}
+
+.income-chart .chart-scroll {
+  margin-top: 12px;
+}
+
+.income-chart .chart {
+  margin: 12px auto 16px;
+}
+
+.income-chart-takeaway {
+  margin: 12px 0 0;
+  font-size: var(--reading-note);
+}
+
+.income-synthesis {
+  margin-top: 28px;
+  padding: 20px 0;
+  border-top: 1px solid var(--border);
+}
+
+.income-synthesis p {
+  max-width: 65ch;
+  margin: 0;
+}
+
+.income-panel > .chart-source {
+  max-width: none;
+}
+
+@container income-panel (min-width: 1010px) {
+  .income-comparison > .income-chart {
+    width: 50%;
+  }
+
+  .income-chart + .income-chart {
+    margin-top: 0;
+    padding-top: 0;
+    border-top: 0;
+  }
+
+  .income-chart-heading {
+    min-height: 4.8em;
+  }
+
+  .income-chart + .income-chart::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 1px;
+    background: var(--border);
+    pointer-events: none;
+  }
+}
+
+/* Narrow screens */
 
 @media (max-width: 760px) {
-  .c1-heading,
-  .c1-notes {
-    grid-template-columns: 1fr;
-    gap: 24px;
+  .c1-heading > [class*="pure-u"],
+  .c1-notes > [class*="pure-u"] {
+    width: 100%;
+  }
+
+  .c1-heading > .description-left {
+    padding: 0;
+  }
+
+  .c1-heading > .c1-takeaway {
+    margin-top: 24px;
+  }
+
+  .c1-notes > p:first-child,
+  .c1-notes > p:last-child {
+    padding: 0;
+  }
+
+  .c1-notes > p + p {
+    margin-top: 16px;
   }
 
   #c5-household-key {
@@ -517,14 +659,16 @@ summary {
 }
 
 @media (max-width: 600px) {
-  body > header,
-  main,
-  body > footer {
+  .page {
     width: calc(100% - 24px);
   }
 
-  body > header {
+  .page-header {
     padding: 28px 0;
+  }
+
+  .chapter {
+    padding: 32px 0;
   }
 
   .chart-panel {
@@ -540,8 +684,174 @@ summary {
     width: 100%;
   }
 
-  .data-table th,
-  .data-table td {
+  .data-table th, .data-table td {
     padding: 10px 8px;
+  }
+}
+
+
+/* Section 1: a continuous story, rather than separate chart cards */
+
+#food-basket {
+  padding: 32px 28px;
+  background: var(--panel);
+}
+
+#food-basket .chart-panel {
+  margin: 32px 0 0;
+  padding: 0;
+  background: transparent;
+}
+
+#food-basket .chart-panel h3 {
+  max-width: none;
+  margin: 0 0 12px;
+  font-family: Arial, sans-serif;
+  font-size: var(--reading-note);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+/* Opening narrative and the main numerical takeaway */
+
+#food-basket .basket-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 240px;
+  gap: 32px;
+  align-items: start;
+  margin: 20px 0 28px;
+}
+
+#food-basket .basket-intro p {
+  margin: 0;
+}
+
+#food-basket .basket-takeaway {
+  padding-left: 24px;
+  border-left: 2px solid var(--border);
+  font-size: var(--reading-note);
+}
+
+#food-basket .basket-takeaway strong {
+  display: block;
+  margin-bottom: 8px;
+  color: var(--accent);
+  font-size: 3rem;
+  line-height: 1;
+}
+
+/* Chart and interpretation share a row where space permits */
+
+#food-basket .basket-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+#food-basket .basket-visual {
+  min-width: 0;
+}
+
+#food-basket .basket-copy {
+  max-width: 65ch;
+}
+
+#food-basket .basket-copy p:last-child {
+  margin-bottom: 0;
+}
+
+#food-basket .basket-transition {
+  max-width: 65ch;
+  margin: 36px 0 20px;
+}
+
+/* Keep supporting information quieter than the narrative */
+
+#food-basket .chart-reading {
+  margin: 12px 0;
+}
+
+#food-basket .chart-controls {
+  margin: 12px 0;
+}
+
+#food-basket .basket-sources {
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: var(--reading-note);
+}
+
+#food-basket .basket-sources p:last-child {
+  margin-bottom: 0;
+}
+
+@media (min-width: 1100px) {
+  #food-basket .basket-row {
+    grid-template-columns: minmax(0, 1fr) 256px;
+    gap: 32px;
+  }
+}
+
+@media (max-width: 700px) {
+  #food-basket {
+    padding: 24px 16px;
+  }
+
+  #food-basket .basket-intro {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+}
+
+/* Section 2: shared narrative and supporting notes */
+
+.household-story {
+  padding: 32px 28px;
+  background: var(--panel);
+}
+
+.household-story .chart-panel {
+  margin: 28px 0 0;
+  padding: 0;
+  background: transparent;
+}
+
+.household-story .chart-panel h3 {
+  max-width: none;
+  margin: 0 0 12px;
+  font-family: Arial, sans-serif;
+  font-size: var(--reading-note);
+  line-height: 1.4;
+}
+
+.household-story .chart-reading,
+.household-story .chart-controls {
+  margin: 12px 0;
+}
+
+.household-story .section-copy {
+  max-width: 65ch;
+  margin: 20px 0;
+}
+
+.household-story .section-transition {
+  max-width: 65ch;
+  margin: 36px 0 20px;
+}
+
+.household-story .section-sources {
+  margin-top: 32px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: var(--reading-note);
+}
+
+@media (max-width: 700px) {
+  .household-story {
+    padding: 24px 16px;
   }
 }

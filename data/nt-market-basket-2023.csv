@@ -1,0 +1,60 @@
+store_id,district,store_type,healthy_basket_aud,current_basket_aud,source_row
+R005,Barkly,Remote store,897.72,1046.15,5
+R006,Barkly,Remote store,914.01,1106.09,6
+R007,Barkly,Remote store,915.30,1098.15,7
+S009,Barkly,District supermarket,864.68,879.97,9
+R013,Big Rivers,Remote store,890.31,1057.97,13
+R014,Big Rivers,Remote store,890.70,1027.12,14
+R015,Big Rivers,Remote store,954.52,1119.65,15
+R016,Big Rivers,Remote store,970.51,1063.86,16
+R017,Big Rivers,Remote store,989.99,987.85,17
+R018,Big Rivers,Remote store,1010.58,1027.89,18
+R019,Big Rivers,Remote store,1022.90,1124.51,19
+R020,Big Rivers,Remote store,1086.88,1119.28,20
+R021,Big Rivers,Remote store,1089.37,1209.62,21
+R022,Big Rivers,Remote store,1111.98,1209.76,22
+R023,Big Rivers,Remote store,1351.91,1306.49,23
+S025,Big Rivers,District supermarket,656.31,881.82,25
+R029,Central Australia,Remote store,839.45,977.94,29
+R030,Central Australia,Remote store,850.77,1057.05,30
+R031,Central Australia,Remote store,852.54,1024.93,31
+R032,Central Australia,Remote store,863.84,1018.82,32
+R033,Central Australia,Remote store,867.82,1042.24,33
+R034,Central Australia,Remote store,875.83,1065.77,34
+R035,Central Australia,Remote store,878.44,1027.85,35
+R036,Central Australia,Remote store,879.01,991.14,36
+R037,Central Australia,Remote store,888.49,1026.36,37
+R038,Central Australia,Remote store,890.06,1038.04,38
+R039,Central Australia,Remote store,895.41,1067.77,39
+R040,Central Australia,Remote store,915.65,1054.68,40
+R041,Central Australia,Remote store,938.03,1023.76,41
+R042,Central Australia,Remote store,1004.12,1046.70,42
+R043,Central Australia,Remote store,1009.59,1105.80,43
+R044,Central Australia,Remote store,1069.31,1084.42,44
+R045,Central Australia,Remote store,1142.21,1164.30,45
+R046,Central Australia,Remote store,1242.66,1203.26,46
+R047,Central Australia,Remote store,1275.00,1175.54,47
+R048,Central Australia,Remote store,1383.34,1242.58,48
+S050,Central Australia,District supermarket,697.63,889.51,50
+R054,East Arnhem,Remote store,980.01,1137.27,54
+R055,East Arnhem,Remote store,1009.59,1160.47,55
+R056,East Arnhem,Remote store,1013.63,1130.80,56
+R057,East Arnhem,Remote store,1033.21,1134.57,57
+R058,East Arnhem,Remote store,1094.44,1103.37,58
+R059,East Arnhem,Remote store,1114.84,1222.03,59
+R060,East Arnhem,Remote store,1115.66,1213.60,60
+R061,East Arnhem,Remote store,1185.49,1165.45,61
+R062,East Arnhem,Remote store,1230.56,1189.27,62
+R063,East Arnhem,Remote store,1268.96,1215.98,63
+S065,East Arnhem,District supermarket,682.07,860.83,65
+R069,Top End,Remote store,830.97,996.68,69
+R070,Top End,Remote store,924.03,1093.32,70
+R071,Top End,Remote store,1008.39,1078.57,71
+R072,Top End,Remote store,1036.29,1092.15,72
+R073,Top End,Remote store,1039.87,1144.29,73
+R074,Top End,Remote store,1044.67,1049.23,74
+R075,Top End,Remote store,1055.04,1136.03,75
+R076,Top End,Remote store,1083.12,1102.41,76
+R077,Top End,Remote store,1087.42,1212.28,77
+R078,Top End,Remote store,1124.17,1291.82,78
+S080,Top End,District supermarket,721.07,886.65,80

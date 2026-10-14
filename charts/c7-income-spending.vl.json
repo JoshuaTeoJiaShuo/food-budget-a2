@@ -1,10 +1,11 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-  "description": "Average weekly household spending on meals out and other food purchases, by equivalised disposable household income quintile, Australia, 2015–16.",
+  "description": "Butterfly chart comparing average weekly household food spending by income quintile, Australia, 2015–16. Other food purchases extend left and meals out and fast foods extend right from a shared zero. Both sides use the same dollar scale; all spending amounts are positive.",
   "width": 640,
   "height": 380,
   "background": "#fffefa",
   "padding": 12,
+
   "data": {
     "url": "data/income-spending-joined.csv",
     "format": {
@@ -15,6 +16,7 @@
       }
     }
   },
+
   "transform": [
     {
       "fold": ["meals_weekly", "other_food_weekly"],
@@ -27,16 +29,21 @@
     {
       "calculate": "format(datum.weekly, '$,.2f')",
       "as": "value_label"
+    },
+    {
+      "calculate": "datum.spending_component === 'other_food_weekly' ? -datum.weekly : datum.weekly",
+      "as": "position"
     }
   ],
+
   "encoding": {
     "y": {
       "field": "income_quintile",
       "type": "ordinal",
       "sort": ["Lowest", "Second", "Third", "Fourth", "Highest"],
       "scale": {
-        "paddingInner": 0.3,
-        "paddingOuter": 0.15
+        "paddingInner": 0.5,
+        "paddingOuter": 0.25
       },
       "axis": {
         "title": null,
@@ -46,30 +53,28 @@
         "ticks": false
       }
     },
-    "yOffset": {
-      "field": "purchase_type",
-      "type": "nominal",
-      "sort": ["Meals out & fast foods", "Other food purchases"]
-    },
+
     "x": {
-      "field": "weekly",
+      "field": "position",
       "type": "quantitative",
+      "stack": null,
       "scale": {
-        "domain": [0, 230],
+        "domain": [-260, 260],
         "zero": true,
         "nice": false
       },
       "axis": {
         "title": "Average weekly spending per household (A$)",
         "titlePadding": 18,
-        "values": [0, 50, 100, 150, 200],
-        "format": "$.0f",
+        "values": [-200, -100, 0, 100, 200],
+        "labelExpr": "format(abs(datum.value), '$.0f')",
         "labelPadding": 8,
         "domain": false,
         "ticks": false,
         "grid": true
       }
     },
+
     "tooltip": [
       {
         "field": "income_quintile",
@@ -89,7 +94,25 @@
       }
     ]
   },
+
   "layer": [
+    {
+      "data": {
+        "values": [{}]
+      },
+      "mark": {
+        "type": "rule",
+        "color": "#819383",
+        "strokeWidth": 1.2
+      },
+      "encoding": {
+        "x": {"datum": 0},
+        "y": {"value": 0},
+        "y2": {"value": "height"},
+        "tooltip": null
+      }
+    },
+
     {
       "mark": {
         "type": "bar",
@@ -102,10 +125,10 @@
           "type": "nominal",
           "scale": {
             "domain": [
-              "Meals out & fast foods",
-              "Other food purchases"
+              "Other food purchases",
+              "Meals out & fast foods"
             ],
-            "range": ["#e8c8ad", "#c5d4c5"]
+            "range": ["#c5d4c5", "#e8c8ad"]
           },
           "legend": {
             "title": null,
@@ -121,12 +144,17 @@
         }
       }
     },
+
     {
       "mark": {
         "type": "text",
-        "align": "left",
+        "align": {
+          "expr": "datum.position < 0 ? 'right' : 'left'"
+        },
         "baseline": "middle",
-        "dx": 8,
+        "dx": {
+          "expr": "datum.position < 0 ? -8 : 8"
+        },
         "fontSize": 18,
         "color": "#223b36"
       },
@@ -138,6 +166,7 @@
       }
     }
   ],
+
   "config": {
     "font": "Arial",
     "view": {

@@ -1,0 +1,250 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "description": "NT basket costs for six people over a fortnight, 2023. Both panels share the same price scale and district order. Vertical jitter separates stores and has no numerical meaning.",
+  "background": "#fffefa",
+  "padding": 12,
+
+  "data": {
+    "url": "data/nt-market-basket-2023.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "healthy_basket_aud": "number",
+        "current_basket_aud": "number",
+        "source_row": "number"
+      }
+    }
+  },
+
+  "transform": [
+    {
+      "fold": [
+        "healthy_basket_aud",
+        "current_basket_aud"
+      ],
+      "as": ["basket_field", "basket_cost"]
+    },
+    {
+      "calculate": "datum.basket_field === 'healthy_basket_aud' ? 'Healthy food basket' : 'Current diet basket'",
+      "as": "basket_name"
+    },
+    {
+      "calculate": "datum.store_type === 'Remote store' ? ((datum.source_row * 37) % 101) / 100 - 0.5 : 0",
+      "as": "jitter"
+    }
+  ],
+
+  "facet": {
+    "field": "basket_name",
+    "type": "nominal",
+    "sort": [
+      "Healthy food basket",
+      "Current diet basket"
+    ],
+    "header": {
+      "title": null,
+      "labelFont": "Arial",
+      "labelFontSize": 20,
+      "labelFontWeight": "bold",
+      "labelColor": "#223b36",
+      "labelPadding": 16
+    }
+  },
+
+  "columns": 2,
+  "spacing": 28,
+
+  "spec": {
+    "width": 350,
+    "height": 340,
+
+    "encoding": {
+      "x": {
+        "field": "basket_cost",
+        "type": "quantitative",
+        "scale": {
+          "domain": [550, 1450],
+          "zero": false,
+          "nice": false
+        },
+        "axis": {
+          "title": "Basket cost (A$)",
+          "values": [600, 1000, 1400],
+          "format": "$,.0f",
+          "titlePadding": 18,
+          "labelPadding": 8,
+          "domain": false,
+          "ticks": false,
+          "grid": true
+        }
+      },
+
+      "y": {
+        "field": "district",
+        "type": "nominal",
+        "sort": [
+          "Barkly",
+          "Big Rivers",
+          "Central Australia",
+          "East Arnhem",
+          "Top End"
+        ],
+        "scale": {
+          "paddingInner": 0.25,
+          "paddingOuter": 0.3
+        },
+        "axis": {
+          "title": null,
+          "labelLimit": 220,
+          "labelPadding": 16,
+          "labelExpr": "datum.label === 'Central Australia' ? ['Central', 'Australia'] : datum.label",
+          "ticks": false,
+          "domain": false,
+          "grid": true,
+          "gridColor": "#e8ece6",
+          "gridDash": [2, 4]
+        }
+      },
+
+      "yOffset": {
+        "field": "jitter",
+        "type": "quantitative",
+        "scale": {
+          "domain": [-0.5, 0.5],
+          "range": [
+            {
+              "expr": "bandwidth('y') / 2 - 18"
+            },
+            {
+              "expr": "bandwidth('y') / 2 + 18"
+            }
+          ],
+          "nice": false
+        }
+      },
+
+      "tooltip": [
+        {
+          "field": "district",
+          "type": "nominal",
+          "title": "District"
+        },
+        {
+          "field": "store_type",
+          "type": "nominal",
+          "title": "Store type"
+        },
+        {
+          "field": "store_id",
+          "type": "nominal",
+          "title": "Anonymous reference"
+        },
+        {
+          "field": "basket_name",
+          "type": "nominal",
+          "title": "Basket"
+        },
+        {
+          "field": "basket_cost",
+          "type": "quantitative",
+          "title": "Six people / fortnight (A$)",
+          "format": ",.2f"
+        }
+      ]
+    },
+
+    "layer": [
+      {
+        "mark": {
+          "type": "point",
+          "filled": true,
+          "stroke": "#fffefa",
+          "strokeWidth": 0.8
+        },
+
+        "encoding": {
+          "color": {
+            "field": "store_type",
+            "type": "nominal",
+            "scale": {
+              "domain": [
+                "Remote store",
+                "District supermarket"
+              ],
+              "range": ["#39778b", "#223b36"]
+            },
+            "legend": {
+              "title": null,
+              "orient": "top",
+              "direction": "horizontal",
+              "columns": 2,
+              "columnPadding": 28,
+              "labelLimit": 0,
+              "offset": 20
+            }
+          },
+
+          "shape": {
+            "field": "store_type",
+            "type": "nominal",
+            "scale": {
+              "domain": [
+                "Remote store",
+                "District supermarket"
+              ],
+              "range": ["circle", "diamond"]
+            },
+            "legend": {
+              "title": null,
+              "orient": "top"
+            }
+          },
+
+          "size": {
+            "condition": {
+              "test": "datum.store_type === 'District supermarket'",
+              "value": 190
+            },
+            "value": 85
+          },
+
+          "opacity": {
+            "condition": {
+              "test": "datum.store_type === 'District supermarket'",
+              "value": 1
+            },
+            "value": 0.8
+          }
+        }
+      }
+    ]
+  },
+
+  "resolve": {
+    "scale": {
+      "x": "shared",
+      "y": "shared",
+      "color": "shared",
+      "shape": "shared"
+    }
+  },
+
+  "config": {
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 18,
+      "titleFontSize": 18,
+      "titleFontWeight": "normal",
+      "labelColor": "#223b36",
+      "titleColor": "#223b36",
+      "gridColor": "#e1e5de"
+    },
+    "legend": {
+      "labelFontSize": 18,
+      "labelColor": "#223b36"
+    }
+  }
+}

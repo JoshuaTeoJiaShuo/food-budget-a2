@@ -1,0 +1,245 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "description": "Foodbank 2025 estimates of moderate or severe food insecurity by parental status, connected to the 33% national benchmark. Connections show differences between estimates, not changes over time or statistical significance.",
+  "width": 600,
+  "height": 320,
+  "background": "#fffefa",
+  "padding": {
+    "left": 12,
+    "right": 24,
+    "top": 38,
+    "bottom": 12
+  },
+  "data": {
+    "url": "data/foodbank-parental-status-2025.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "year": "number",
+        "moderate_or_severe_pct": "number",
+        "sample_n": "number"
+      }
+    }
+  },
+  "transform": [
+    {
+      "calculate": "33",
+      "as": "national_pct"
+    },
+    {
+      "calculate": "datum.moderate_or_severe_pct - datum.national_pct",
+      "as": "difference_pp"
+    },
+    {
+      "calculate": "format(datum.moderate_or_severe_pct, '.0f') + '%'",
+      "as": "estimate_label"
+    },
+    {
+      "calculate": "datum.parental_status === 'Relative/co-resident of child' ? 'Relative/co-resident|of child' : datum.parental_status === 'Households without children' ? 'Households without|children' : datum.parental_status",
+      "as": "display_label"
+    }
+  ],
+  "encoding": {
+    "x": {
+      "field": "moderate_or_severe_pct",
+      "type": "quantitative",
+      "scale": {
+        "domain": [0, 80],
+        "nice": false,
+        "zero": true
+      },
+      "axis": {
+        "title": "Households experiencing food insecurity (%)",
+        "values": [0, 20, 40, 60, 80],
+        "labelExpr": "datum.value + '%'",
+        "labelPadding": 8,
+        "titlePadding": 18,
+        "domain": false,
+        "ticks": false,
+        "grid": true
+      }
+    }
+  },
+  "layer": [
+    {
+      "data": {
+        "values": [
+          {
+            "national_pct": 33
+          }
+        ]
+      },
+      "mark": {
+        "type": "rule",
+        "color": "#786c78",
+        "strokeDash": [5, 5],
+        "strokeWidth": 1.5
+      },
+      "encoding": {
+        "x": {
+          "field": "national_pct",
+          "type": "quantitative"
+        }
+      }
+    },
+    {
+      "data": {
+        "values": [
+          {
+            "national_pct": 33,
+            "label": "National: 33%"
+          }
+        ]
+      },
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "baseline": "bottom",
+        "dy": -12,
+        "fontSize": 18,
+        "fontWeight": "bold",
+        "color": "#69516b"
+      },
+      "encoding": {
+        "x": {
+          "field": "national_pct",
+          "type": "quantitative"
+        },
+        "y": {
+          "value": 0
+        },
+        "text": {
+          "field": "label"
+        }
+      }
+    },
+    {
+      "encoding": {
+        "y": {
+          "field": "display_label",
+          "type": "nominal",
+          "sort": [
+            "Single-parent",
+            "Relative/co-resident|of child",
+            "Non single-parent",
+            "Households without|children"
+          ],
+          "axis": {
+            "title": null,
+            "labelExpr": "split(datum.label, '|')",
+            "labelLimit": 250,
+            "labelLineHeight": 24,
+            "labelPadding": 14,
+            "domain": false,
+            "ticks": false
+          }
+        },
+        "tooltip": [
+          {
+            "field": "parental_status",
+            "type": "nominal",
+            "title": "Parental status"
+          },
+          {
+            "field": "moderate_or_severe_pct",
+            "type": "quantitative",
+            "title": "Moderate or severe food insecurity (%)",
+            "format": ".0f"
+          },
+          {
+            "field": "national_pct",
+            "type": "quantitative",
+            "title": "National benchmark (%)",
+            "format": ".0f"
+          },
+          {
+            "field": "difference_pp",
+            "type": "quantitative",
+            "title": "Difference from national (percentage points)",
+            "format": "+.0f"
+          },
+          {
+            "field": "sample_n",
+            "type": "quantitative",
+            "title": "Survey sample (respondents)",
+            "format": ",.0f"
+          }
+        ]
+      },
+      "layer": [
+        {
+          "mark": {
+            "type": "rule",
+            "strokeWidth": 3,
+            "color": "#b8a6b8"
+          },
+          "encoding": {
+            "x2": {
+              "field": "national_pct"
+            }
+          }
+        },
+        {
+          "mark": {
+            "type": "point",
+            "filled": true,
+            "fill": "#fffefa",
+            "stroke": "#786c78",
+            "strokeWidth": 1.5,
+            "size": 85,
+            "opacity": 1
+          },
+          "encoding": {
+            "x": {
+              "field": "national_pct",
+              "type": "quantitative"
+            },
+            "tooltip": null
+          }
+        },
+        {
+          "mark": {
+            "type": "point",
+            "filled": true,
+            "color": "#70516f",
+            "stroke": "#fffefa",
+            "strokeWidth": 1.5,
+            "size": 190,
+            "opacity": 1
+          }
+        },
+        {
+          "mark": {
+            "type": "text",
+            "align": "left",
+            "baseline": "middle",
+            "dx": 14,
+            "fontSize": 20,
+            "fontWeight": "bold",
+            "color": "#513c51"
+          },
+          "encoding": {
+            "text": {
+              "field": "estimate_label"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "config": {
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "axis": {
+      "labelFontSize": 18,
+      "titleFontSize": 18,
+      "titleFontWeight": "normal",
+      "labelColor": "#223b36",
+      "titleColor": "#223b36",
+      "gridColor": "#e1e5de",
+      "gridOpacity": 0.7
+    }
+  }
+}

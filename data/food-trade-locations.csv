@@ -1,0 +1,20 @@
+origin,label,longitude,latitude,position_method
+Australia,Australia,133.0639,-24.8489,basemap_interior
+New Zealand,New Zealand,171.2585,-43.5659,basemap_interior
+United States of America,USA,-99.3122,37.2318,basemap_interior
+Italy (includes Holy See and San Marino),Italy*,12.6913,42.5108,basemap_interior
+Netherlands,Netherlands,5.4698,52.1573,basemap_interior
+France (includes Andorra and Monaco),France*,2.0752,46.7456,basemap_interior
+"United Kingdom, Channel Islands and Isle of Man, nfd",UK group*,-1.8144,54.2954,basemap_interior
+Vietnam,Vietnam,107.7967,15.9788,basemap_interior
+Thailand,Thailand,101.6626,13.0575,basemap_interior
+China (excludes SARs and Taiwan),China,98.9020,36.8712,basemap_interior
+Indonesia,Indonesia,113.2388,0.1002,basemap_interior
+Denmark (includes Greenland and Faroe Islands),Denmark*,9.4482,56.2803,basemap_interior
+Belgium,Belgium,4.7738,50.4998,basemap_interior
+India,India,79.2278,21.7302,basemap_interior
+Turkiye,Turkiye,35.5081,38.9307,basemap_interior
+Germany,Germany,10.5448,51.1421,basemap_interior
+Switzerland (includes Liechtenstein),Switzerland*,8.2854,46.8037,basemap_interior
+Poland,Poland,19.0836,51.9418,basemap_interior
+Singapore,Singapore,103.8000,1.3500,approximate_manual

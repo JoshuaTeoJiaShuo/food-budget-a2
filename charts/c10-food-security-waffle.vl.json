@@ -1,0 +1,148 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
+  "description": "Foodbank 2025 national food-security estimates. One square represents one percentage point of households, not one respondent. Moderate and severe food insecurity together account for 33%.",
+
+  "width": 360,
+  "height": 360,
+  "background": "#fffefa",
+
+  "data": {
+    "url": "data/foodbank-security-2025.csv",
+    "format": {
+      "type": "csv",
+      "parse": {
+        "pct": "number"
+      }
+    }
+  },
+
+  "transform": [
+    {
+      "calculate": "datum.status === 'Severely food insecure' ? 0 : datum.status === 'Moderately food insecure' ? 1 : datum.status === 'Marginally food secure' ? 2 : 3",
+      "as": "status_order"
+    },
+    {
+      "window": [
+        {
+          "op": "sum",
+          "field": "pct",
+          "as": "cumulative_pct"
+        }
+      ],
+      "sort": [
+        {
+          "field": "status_order",
+          "order": "ascending"
+        }
+      ],
+      "frame": [null, 0]
+    },
+    {
+      "calculate": "sequence(datum.cumulative_pct - datum.pct, datum.cumulative_pct)",
+      "as": "cells"
+    },
+    {
+      "flatten": ["cells"],
+      "as": ["cell"]
+    },
+    {
+      "calculate": "datum.cell % 10",
+      "as": "column"
+    },
+    {
+      "calculate": "floor(datum.cell / 10)",
+      "as": "row"
+    },
+    {
+      "calculate": "datum.status + ' — ' + format(datum.pct, '.0f') + '%'",
+      "as": "status_label"
+    }
+  ],
+
+  "mark": {
+    "type": "rect",
+    "stroke": "#c0b2bc",
+    "strokeWidth": 0.7,
+    "cornerRadius": 2
+  },
+
+  "encoding": {
+    "x": {
+      "field": "column",
+      "type": "ordinal",
+      "sort": "ascending",
+      "axis": null,
+      "scale": {
+        "paddingInner": 0.12,
+        "paddingOuter": 0
+      }
+    },
+    "y": {
+      "field": "row",
+      "type": "ordinal",
+      "sort": "ascending",
+      "axis": null,
+      "scale": {
+        "paddingInner": 0.12,
+        "paddingOuter": 0
+      }
+    },
+    "color": {
+      "field": "status_label",
+      "type": "nominal",
+      "sort": {
+        "field": "status_order",
+        "op": "min",
+        "order": "ascending"
+      },
+      "scale": {
+        "range": [
+          "#65405d",
+          "#a47d99",
+          "#d2c1ce",
+          "#eee8ed"
+        ]
+      },
+      "legend": {
+        "title": "Food security in 2025",
+        "orient": "right",
+        "direction": "vertical",
+        "labelLimit": 0,
+        "titleLimit": 0,
+        "symbolType": "square",
+        "symbolSize": 200,
+        "rowPadding": 20,
+        "labelOffset": 10,
+        "titlePadding": 18,
+        "offset": 28
+      }
+    },
+    "tooltip": [
+      {
+        "field": "status",
+        "type": "nominal",
+        "title": "Food-security status"
+      },
+      {
+        "field": "pct",
+        "type": "quantitative",
+        "title": "Share of households (%)",
+        "format": ".0f"
+      }
+    ]
+  },
+
+  "config": {
+    "font": "Arial",
+    "view": {
+      "stroke": null
+    },
+    "legend": {
+      "labelFontSize": 18,
+      "titleFontSize": 18,
+      "titleFontWeight": 600,
+      "labelColor": "#223b36",
+      "titleColor": "#223b36"
+    }
+  }
+}

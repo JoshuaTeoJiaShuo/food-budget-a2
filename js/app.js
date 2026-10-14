@@ -3,12 +3,16 @@ import { showChartError } from "./chart-utils.js";
 import { initialiseC1 } from "./c1.js";
 import { initialiseC2 } from "./c2.js";
 import { initialiseC3 } from "./c3.js";
-import { initialiseC4 } from "./c4.js";
+import { initialiseC4Flow } from "./c4-flow.js";
 import { initialiseC5 } from "./c5.js";
 import { initialiseC6 } from "./c6.js";
 import { initialiseC7 } from "./c7.js";
 import { initialiseC8 } from "./c8.js";
 import { initialiseC9 } from "./c9.js";
+import { initialiseC10 } from "./c10.js";
+import { initialiseC11 } from "./c11.js";
+import { initialiseC12 } from "./c12.js";
+import { initialiseC13 } from "./c13.js";
 
 async function start() {
   initialiseReadingSize();
@@ -17,12 +21,16 @@ async function start() {
     initialiseC1,
     initialiseC2,
     initialiseC3,
-    initialiseC4,
+    initialiseC4Flow,
     initialiseC5,
     initialiseC6,
     initialiseC7,
     initialiseC8,
     initialiseC9,
+    initialiseC10,
+    initialiseC11,
+    initialiseC12,
+    initialiseC13,
   ];
 
   const controllers = [];
