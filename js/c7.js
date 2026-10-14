@@ -51,9 +51,13 @@ export function initialiseC7() {
         (layer) => layer.mark?.type === "text"
       );
 
-      valueLayer.mark.fontWeight = {
-        expr: `(${endpoint}) ? 'bold' : 'normal'`,
-      };
+      // Label only the lowest- and highest-income groups.
+      valueLayer.transform = [
+        ...(valueLayer.transform ?? []),
+        { filter: endpoint },
+      ];
+
+      valueLayer.mark.fontWeight = "bold";
 
       // Direct headings replace the detached legend.
       const barLayer = spec.layer.find(

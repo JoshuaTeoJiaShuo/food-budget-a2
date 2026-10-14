@@ -150,7 +150,7 @@
                   "$70–under $90",
                   "$90 and over"
                 ],
-                "range": [250, 900, 2000]
+                "range": [150, 650, 3200]
               },
               "legend": {
                 "title": "Average weekly household spending",

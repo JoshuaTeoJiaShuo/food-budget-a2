@@ -57,9 +57,13 @@ export function initialiseC8() {
         (layer) => layer.mark?.type === "text"
       );
 
-      valueLayer.mark.fontWeight = {
-        expr: `(${endpoint}) ? 'bold' : 'normal'`,
-      };
+      // Label only the lowest- and highest-income groups.
+      valueLayer.transform = [
+        ...(valueLayer.transform ?? []),
+        { filter: endpoint },
+      ];
+
+      valueLayer.mark.fontWeight = "bold";
 
       const rowBands = {
         transform: [{ filter: endpoint }],

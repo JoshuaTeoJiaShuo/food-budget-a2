@@ -86,7 +86,7 @@
             </p>
           </div>
         </div>
-
+        <div class="chapter-body">
         <!-- C1: Historical context -->
         <figure class="chart-panel c1-panel" aria-labelledby="c1-title">
           <figcaption>
@@ -139,11 +139,6 @@
           ></p>
         </figure>
 
-        <p class="basket-transition">
-          By 2015–16, the remaining two-thirds of food spending covered
-          a more fragmented basket of purchases. Looking inside those
-          broad groups reveals how households divided their weekly bill.
-        </p>
 
         <!-- C2: The basket behind the broad categories -->
         <figure class="chart-panel c2-panel" aria-labelledby="c2-title">
@@ -153,59 +148,60 @@
             </h3>
           </figcaption>
 
-          <div class="basket-row">
-            <div class="basket-visual">
-              <div class="chart-controls">
-                <label for="c2-group">Explore a group</label>
+          <p class="section-copy">
+            Meals out and fast foods formed the largest food group at
+            <strong>$80.27 per household per week</strong>.
+            Explore the other groups to see the purchases within them.
+          </p>
 
-                <select id="c2-group" aria-describedby="c2-control-help">
-                  <option value="">All food groups</option>
-                </select>
+          <div class="chart-controls">
+            <label for="c2-group">Explore a group</label>
 
-                <button id="c2-reset" type="button" disabled>
-                  All groups
-                </button>
-              </div>
+            <select id="c2-group" aria-describedby="c2-control-help">
+              <option value="">All food groups</option>
+            </select>
 
-              <p id="c2-context" class="chart-reading" aria-live="polite">
-                Average household spending in Australian dollars per week,
-                2015–16.
-              </p>
-
-              <div
-                id="chart-2"
-                class="chart"
-                role="img"
-                aria-label="Nested treemap of average household food spending in 2015–16"
-                aria-describedby="c2-context c2-reading"
-              ></div>
-            </div>
-
-            <div class="basket-copy">
-              <p>
-                At <strong>$80.27 a week</strong>, meals out and fast foods
-                formed the largest food group. The other purchases were
-                spread across groups such as meat, vegetables and dairy,
-                each containing different kinds of food.
-              </p>
-
-              <p id="c2-reading" class="chart-reading">
-                Rectangle area shows weekly spending. Tan marks meals out
-                and fast foods; green marks other food purchases.
-              </p>
-
-              <p id="c2-control-help" class="chart-reading">
-                Select a group to enlarge its categories. Within that view,
-                rectangle sizes compare purchases in the selected group.
-                Choose “All groups” to return to the complete basket.
-              </p>
-
-              <p class="chart-reading">
-                This breakdown separates meat from seafood, and fruit and
-                nuts from vegetables, unlike the broader historical groups above.
-              </p>
-            </div>
+            <button id="c2-reset" type="button" disabled>
+              All groups
+            </button>
           </div>
+
+          <p id="c2-context" class="chart-reading" aria-live="polite">
+            Average household spending in Australian dollars per week,
+            2015–16.
+          </p>
+
+          <p id="c2-reading" class="chart-reading">
+            Rectangle area represents spending. Tan highlights meals out
+            and fast foods; green represents other food purchases.
+          </p>
+
+          <div
+            id="chart-2"
+            class="chart"
+            role="img"
+            aria-label="Nested treemap of average household food spending in 2015–16"
+            aria-describedby="c2-context c2-reading"
+          ></div>
+
+          <details class="chart-details">
+            <summary>Explore the hierarchy and understand the categories</summary>
+
+            <div class="methods-content">
+              <p id="c2-control-help">
+                Select a food group to enlarge its categories.
+                Rectangle areas then compare purchases within that group.
+                Choose “All groups” to return to the complete basket.
+                Hover over a rectangle for its full name and value.
+              </p>
+
+              <p>
+                This detailed breakdown separates meat from seafood,
+                and fruit and nuts from vegetables, unlike the broader
+                historical groups in the preceding chart.
+              </p>
+            </div>
+          </details>
 
           <details class="chart-details">
             <summary>Read exact values and full category names</summary>
@@ -236,10 +232,11 @@
         </figure>
 
         <p class="basket-transition">
-          That $80.27 meals-out bill was a national average. Across states
-          and territories, the estimates ranged from
-          <strong>$59.86 in Tasmania</strong> to
-          <strong>$100.82 in the ACT</strong>.
+          The <span class="text-meals">$80.27 weekly meals-out bill</span>
+          was a national average. ACT households spent
+          <strong>about 68% more</strong> on meals out and fast foods
+          than Tasmanian households:
+          <strong>$100.82 versus $59.86 a week</strong>.
         </p>
 
         <!-- C3: Variation behind the national average -->
@@ -388,10 +385,11 @@
         </h2>
 
         <p class="section-copy">
-          Group households devoted <strong>54.5%</strong> of their food
-          spending to meals out and fast foods. Yet they accounted for only
-          <strong>3.4%</strong> of estimated total food expenditure across
-          the seven household types.
+          Group households devoted
+          <span class="text-meals">more than half their food budget
+          to meals out and fast foods</span>—54.5%.
+          Yet they contributed only <strong>3.4%</strong> of estimated
+          food spending across the seven household types.
         </p>
 
         <!-- C5: Spending composition and contribution -->
@@ -403,9 +401,10 @@
           </figcaption>
 
           <p id="c5-chart-help" class="chart-reading">
-            Column width shows each type’s contribution to total food spending.
-            Tan segment height shows its meals-out share.
-            Numbers beneath the columns identify the household types below.
+            Wider columns mean a larger contribution to total food spending.
+            The <span class="text-meals">tan segment</span> shows the
+            meals-out share within each household type.
+            Numbers identify the household types listed below.
           </p>
 
           <div
@@ -479,10 +478,11 @@
         </p>
 
         <p class="section-transition">
-          The green portions combine many other purchases. Separating those
-          categories reveals another consideration: a household bill may
-          be shared by one person or several. Switching the comparison below
-          shows how the pattern changes when household size is taken into account.
+          Couples with dependent children accounted for
+          <strong>38.3% of estimated food spending</strong>,
+          the largest contribution of any household type.
+          But a household bill also feeds different numbers of people.
+          Comparing spending per person changes the basis of comparison.
         </p>
 
         <!-- C6: Household size and category spending -->
@@ -652,11 +652,10 @@
 
           <div class="pure-u-1-1 description-right">
             <p class="income-intro">
-              In 2015–16, the lowest-income group spent
-              <strong>$144.40 a week on food</strong>, compared with
-              <strong>$339.32</strong> in the highest-income group.
-              Yet food occupied a larger share of the lower-income
-              group's total spending.
+              The lowest-income group spent less than half as much
+              on food as the highest-income group:
+              <strong>$144.40 versus $339.32 per household a week</strong>
+              in 2015–16. Yet food took a larger share of its total spending.
             </p>
           </div>
         </div>
@@ -698,10 +697,11 @@
               </p>
 
               <p class="income-chart-takeaway">
-                The spending difference was sharper for meals out:
-                <strong>4.6 times as much</strong> in the highest-income
-                group as in the lowest, compared with
-                <strong>1.7 times</strong> for other food.
+                The highest-income group spent
+                <span class="text-meals">4.6 times as much on meals out
+                and fast foods</span> as the lowest-income group,
+                compared with <strong>1.7 times as much</strong>
+                on other food purchases.
               </p>
             </figure>
 
@@ -746,8 +746,8 @@
           <div class="income-synthesis">
             <p>
               <strong>
-                A smaller food bill does not necessarily indicate
-                a smaller claim on the household budget.
+                Lower-income households spent fewer food dollars,
+                but food absorbed more of their budget.
               </strong>
             </p>
           </div>
@@ -834,10 +834,10 @@
         </h2>
 
         <p class="section-copy">
-          Spending differences reflect both what households purchase and
-          what those purchases cost. Australia's food supply includes overseas
-          sources, while consumer prices vary over time and basket costs
-          differ between places.
+          Household budgets also face different food prices.
+          Australia's imports connect its food supply to overseas markets;
+          consumer price indexes show changes over time, while local
+          basket surveys reveal differences between stores.
         </p>
 
         <!-- C4: Supply context -->
@@ -911,10 +911,9 @@
         </figure>
 
         <p class="section-transition">
-          These trade connections describe part of the supply system.
-          They do not establish why retail prices changed. For the price
-          movements experienced by consumers, we turn to the Consumer
-          Price Index.
+          Import values describe overseas purchases, not supermarket prices.
+          At the consumer level, food categories followed markedly
+          different price paths.
         </p>
 
         <!-- C9: Changes in consumer prices -->
@@ -984,10 +983,12 @@
         </figure>
 
         <p class="section-transition">
-          These indexes describe price changes across Australia's eight
-          capital cities. They do not show the dollar cost of a particular
-          basket in every community. A separate Northern Territory survey
-          provides a closer look at differences between stores.
+          These capital-city price trends hide local differences.
+          In the Northern Territory's 2023 survey,
+          <span class="text-remote">remote stores</span>
+          consistently recorded higher basket costs than their
+          <span class="text-supermarket">district supermarket</span>
+          comparisons.
         </p>
 
         <!-- C13: Local basket costs -->
@@ -999,36 +1000,23 @@
           </figcaption>
 
           <p class="section-copy">
-            In all five districts, every surveyed remote store recorded a
-            higher basket cost than its district supermarket comparison.
-            This held for both baskets, each specified for a
-            <strong>family of six over a fortnight</strong>.
+            The comparison covers <strong>54 remote stores across five
+            districts</strong>. Both baskets specify food for
+            <strong>six people over a fortnight</strong>.
           </p>
 
           <div class="chart-controls">
             <label for="c13-basket">Compare basket costs</label>
 
-            <select
-              id="c13-basket"
-              aria-controls="chart-13"
-              aria-describedby="c13-chart-help"
-              disabled
-            >
-              <option value="Healthy food basket" selected>
-                Healthy food basket
-              </option>
-              <option value="Current diet basket">
-                Current diet basket
-              </option>
-            </select>
           </div>
 
           <p id="c13-chart-help" class="chart-reading">
-            Both panels show basket costs for six people over a fortnight,
-            using the same dollar scale and district order. Circles represent
-            remote stores; diamonds represent district supermarket comparisons.
-            Further right means a higher cost. Vertical spacing separates
-            nearby dots and has no numerical meaning. Hover for exact prices.
+            Circles represent <span class="text-remote">remote stores</span>;
+            diamonds represent
+            <span class="text-supermarket">district supermarkets</span>.
+            Both panels use the same dollar scale: further right means
+            higher cost. Vertical offsets separate dots and have no
+            numerical meaning. Hover for exact prices.
           </p>
 
           <div
@@ -1059,7 +1047,7 @@
         <p class="section-transition">
           A basket's price is only one side of affordability.
           The other is the household's resources. Foodbank's separate
-          2025 survey brings the story back to whether households
+          2025 survey brings us back to whether households
           had enough to eat.
         </p>
 
@@ -1226,53 +1214,39 @@
       </section>
       <!-- SECTION 5: Food access -->
       <section
-        class="chapter"
+        class="chapter household-story"
         id="food-access"
         aria-labelledby="food-access-title"
       >
         <div class="section-number">05 / ACCESS TO ENOUGH FOOD</div>
 
-        <div class="pure-g chapter-heading">
-          <div class="pure-u-1-1 description-left">
-            <h2 id="food-access-title">
-              An average food bill cannot tell us who has enough
-            </h2>
-          </div>
+        <h2 id="food-access-title">
+          An average food bill cannot tell us who has enough
+        </h2>
 
-          <div class="pure-u-1-1 description-right">
-            <p>
-              Foodbank's 2025 survey shifts the question from spending
-              and prices to food security: how widespread was difficulty
-              accessing enough food, and how did it vary across states
-              and household groups?
-            </p>
-          </div>
-        </div>
+        <p class="section-copy">
+          Foodbank estimated that <strong>33% of Australian households</strong>
+          experienced moderate or severe food insecurity in 2025.
+          This included <strong>20%</strong> classified as
+          <span class="text-severe">severely food insecure</span>—
+          one in five households.
+        </p>
 
-        <!-- C10: National food-security estimates -->
+        <!-- C10: National picture -->
         <figure class="chart-panel" aria-labelledby="c10-title">
-          <figcaption class="chart-heading">
-            <p class="chart-kicker">
-              FOOD ACCESS · FOODBANK HUNGER REPORT 2025
-            </p>
-
+          <figcaption>
             <h3 id="c10-title">
-              One in three households experienced food insecurity
+              Food security among Australian households, 2025
             </h3>
-
-            <p class="chart-deck">
-              Foodbank estimated that <strong>33%</strong> of Australian
-              households experienced moderate or severe food insecurity.
-              This included <strong>20%</strong> classified as severely
-              food insecure—one in five households.
-            </p>
           </figcaption>
 
           <p id="c10-chart-help" class="chart-reading">
-            Each square represents one percentage point of households.
-            Read from left to right, starting at the top.
-            The two darkest shades together represent the 33% experiencing
-            moderate or severe food insecurity.
+            Each house symbol represents 1% of Australian households.
+            Read left to right, starting at the top.
+            The darkest purple represents households classified as
+            <span class="text-severe">severely food insecure</span>;
+            the next shade represents moderate food insecurity.
+            Together, they account for 33%.
           </p>
 
           <div
@@ -1285,103 +1259,43 @@
             <div
               id="chart-10"
               class="chart"
-              aria-label="Foodbank estimated 20% of households were severely food insecure, 13% moderately food insecure, 11% marginally food secure and 56% highly food secure."
+              aria-label="Severely food insecure: 20%; moderately food insecure: 13%; marginally food secure: 11%; highly food secure: 56%."
             ></div>
           </div>
 
           <p id="c10-scroll-help" class="scroll-help">
             If needed, scroll horizontally to see all category labels.
           </p>
-
-          <details class="chart-details">
-            <summary>What do the squares and categories represent?</summary>
-
-            <div class="methods-content">
-              <p>
-                The 100 squares show published, rounded percentages.
-                They do not represent 100 survey respondents.
-                Foodbank's survey had a sample of 4,260 respondents.
-              </p>
-
-              <p>
-                The headline 33% combines the moderately and severely
-                food-insecure categories. The 11% classified as marginally
-                food secure is shown separately and is not included in
-                that headline.
-              </p>
-
-              <p>
-                Foodbank/Ipsos used an online survey with quotas and
-                weighting. Fieldwork ran from 24 June to 17 July 2025.
-                These are survey estimates, rather than a census of
-                Australian households.
-              </p>
-
-              <p>
-                This is a different sample and measure from the ABS
-                expenditure survey. The chart does not establish that
-                households spending less on food were food insecure,
-                or that the price changes shown above caused these outcomes.
-              </p>
-
-              <p>
-                The food-security evidence relates to 2025.
-                It should not be interpreted as an outcome measured after
-                the June 2026 endpoint of the preceding price chart.
-              </p>
-            </div>
-          </details>
-
-          <p class="chart-source">
-            Source:
-            <a href="https://reports.foodbank.org.au/wp-content/uploads/2025/10/Foodbank_Hunger_Report_2025_Ipsos_WEBCOPY.pdf">
-              Foodbank Hunger Report 2025, Figure 4
-            </a>.
-            National food-security categories; published percentages.
-          </p>
-
-          <div class="chart-links">
-            <a href="charts/c10-food-security-waffle.vl.json">Chart specification</a>
-            <a href="data/foodbank-security-2025.csv">View food-security data</a>
-          </div>
         </figure>
 
-        <p class="story-bridge">
-          The national estimate establishes the scale of food insecurity.
-          How did reported prevalence differ across states and territories?
+        <p class="section-transition">
+          This national estimate was reflected across much of the country:
+          seven state and territory estimates fell between
+          <strong>30% and 35%</strong>. The Northern Territory estimate
+          stood apart at 46%, although its small survey sample makes
+          that result less certain.
         </p>
 
-        <!-- C11: Food insecurity by state and territory -->
+        <!-- C11: Geographical context -->
         <figure class="chart-panel" aria-labelledby="c11-title">
-          <figcaption class="chart-heading">
-            <p class="chart-kicker">
-              FOOD ACCESS BY LOCATION · FOODBANK 2025
-            </p>
-
+          <figcaption>
             <h3 id="c11-title">
-              Most state and territory estimates were close to one in three
+              Moderate or severe food insecurity by state and territory
             </h3>
-
-            <p class="chart-deck">
-              Seven estimates ranged from <strong>30% to 35%</strong>,
-              compared with <strong>33% nationally</strong>.
-              The Northern Territory estimate was <strong>46%</strong>,
-              but came from a small sample and needs cautious interpretation.
-            </p>
           </figcaption>
 
           <p id="c11-chart-help" class="chart-reading">
-            Darker purple indicates a larger estimated percentage of
-            households experiencing moderate or severe food insecurity.
-            Labels show the percentages; hover for survey sample sizes.
-            The map shows prevalence, not the number of affected households.
+            Darker purple indicates a higher estimated percentage of
+            households experiencing food insecurity. Hover for exact
+            estimates and sample sizes. The map shows prevalence,
+            not the number of affected households.
           </p>
 
           <div
             class="chart-scroll"
             role="region"
             tabindex="0"
-            aria-label="Food insecurity estimates by Australian state and territory"
+            aria-label="Food insecurity by Australian state and territory"
             aria-describedby="c11-chart-help c11-sample-note c11-scroll-help"
           >
             <div
@@ -1396,95 +1310,28 @@
           </p>
 
           <p id="c11-sample-note" class="chart-reading">
-            <strong>† Small survey samples:</strong>
-            Northern Territory: 102 respondents; ACT: 69 respondents.
-            Their estimates are less precise than larger samples would
-            generally allow. The displayed differences have not been
-            tested here for statistical significance.
+            <strong>† Small samples:</strong> Northern Territory:
+            102 respondents; ACT: 69 respondents. Small differences
+            should not be treated as a reliable ranking. Statistical
+            significance has not been tested here.
           </p>
-
-          <details class="chart-details">
-            <summary>How should these geographical differences be interpreted?</summary>
-
-            <div class="methods-content">
-              <p>
-                Every state uses the same measure: the published percentage
-                of households classified as moderately or severely food
-                insecure. The national reference is 33%, as introduced in
-                the preceding waffle chart.
-              </p>
-
-              <p>
-                These are weighted Foodbank/Ipsos survey estimates.
-                Sample sizes count respondents, not the number of
-                food-insecure households in a state.
-              </p>
-
-              <p>
-                Small differences between estimates should not be treated
-                as a reliable ranking. State land area also does not
-                represent population: a large coloured region need not
-                contain the largest number of affected households.
-              </p>
-
-              <p>
-                The earlier spending maps describe ABS household expenditure
-                in 2015–16. This map describes food insecurity in a separate
-                2025 survey. Matching state names does not establish that
-                spending patterns caused the food-security outcomes.
-              </p>
-
-              <p>
-                Generalised ABS 2016 state and territory boundaries are
-                reused for geographical display. They do not change the
-                2025 reference period of the Foodbank estimates.
-              </p>
-            </div>
-          </details>
-
-          <p class="chart-source">
-            Estimates:
-            <a href="https://reports.foodbank.org.au/wp-content/uploads/2025/10/Foodbank_Hunger_Report_2025_Ipsos_WEBCOPY.pdf">
-              Foodbank Hunger Report 2025, Table 11
-            </a>.
-            Boundaries:
-            <a href="https://www.abs.gov.au/ausstats/abs@.nsf/mf/1270.0.55.001">
-              ABS Australian Statistical Geography Standard, July 2016
-            </a>,
-            simplified for display.
-          </p>
-
-          <div class="chart-links">
-            <a href="charts/c11-state-food-security.vl.json">Chart specification</a>
-            <a href="data/foodbank-state-2025.csv">
-              View state estimates and sample sizes
-            </a>
-          </div>
         </figure>
 
-        <p class="story-bridge">
-          State averages still combine households with very different
-          circumstances. Returning to the households behind the numbers,
-          how did food insecurity differ by parental status?
+        <p class="section-transition">
+          Geography still leaves important differences hidden within
+          each state. Returning to household circumstances,
+          <strong>68% of single-parent households</strong> were estimated
+          to experience food insecurity—35 percentage points above
+          the national estimate. For households without children,
+          the estimate was 28%.
         </p>
 
-        <!-- C12: Food insecurity by parental status -->
+        <!-- C12: Household circumstances -->
         <figure class="chart-panel" aria-labelledby="c12-title">
-          <figcaption class="chart-heading">
-            <p class="chart-kicker">
-              FOOD ACCESS BY PARENTAL STATUS · FOODBANK 2025
-            </p>
-
+          <figcaption>
             <h3 id="c12-title">
-              Single-parent households reported the highest food insecurity
+              Food insecurity by parental status, compared with the national estimate
             </h3>
-
-            <p class="chart-deck">
-              Among the four parental-status groups, the estimate for
-              single-parent households was <strong>68%</strong>:
-              <strong>35 percentage points above</strong> the national
-              estimate of 33%. For households without children, it was 28%.
-            </p>
           </figcaption>
 
           <p id="c12-chart-help" class="chart-reading">
@@ -1503,111 +1350,178 @@
             <div
               id="chart-12"
               class="chart"
-              aria-label="Moderate or severe food insecurity: single-parent households 68%, relatives or co-residents of a child 40%, non-single-parent households 39%, and households without children 28%. National estimate: 33%."
+              aria-label="Moderate or severe food insecurity: single-parent households 68%; relatives or co-residents of a child 40%; non-single-parent households 39%; households without children 28%. National estimate: 33%."
             ></div>
           </div>
 
           <p id="c12-scroll-help" class="scroll-help">
             On narrow screens, scroll horizontally to see the full comparison.
           </p>
+        </figure>
 
-          <details class="chart-details">
-            <summary>How should I interpret these comparisons?</summary>
+        <p class="section-copy">
+          The story began with how households divided their food dollars.
+          These findings add another dimension: whether households had
+          enough food at all. Spending patterns and food security are
+          different measures, but both show why a national average cannot
+          describe every household's circumstances.
+        </p>
 
-            <div class="methods-content">
-              <p>
-                Percentages are weighted Foodbank/Ipsos estimates of
-                moderate or severe food insecurity. The four groups follow
-                the report's parental-status categories. Their sample sizes
-                were 130 single-parent respondents, 1,080 non-single-parent
-                respondents, 133 relatives or co-residents of a child,
-                and 2,917 respondents in households without children.
-              </p>
-
-              <p>
-                The national benchmark includes respondents from these
-                groups; it is not an independent control group.
-                Connecting lines display differences in percentage points.
-                They are not confidence intervals or tests of statistical
-                significance. In particular, the 39% and 40% estimates
-                should not be interpreted as a reliable ranking.
-              </p>
-
-              <p>
-                These 2025 survey groups are not the same households
-                observed in the earlier ABS expenditure survey.
-                The comparison describes an association with household
-                circumstances; it does not establish what caused
-                food insecurity.
-              </p>
-            </div>
-          </details>
-
-          <p class="chart-source">
+        <!-- Shared sources and methods -->
+        <div class="section-sources">
+          <p>
             Source:
             <a href="https://reports.foodbank.org.au/wp-content/uploads/2025/10/Foodbank_Hunger_Report_2025_Ipsos_WEBCOPY.pdf">
               Foodbank Hunger Report 2025
             </a>.
-            Published parental-status estimates and sample sizes;
-            national moderate or severe food insecurity estimate: 33%.
+            National categories: Figure 4; state estimates: Table 11;
+            parental-status estimates and sample sizes: report tables.
+            Map boundaries:
+            <a href="https://www.abs.gov.au/ausstats/abs@.nsf/mf/1270.0.55.001">
+              ABS Australian Statistical Geography Standard, July 2016
+            </a>,
+            simplified for display.
           </p>
 
-          <div class="chart-links">
-            <a href="charts/c12-parental-food-security.vl.json">
-              Chart specification
-            </a>
-            <a href="data/foodbank-parental-status-2025.csv">
-              View parental-status estimates
-            </a>
-          </div>
-        </figure>
+          <details class="chart-details">
+            <summary>Survey coverage and food-security categories</summary>
+
+            <div class="methods-content">
+              <p>
+                Foodbank/Ipsos surveyed 4,260 respondents online using
+                quotas and weighting. Fieldwork ran from 24 June to
+                17 July 2025. These are weighted survey estimates,
+                rather than a census of Australian households.
+              </p>
+
+                The 100 house symbols represent rounded published
+                percentages, not individual households or respondents.
+
+              <p>
+                This survey uses a different sample and measure from the
+                earlier ABS expenditure survey. It does not establish
+                that households spending less were food insecure or that
+                the price changes shown earlier caused these outcomes.
+                The 2025 findings also precede the June 2026 endpoint
+                of the price chart.
+              </p>
+            </div>
+          </details>
+
+          <details class="chart-details">
+            <summary>Interpreting state and household comparisons</summary>
+
+            <div class="methods-content">
+              <p>
+                All comparisons use the published percentage experiencing
+                moderate or severe food insecurity. Sample sizes count
+                respondents, not affected households. Land area does not
+                represent population, so a larger coloured region need
+                not contain more food-insecure households.
+              </p>
+
+              <p>
+                Generalised 2016 boundaries provide geographical context
+                for the 2025 estimates. Matching state names with the
+                earlier spending maps does not establish a causal
+                relationship between spending and food insecurity.
+              </p>
+
+              <p>
+                Parental-status sample sizes were 130 single-parent
+                respondents, 1,080 non-single-parent respondents,
+                133 relatives or co-residents of a child, and 2,917
+                respondents in households without children.
+              </p>
+
+              <p>
+                The national benchmark includes these groups; it is
+                not an independent control group. Connecting lines
+                show percentage-point differences, not confidence
+                intervals or statistical significance. In particular,
+                the 39% and 40% estimates should not be interpreted
+                as a reliable ranking.
+              </p>
+
+              <p>
+                These parental-status groups are not the same households
+                observed in the earlier ABS survey. The comparison
+                describes an association with household circumstances,
+                rather than establishing causes of food insecurity.
+              </p>
+            </div>
+          </details>
+
+          <details class="chart-details">
+            <summary>Download data and chart specifications</summary>
+
+            <div class="methods-content">
+              <div class="chart-links">
+                <a href="data/foodbank-security-2025.csv">
+                  National estimates
+                </a>
+                <a href="charts/c10-food-security-waffle.vl.json">
+                  C10 specification
+                </a>
+              </div>
+
+              <div class="chart-links">
+                <a href="data/foodbank-state-2025.csv">
+                  State estimates and sample sizes
+                </a>
+                <a href="charts/c11-state-food-security.vl.json">
+                  C11 specification
+                </a>
+              </div>
+
+              <div class="chart-links">
+                <a href="data/foodbank-parental-status-2025.csv">
+                  Parental-status estimates
+                </a>
+                <a href="charts/c12-parental-food-security.vl.json">
+                  C12 specification
+                </a>
+              </div>
+            </div>
+          </details>
+        </div>
       </section>
 
       <!-- Conclusion -->
       <section
-        class="chapter"
+        class="chapter household-story"
         id="conclusion"
         aria-labelledby="conclusion-title"
       >
-        <div class="chart-panel">
-          <header class="chart-heading">
-            <p class="chart-kicker">THE FOOD BUDGET DIVIDE</p>
+        <div class="section-number">CONCLUSION</div>
 
-            <h2 id="conclusion-title">
-              The average food bill hides unequal circumstances
-            </h2>
-          </header>
+        <h2 id="conclusion-title">
+          The same food dollar means different things to different households
+        </h2>
 
-          <p class="chart-deck">
-            Meals out took a growing share of Australia's food budget,
-            while spending patterns differed across household types
-            and income groups. Household size also changed the picture:
-            a larger household bill did not necessarily mean more
-            spending per person.
-          </p>
+        <p class="section-copy">
+          Australia's food budget changed, but households did not share
+          the same spending patterns or purchasing conditions.
+          Lower-income households spent fewer food dollars while
+          devoting more of their total expenditure to food. In Foodbank's
+          separate 2025 survey, one in three households experienced
+          moderate or severe food insecurity.
+        </p>
 
-          <p class="chart-deck">
-            In 2015–16, lower-income households spent fewer food dollars
-            but allocated a larger share of their total expenditure to
-            food. Foodbank's separate 2025 survey found that food
-            insecurity also varied across household circumstances,
-            with single-parent households reporting the highest
-            estimate among the parental-status groups shown.
-          </p>
+        <p class="section-copy">
+          <strong>
+            The food budget divide is about more than dollars spent:
+            it is about the share of the budget food absorbs,
+            the prices households face, and whether they have enough to eat.
+          </strong>
+        </p>
 
-          <p class="chart-deck">
-            <strong>
-              Understanding Australia's food budget requires looking
-              beyond dollars spent to the share of the budget food
-              absorbs—and whether households have enough to eat.
-            </strong>
-          </p>
-
-          <p class="chart-source">
-            These sources describe different periods, measures and
-            survey samples. They provide complementary perspectives;
-            they do not track the same households or establish that
-            earlier spending patterns caused later food insecurity.
+        <div class="section-sources">
+          <p>
+            These sources cover different periods, measures and samples.
+            Together they describe several dimensions of the food budget;
+            they do not track the same households or establish that earlier
+            spending patterns caused later food insecurity.
           </p>
         </div>
       </section>

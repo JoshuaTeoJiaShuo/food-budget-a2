@@ -11,46 +11,119 @@ export function initialiseC13() {
     prepare(spec, { availableWidth, fontSize }) {
       applyTextSize(spec, fontSize);
 
-      const paired = availableWidth >= Math.max(900, fontSize * 44);
-      const labelAllowance = Math.ceil(fontSize * 8 + 56);
-      const gap = 28;
+      const paired = availableWidth >= 960;
+      const columns = paired ? 2 : 1;
+      const gap = 36;
 
-      spec.columns = paired ? 2 : 1;
+      // Reserve the same district-label space in each panel.
+      const labelWidth = Math.ceil(fontSize * 7);
+      const panelWidth = Math.floor(
+        (availableWidth - 32 - gap * (columns - 1)) / columns
+      );
+
+      const plotWidth = Math.max(
+        240,
+        panelWidth - labelWidth - 24
+      );
+
+      const plotHeight = Math.max(340, fontSize * 18);
+      const districts = [
+        "Barkly",
+        "Big Rivers",
+        "Central Australia",
+        "East Arnhem",
+        "Top End",
+      ];
+
+      const template = spec.spec;
+
+      function makePanel(basket) {
+        const panel = structuredClone(template);
+
+        panel.width = plotWidth;
+        panel.height = plotHeight;
+
+        panel.title = {
+          text: basket,
+          anchor: "middle",
+          font: "Arial",
+          fontSize,
+          fontWeight: "bold",
+          color: "#223b36",
+          offset: 18,
+        };
+
+        panel.transform = [
+          {
+            filter: {
+              field: "basket_name",
+              equal: basket,
+            },
+          },
+        ];
+
+        // Identical domains keep both panels directly comparable.
+        panel.encoding.y.scale.domain = districts;
+
+        Object.assign(panel.encoding.y.axis, {
+          labelFontSize: fontSize,
+          labelLineHeight: Math.ceil(fontSize * 1.2),
+          labelLimit: labelWidth,
+          labelPadding: 12,
+          minExtent: labelWidth,
+          maxExtent: labelWidth,
+        });
+
+        Object.assign(panel.encoding.x.axis, {
+          labelFontSize: fontSize,
+          titleFontSize: fontSize,
+          values: [600, 1000, 1400],
+        });
+
+        const legend = panel.layer[0].encoding.color.legend;
+
+        Object.assign(legend, {
+          columns: availableWidth >= 650 ? 2 : 1,
+          direction: availableWidth >= 650
+            ? "horizontal"
+            : "vertical",
+          labelFontSize: fontSize,
+          rowPadding: 10,
+        });
+
+        return panel;
+      }
+
+      // Replace the facet layout with two equally sized panels.
+      delete spec.facet;
+      delete spec.spec;
+
+      spec.concat = [
+        makePanel("Healthy food basket"),
+        makePanel("Current diet basket"),
+      ];
+
+      spec.columns = columns;
       spec.spacing = gap;
+      spec.align = "all";
+      spec.bounds = "full";
 
-      spec.spec.width = Math.max(
-        320,
-        Math.floor(
-          (availableWidth - labelAllowance - (paired ? gap : 0)) /
-          spec.columns
-        )
-      );
-
-      spec.spec.height = Math.max(
-        340,
-        Math.round(fontSize * 18)
-      );
-
-      Object.assign(spec.facet.header, {
-        labelFontSize: fontSize,
-        labelLimit: 0,
-        labelPadding: 16,
-      });
-
-      Object.assign(spec.spec.encoding.y.axis, {
-        labelFontSize: fontSize,
-        labelLineHeight: Math.ceil(fontSize * 1.2),
-        labelLimit: Math.ceil(fontSize * 8),
-      });
-
-      const legend = spec.spec.layer[0].encoding.color.legend;
-
-      legend.columns = availableWidth >= 600 ? 2 : 1;
-      legend.direction = availableWidth >= 600
-        ? "horizontal"
-        : "vertical";
-
-      legend.rowPadding = 10;
+      spec.resolve = {
+        scale: {
+          x: "shared",
+          y: "shared",
+          color: "shared",
+          shape: "shared",
+        },
+        axis: {
+          x: "independent",
+          y: "independent",
+        },
+        legend: {
+          color: "shared",
+          shape: "shared",
+        },
+      };
 
       return spec;
     },

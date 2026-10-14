@@ -31,7 +31,7 @@
       "as": "difference_pp"
     },
     {
-      "calculate": "format(datum.moderate_or_severe_pct, '.0f') + '%'",
+      "calculate": "datum.parental_status === 'Single-parent' || datum.parental_status === 'Households without children' ? format(datum.moderate_or_severe_pct, '.0f') + '%' : ''",
       "as": "estimate_label"
     },
     {
