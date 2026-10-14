@@ -8,12 +8,7 @@
     <title>Australia's Food Budget Divide</title>
 
     <!-- Pure.css layout and our stylesheet -->
-    <link
-    rel="stylesheet"
-    href="https://unpkg.com/purecss@2.0.3/build/pure-min.css"
-    integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ"
-    crossorigin="anonymous"
-    >
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" integrity="sha384-cg6SkqEOCV1NbJoCu11+bm0NvBRc8IYLRGXkmNrqUBfTjmMYwNKPWBTIKyw9mHNJ" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
 
     <!-- Visualisation libraries -->
@@ -32,24 +27,11 @@
 
       <!-- Page introduction -->
       <header class="page-header">
-        <h1>Australia's Food Budget Divide</h1>
+        <p class="page-eyebrow">HOUSEHOLD FOOD EXPENDITURE · AUSTRALIA</p>
+<h1>Australia's Food Budget Divide</h1>
         <p>What we buy, and who has room to choose.</p>
 
-        <div id="reading-controls" class="reading-controls" hidden>
-          <label for="reading-size">Reading text size</label>
-
-          <select id="reading-size" aria-describedby="reading-size-help">
-            <option value="extra-small">Extra small</option>
-            <option value="small">Small</option>
-            <option value="medium" selected>Medium</option>
-            <option value="large">Large</option>
-          </select>
-
-          <p id="reading-size-help" class="reading-controls-help">
-            Adjust reading text and chart labels.
-          </p>
-        </div>
-      </header>
+        </header>
 
       <main id="main-content">
         <noscript>
@@ -60,62 +42,30 @@
         </noscript>
 
         <!-- SECTION 1: National food spending -->
-        <section
-          class="chapter"
-          id="food-basket"
-          aria-labelledby="food-basket-title"
-          >
-          <div class="section-number">01 / THE NATIONAL BASKET</div>
+        <section class="chapter" id="food-basket" aria-labelledby="food-basket-title">
+          <header class="chapter-header"><div class="chapter-title">
+<div class="section-number">01 / THE NATIONAL BASKET</div>
 
           <h2 id="food-basket-title">
             Meals out took a growing share of the food budget
           </h2>
 
-          <div class="basket-intro">
-            <p>
-              Between 1988–89 and 2015–16, meals out and fast foods rose
-              from about a quarter to a third of Australian household food
-              spending. They were the largest food category in all six
-              surveys shown.
-            </p>
-
-            <div class="basket-takeaway">
-              <strong>+9.4</strong>
-              <p>
-                percentage points<br>
-                24.5% → 33.9% of food spending
-              </p>
-            </div>
           </div>
-          <div class="chapter-body">
+<p class="chapter-intro">Meals out became the largest food category. The national basket still hides differences between places and households.</p></header><div class="chapter-body">
             <!-- C1: Historical context -->
-            <figure class="chart-panel c1-panel" aria-labelledby="c1-title">
-              <figcaption>
-                <h3 id="c1-title">
-                  Food spending shares across six survey waves, 1988–89 to 2015–16
-                </h3>
-              </figcaption>
+            <figure class="story-frame wide-frame c1-panel" aria-labelledby="c1-title"><figcaption class="figure-heading"><div class="figure-title">
+<p class="figure-scope">Australia · 1988–89 to 2015–16</p>
+<h3 id="c1-title">Meals out gained a larger share</h3>
+              </div>
+<p class="chart-finding">Meals out rose from <strong>24.5% to 33.9%</strong> of food spending—an increase of <strong>9.4 percentage points</strong>.</p></figcaption><div id="chart-1" class="chart" role="group" tabindex="0" aria-label="Interactive chart of food spending shares" aria-describedby="c1-interaction-hint c1-survey-note"></div>
+
+              <div class="figure-footer">
+<p id="c1-interaction-hint" class="chart-reading">Hover a category to follow its trend. Keyboard controls are below.</p>
+
+              <p id="c1-survey-note" class="chart-reading">Six survey waves; connecting lines do not show annual observations.</p>
 
               <p class="c1-compact-measure">
                 Share of total food spending (%)
-              </p>
-
-              <div
-                id="chart-1"
-                class="chart"
-                role="group"
-                tabindex="0"
-                aria-label="Interactive chart of food spending shares"
-                aria-describedby="c1-interaction-hint c1-survey-note"
-                ></div>
-
-              <p id="c1-interaction-hint" class="chart-reading">
-                Hover over a line or category label to follow its trend.
-              </p>
-
-              <p id="c1-survey-note" class="chart-reading">
-                Points represent six surveys; the connecting lines do not
-                show annual observations.
               </p>
 
               <p class="c1-compact-note">
@@ -123,7 +73,8 @@
                 and the same 0–40% scale.
               </p>
 
-              <details class="chart-help">
+              </div>
+<details class="chart-help">
                 <summary>Keyboard controls</summary>
                 <p>
                   Press Tab to focus the chart. Use the left and right arrow
@@ -132,29 +83,17 @@
                 </p>
               </details>
 
-              <p
-                id="c1-selection-status"
-                class="sr-only"
-                aria-live="polite"
-                aria-atomic="true"
-                ></p>
-            </figure>
+              <div class="figure-status">
+<p id="c1-selection-status" class="sr-only" aria-live="polite" aria-atomic="true"></p>
+            </div></figure>
 
             <!-- C2: The basket behind the broad categories -->
-            <figure class="chart-panel c2-panel" aria-labelledby="c2-title">
-              <figcaption>
-                <h3 id="c2-title">
-                  Inside the weekly food basket, 2015–16
-                </h3>
-              </figcaption>
-
-              <p class="section-copy">
-                Meals out and fast foods formed the largest food group at
-                <strong>$80.27 per household per week</strong>.
-                Explore the other groups to see the purchases within them.
-              </p>
-
-              <div class="chart-controls">
+            <figure class="story-frame wide-frame" aria-labelledby="c2-title"><figcaption class="figure-heading"><div class="figure-title">
+<p class="figure-scope">Australia · 2015–16 · A$ per household per week</p>
+<h3 id="c2-title">Inside the weekly food basket</h3>
+              </div>
+<p class="chart-finding">Meals out and fast foods made up the largest group: <strong>$80.27 per household per week</strong>.</p></figcaption><div class="figure-toolbar">
+<div class="chart-controls">
                 <label for="c2-group">Explore a group</label>
 
                 <select id="c2-group" aria-describedby="c2-control-help">
@@ -166,25 +105,19 @@
                 </button>
               </div>
 
-              <p id="c2-context" class="chart-reading" aria-live="polite">
+              </div>
+<div id="chart-2" class="chart" role="img" aria-label="Nested treemap of average household food spending in 2015–16" aria-describedby="c2-context c2-reading"></div>
+
+              <div class="figure-footer">
+<p id="c2-context" class="chart-reading" aria-live="polite">
                 Average household spending in Australian dollars per week,
                 2015–16.
               </p>
 
-              <p id="c2-reading" class="chart-reading">
-                Rectangle area represents spending. Tan highlights meals out
-                and fast foods; green represents other food purchases.
-              </p>
+              <p id="c2-reading" class="chart-reading">Area shows spending. Tan marks meals out; green marks other purchases.</p>
 
-              <div
-                id="chart-2"
-                class="chart"
-                role="img"
-                aria-label="Nested treemap of average household food spending in 2015–16"
-                aria-describedby="c2-context c2-reading"
-                ></div>
-
-              <details class="chart-details">
+              </div>
+<details class="chart-details">
                 <summary>Explore the hierarchy and understand the categories</summary>
 
                 <div class="methods-content">
@@ -206,12 +139,7 @@
               <details class="chart-details">
                 <summary>Read exact values and full category names</summary>
 
-                <div
-                  class="table-scroll"
-                  role="region"
-                  tabindex="0"
-                  aria-label="Detailed food expenditure values"
-                  >
+                <div class="table-scroll" role="region" tabindex="0" aria-label="Detailed food expenditure values">
                   <table class="data-table food-table">
                     <caption id="c2-table-caption">
                       Average household spending in dollars per week, 2015–16
@@ -231,60 +159,34 @@
               </details>
             </figure>
 
-            <p class="basket-transition">
-              The <span class="text-meals">$80.27 weekly meals-out bill</span>
-              was a national average. ACT households spent
-              <strong>about 68% more</strong> on meals out and fast foods
-              than Tasmanian households:
-              <strong>$100.82 versus $59.86 a week</strong>.
-            </p>
+            
 
             <!-- C3: Variation behind the national average -->
-            <figure class="chart-panel" aria-labelledby="c3-title">
-              <figcaption>
-                <h3 id="c3-title">
-                  Weekly spending on meals out and fast foods by state, 2015–16
-                </h3>
-              </figcaption>
+            <figure class="story-frame side-frame" aria-labelledby="c3-title"><div class="support-body">
+<div class="support-copy">
+<figcaption class="figure-heading"><div class="figure-title">
+<p class="figure-scope">2015–16 · A$ per household per week</p>
+<h3 id="c3-title">The meals-out bill varied by state</h3>
+              </div>
+<p class="chart-finding">ACT households spent <strong>$100.82 a week</strong> on meals out, against <strong>$59.86</strong> in Tasmania—about <strong>68% more</strong>.</p></figcaption><p id="c3-map-help" class="chart-reading">Three circle sizes show spending bands. Hover for exact estimates.</p>
 
-              <p id="c3-map-help" class="chart-reading">
-                Three circle sizes represent spending bands, not proportional
-                dollar amounts. Hover over a circle for its exact estimate.
-              </p>
-
-              <div
-                class="chart-scroll"
-                role="region"
-                tabindex="0"
-                aria-label="Australian state spending map"
-                aria-describedby="c3-map-help c3-scroll-help"
-                >
-                <div
-                  id="chart-3"
-                  class="chart"
-                  aria-label="Graduated-symbol map of average weekly household spending on meals out and fast foods in 2015–16"
-                  ></div>
+              <details class="chart-help"><summary>Interpreting spending</summary><p>Spending reflects prices and household circumstances as well as purchases. A higher bill does not necessarily mean more meals eaten out.</p></details>
+</div>
+<div class="support-visual">
+<div class="chart-scroll" role="region" tabindex="0" aria-label="Australian state spending map" aria-describedby="c3-map-help c3-scroll-help">
+                <div id="chart-3" class="chart" aria-label="Graduated-symbol map of average weekly household spending on meals out and fast foods in 2015–16"></div>
               </div>
 
-              <p id="c3-scroll-help" class="scroll-help">
-                On narrow screens, scroll horizontally to see the whole map.
-              </p>
+              </div>
+</div>
+<div class="figure-status">
+<p id="c3-scroll-help" class="scroll-help" hidden="hidden">This chart adapts to the available width.</p>
 
-              <p class="chart-reading">
-                Spending reflects prices and household circumstances as well
-                as purchases. A higher bill does not necessarily mean more
-                meals eaten out.
-              </p>
-            </figure>
-
-            <p class="basket-transition">
-              Geography reveals one kind of variation. State averages still
-              combine households of different sizes and circumstances—the
-              next comparison looks at the households behind those averages.
-            </p>
+              
+            </div></figure>
 
             <!-- Shared sources and methods for this section -->
-            <div class="basket-sources">
+            <details class="chapter-notes"><summary>Sources, definitions and downloads</summary><div class="basket-sources">
               <p>
                 Sources: historical shares from ABARES,
                 <em>Food demand in Australia: trends and issues 2018</em>,
@@ -370,83 +272,46 @@
                 </div>
               </details>
             </div>
-          </div>
+          </details>
+</div>
         </section>
 
         <!-- SECTION 2: Household differences -->
-        <section
-          class="chapter household-story"
-          id="household-differences"
-          aria-labelledby="household-differences-title"
-          >
-          <div class="section-number">02 / BEHIND THE AVERAGE</div>
+        <section class="chapter household-story" id="household-differences" aria-labelledby="household-differences-title">
+          <header class="chapter-header"><div class="chapter-title">
+<div class="section-number">02 / BEHIND THE AVERAGE</div>
 
           <h2 id="household-differences-title">
             Different households divided their food budgets differently
           </h2>
 
-          <p class="section-copy">
-            Group households devoted
-            <span class="text-meals">more than half their food budget
-              to meals out and fast foods</span>—54.5%.
-            Yet they contributed only <strong>3.4%</strong> of estimated
-            food spending across the seven household types.
-          </p>
-
-          <!-- C5: Spending composition and contribution -->
+          </div>
+<p class="chapter-intro">A household’s contribution to total spending differs from how it divides its own food budget.</p></header><!-- C5: Spending composition and contribution -->
           <div class="chapter-body">
-            <figure class="chart-panel c5-panel" aria-labelledby="c5-title">
-              <figcaption>
-                <h3 id="c5-title">
-                  Food spending composition and contribution by household type, 2015–16
-                </h3>
-              </figcaption>
-
-              <p id="c5-chart-help" class="chart-reading">
-                Wider columns mean a larger contribution to total food spending.
-                The <span class="text-meals">tan segment</span> shows the
-                meals-out share within each household type.
-                Numbers identify the household types listed below.
-              </p>
-
-              <div
-                class="chart-scroll"
-                role="region"
-                tabindex="0"
-                aria-label="Household food expenditure mosaic chart"
-                aria-describedby="c5-chart-help c5-scroll-help"
-                >
-                <div
-                  id="chart-5"
-                  class="chart"
-                  aria-label="Marimekko chart comparing meals out and other food purchases across seven household types"
-                  ></div>
+            <figure class="story-frame wide-frame" aria-labelledby="c5-title"><figcaption class="figure-heading"><div class="figure-title">
+<p class="figure-scope">Australia · seven household types · 2015–16</p>
+<h3 id="c5-title">Composition and contribution are different</h3>
+              </div>
+<p class="chart-finding">Group households allocated <strong>54.5%</strong> to meals out, but contributed just <strong>3.4%</strong> of combined food spending.</p></figcaption><div class="chart-scroll" role="region" tabindex="0" aria-label="Household food expenditure mosaic chart" aria-describedby="c5-chart-help c5-scroll-help">
+                <div id="chart-5" class="chart" aria-label="Marimekko chart comparing meals out and other food purchases across seven household types"></div>
               </div>
 
-              <p id="c5-scroll-help" class="scroll-help">
-                On narrow screens, scroll horizontally to see all seven columns.
-              </p>
+              <div class="c5-household-key figure-key">
+                <ol id="c5-household-key" aria-labelledby="c5-key-heading"></ol>
+              </div>
 
-              <div class="c5-household-key">
-                <p id="c5-key-heading">
+              <div class="figure-footer">
+<p id="c5-chart-help" class="chart-reading">Width shows contribution to combined spending. Tan height shows meals-out share. Numbers match the household key.</p>
+
+              <p id="c5-key-heading">
                   <strong>Household types — numbers match the chart</strong>
                 </p>
 
-                <ol
-                  id="c5-household-key"
-                  aria-labelledby="c5-key-heading"
-                  ></ol>
-              </div>
-
-              <details class="chart-details">
+                </div>
+<details class="chart-details">
                 <summary>View exact spending shares</summary>
 
-                <div
-                  class="table-scroll"
-                  role="region"
-                  tabindex="0"
-                  aria-label="Exact household spending shares"
-                  >
+                <div class="table-scroll" role="region" tabindex="0" aria-label="Exact household spending shares">
                   <table class="data-table household-table">
                     <caption>
                       Food expenditure by household type, 2015–16
@@ -469,77 +334,43 @@
                   </table>
                 </div>
               </details>
-            </figure>
+            <div class="figure-status">
+<p id="c5-scroll-help" class="scroll-help" hidden="hidden">This chart adapts to the available width.</p>
 
-            <p class="section-transition">
-              Couples with dependent children accounted for
-              <strong>38.3% of estimated food spending</strong>,
-              the largest contribution of any household type.
-              But a household bill also feeds different numbers of people.
-              Comparing spending per person changes the basis of comparison.
-            </p>
+              </div></figure>
 
             <!-- C6: Household size and category spending -->
-            <figure class="chart-panel" aria-labelledby="c6-title">
-              <figcaption>
-                <h3 id="c6-title">
-                  Weekly spending on other food categories, 2015–16
-                </h3>
-              </figcaption>
-
-              <div class="chart-controls">
+            <figure class="story-frame wide-frame" aria-labelledby="c6-title"><figcaption class="figure-heading"><div class="figure-title">
+<p class="figure-scope">Australia · 2015–16 · excludes meals out</p>
+<h3 id="c6-title">A household bill feeds different numbers of people</h3>
+              </div>
+<p class="chart-finding">Household size changes the comparison. Switch between the whole household bill and the approximate amount per person.</p></figcaption><div class="figure-toolbar">
+<div class="chart-controls">
                 <label for="c6-basis">Compare spending</label>
 
-                <select
-                  id="c6-basis"
-                  aria-describedby="c6-chart-help"
-                  disabled
-                  >
+                <select id="c6-basis" aria-describedby="c6-chart-help" disabled>
                   <option>Approx. per person</option>
                   <option>Per household</option>
                 </select>
               </div>
 
-              <p id="c6-chart-help" class="chart-reading">
-                Darker green means higher weekly spending in Australian dollars.
-                The colour scale updates when the measure changes, so compare
-                the values and legend as well as the shading.
-              </p>
-
-              <div
-                class="chart-scroll"
-                role="region"
-                tabindex="0"
-                aria-label="Food spending heatmap by household type"
-                aria-describedby="c6-chart-help c6-estimate-note c6-scroll-help"
-                >
-                <div
-                  id="chart-6"
-                  class="chart"
-                  aria-label="Weekly expenditure on food categories other than meals out, by household type"
-                  ></div>
+              </div>
+<div class="chart-scroll" role="region" tabindex="0" aria-label="Food spending heatmap by household type" aria-describedby="c6-chart-help c6-estimate-note c6-scroll-help">
+                <div id="chart-6" class="chart" aria-label="Weekly expenditure on food categories other than meals out, by household type"></div>
               </div>
 
-              <p id="c6-scroll-help" class="scroll-help">
-                On narrow screens, scroll horizontally to see all household types.
-              </p>
+              <div class="figure-footer">
+<p id="c6-chart-help" class="chart-reading">Darker green means higher weekly spending. Hover for exact values.</p>
 
-              <p id="c6-estimate-note" class="chart-reading">
-                Per-person amounts divide average expenditure by average household
-                size; they do not adjust for age or food needs.
-                <strong>*</strong> marks an underlying expenditure estimate with
-                a relative standard error of 25% or more; interpret it cautiously.
-              </p>
-            </figure>
+              <p id="c6-estimate-note" class="chart-reading">Labels show category maxima. * Flags an uncertain estimate. Per-person amounts use average household size, without adjusting for needs.</p>
+            </div>
+<div class="figure-status">
+<p id="c6-scroll-help" class="scroll-help" hidden="hidden">This chart adapts to the available width.</p>
 
-            <p class="section-transition">
-              Household size changes the meaning of a dollar comparison.
-              Income adds another dimension: how much of the household’s
-              total spending does food absorb?
-            </p>
+              </div></figure>
 
             <!-- Shared sources and methods -->
-            <div class="section-sources">
+            <details class="chapter-notes"><summary>Sources, definitions and downloads</summary><div class="section-sources">
               <p>
                 Source:
                 <a href="https://www.abs.gov.au/statistics/economy/finance/household-expenditure-survey-australia-summary-results/2015-16">
@@ -627,39 +458,20 @@
                 </div>
               </details>
             </div>
-          </div>
+          </details>
+</div>
         </section>
 
         <!-- SECTION 3: Income and budget shares -->
-        <section
-          class="chapter"
-          id="budget-pressure"
-          aria-labelledby="budget-pressure-title"
-          >
-          <div class="section-number">03 / THE FOOD BUDGET DIVIDE</div>
+        <section class="chapter" id="budget-pressure" aria-labelledby="budget-pressure-title">
+          <header class="chapter-header"><div class="chapter-title">
+<div class="section-number">03 / THE FOOD BUDGET DIVIDE</div>
 
-          <div class="pure-g chapter-heading">
-            <div class="pure-u-1-1 description-left">
-              <h2 id="budget-pressure-title">
+          <h2 id="budget-pressure-title">
                 Smaller food bills. Larger budget shares.
               </h2>
             </div>
-
-            <div class="pure-u-1-1 description-right">
-              <p class="income-intro">
-                The lowest-income group spent less than half as much
-                on food as the highest-income group:
-                <strong>$144.40 versus $339.32 per household a week</strong>
-                in 2015–16. Yet food took a larger share of its total spending.
-              </p>
-            </div>
-          </div>
-
-          <div class="chart-panel income-panel">
-            <p class="chart-kicker">
-              AUSTRALIA · 2015–16 · FIVE INCOME GROUPS
-            </p>
-
+<p class="chapter-intro">The lowest-income group spent <strong>$144.40</strong> a week on food, against <strong>$339.32</strong> in the highest group. Food still took a larger budget share.</p></header><div class="story-frame income-panel">
             <div class="pure-g income-comparison">
 
               <!-- C7: Average weekly spending -->
@@ -673,23 +485,11 @@
                   </p>
                 </figcaption>
 
-                <div
-                  class="chart-scroll"
-                  role="region"
-                  tabindex="0"
-                  aria-label="Weekly food spending by income group"
-                  aria-describedby="c7-chart-help c7-scroll-help"
-                  >
-                  <div
-                    id="chart-7"
-                    class="chart"
-                    aria-label="Butterfly chart comparing average weekly household spending across five income groups. Other food purchases extend left and meals out and fast foods extend right, using the same dollar scale."
-                    ></div>
+                <div class="chart-scroll" role="region" tabindex="0" aria-label="Weekly food spending by income group" aria-describedby="c7-chart-help c7-scroll-help">
+                  <div id="chart-7" class="chart" aria-label="Butterfly chart comparing average weekly household spending across five income groups. Other food purchases extend left and meals out and fast foods extend right, using the same dollar scale."></div>
                 </div>
 
-                <p id="c7-scroll-help" class="scroll-help">
-                  Scroll horizontally to see the full dollar scale.
-                </p>
+                <p id="c7-scroll-help" class="scroll-help" hidden="hidden">This chart adapts to the available width.</p>
 
                 <p class="income-chart-takeaway">
                   The highest-income group spent
@@ -711,23 +511,11 @@
                   </p>
                 </figcaption>
 
-                <div
-                  class="chart-scroll"
-                  role="region"
-                  tabindex="0"
-                  aria-label="Food share of total spending by income group"
-                  aria-describedby="c8-chart-help c8-scroll-help"
-                  >
-                  <div
-                    id="chart-8"
-                    class="chart"
-                    aria-label="Food represented 18.7%, 18.2%, 17.6%, 16.9% and 14.3% of total goods and services expenditure, from the lowest to highest income group."
-                    ></div>
+                <div class="chart-scroll" role="region" tabindex="0" aria-label="Food share of total spending by income group" aria-describedby="c8-chart-help c8-scroll-help">
+                  <div id="chart-8" class="chart" aria-label="Food represented 18.7%, 18.2%, 17.6%, 16.9% and 14.3% of total goods and services expenditure, from the lowest to highest income group."></div>
                 </div>
 
-                <p id="c8-scroll-help" class="scroll-help">
-                  Scroll horizontally to see the full percentage scale.
-                </p>
+                <p id="c8-scroll-help" class="scroll-help" hidden="hidden">This chart adapts to the available width.</p>
 
                 <p class="income-chart-takeaway">
                   For every <strong>$100 of total spending</strong>,
@@ -738,16 +526,25 @@
               </figure>
             </div>
 
-            <div class="income-synthesis">
+            <div class="income-synthesis figure-footer">
               <p>
                 <strong>
                   Lower-income households spent fewer food dollars,
                   but food absorbed more of their budget.
                 </strong>
               </p>
+            <p class="chart-source">
+              Source:
+              <a href="https://www.abs.gov.au/statistics/economy/finance/household-expenditure-survey-australia-summary-results/2015-16">
+                ABS Household Expenditure Survey, 2015–16
+              </a>.
+              Weekly amounts are in 2015–16 Australian dollars.
+              Food shares use total goods and services expenditure.
+            </p>
+
             </div>
 
-            <details class="chart-details">
+            <details class="chapter-notes income-notes"><summary>Income definitions, source data and downloads</summary><details class="chart-details">
               <summary>About the income groups and these two measures</summary>
 
               <div class="methods-content">
@@ -789,15 +586,6 @@
               </div>
             </details>
 
-            <p class="chart-source">
-              Source:
-              <a href="https://www.abs.gov.au/statistics/economy/finance/household-expenditure-survey-australia-summary-results/2015-16">
-                ABS Household Expenditure Survey, 2015–16
-              </a>.
-              Weekly amounts are in 2015–16 Australian dollars.
-              Food shares use total goods and services expenditure.
-            </p>
-
             <div class="chart-links">
               <a href="data/income-spending-joined.csv">View income-group data</a>
               <a href="charts/c7-income-spending.vl.json">
@@ -807,51 +595,32 @@
                 Budget-share chart specification
               </a>
             </div>
-          </div>
+          </details>
+</div>
 
-          <p class="story-bridge">
-            Household spending is only one part of the picture.
-            The next chapter considers food supply, changing prices
-            and the cost of a standard basket in different places.
-          </p>
-        </section>
+          </section>
 
         <!-- SECTION 4: Food supply and costs -->
-        <section
-          class="chapter household-story"
-          id="food-costs"
-          aria-labelledby="food-costs-title"
-          >
-          <div class="section-number">04 / THE COST OF FOOD</div>
+        <section class="chapter household-story" id="food-costs" aria-labelledby="food-costs-title">
+          <header class="chapter-header"><div class="chapter-title">
+<div class="section-number">04 / THE COST OF FOOD</div>
 
           <h2 id="food-costs-title">
             The food bill also depends on the prices households face
           </h2>
 
-          <p class="section-copy">
-            Household budgets also face different food prices.
-            Australia's imports connect its food supply to overseas markets;
-            consumer price indexes show changes over time, while local
-            basket surveys reveal differences between stores.
-          </p>
-
-          <!-- C4: Supply context -->
+          </div>
+<p class="chapter-intro">Trade connections, changing prices and store comparisons describe different parts of the food-cost story.</p></header><!-- C4: Supply context -->
           <div class="chapter-body">
-            <figure class="chart-panel" aria-labelledby="c4-title">
-              <figcaption>
-                <h3 id="c4-title">
-                  Six leading reported origins of selected food imports, December 2025
-                </h3>
-              </figcaption>
-
-              <div class="chart-controls">
+            <figure class="story-frame wide-frame" aria-labelledby="c4-title"><figcaption class="figure-heading"><div class="figure-title">
+<p class="figure-scope">December 2025 · six leading published origins</p>
+<h3 id="c4-title">Where food imports came from</h3>
+              </div>
+<p class="chart-finding">New Zealand led the six published origins for dairy products, at <strong>A$88.1 million</strong>.</p></figcaption><div class="figure-toolbar">
+<div class="chart-controls">
                 <label for="c4-food-category">Compare a food category</label>
 
-                <select
-                  id="c4-food-category"
-                  aria-describedby="c4-chart-help"
-                  disabled
-                  >
+                <select id="c4-food-category" aria-describedby="c4-chart-help" disabled>
                   <option value="Dairy products" selected>
                     Dairy products
                   </option>
@@ -873,87 +642,41 @@
                 </select>
               </div>
 
-              <p id="c4-chart-help" class="chart-reading">
-                All connections represent imports into Australia.
-                Line width shows import value on a fixed scale.
-                Click an origin in the legend to highlight its connection;
-                double-click the map to show all six.
-              </p>
-
-              <div
-                class="chart-scroll"
-                role="region"
-                tabindex="0"
-                aria-label="Origins of Australian food imports"
-                aria-describedby="c4-chart-help c4-scope-note c4-scroll-help"
-                >
-                <div
-                  id="chart-4"
-                  class="chart"
-                  aria-label="Flow map showing six leading reported origins of selected Australian food imports in December 2025"
-                  ></div>
+              <div class="flow-key">
+<span>Line width · A$ million</span><span class="flow-sample"><i style="--line:2.33px"></i>20</span><span class="flow-sample"><i style="--line:7px"></i>60</span><span class="flow-sample"><i style="--line:14px"></i>120</span>
+</div>
+</div>
+<div class="chart-scroll" role="region" tabindex="0" aria-label="Origins and values of Australian food imports" aria-describedby="c4-chart-help c4-scope-note c4-scroll-help">
+                <div id="chart-4" class="chart" aria-label="Linked flow map and ranked import-value bars for six leading reported origins, December 2025"></div>
               </div>
 
-              <p id="c4-scroll-help" class="scroll-help">
-                On narrow screens, scroll horizontally to see the full map.
-              </p>
+              <div class="figure-footer">
+<p id="c4-chart-help" class="chart-reading">Click a bar or origin dot to highlight it. Double-click or Esc resets; arrow keys cycle origins.</p>
 
-              <p id="c4-scope-note" class="chart-reading">
-                Other origins and domestic production are not shown.
-                Connections are not shipping routes.
-                An asterisk identifies an ABS reporting group that includes
-                additional territories.
-              </p>
-            </figure>
+              <p id="c4-scope-note" class="chart-reading">Trade connections, not shipping routes. * Includes additional territories. Other origins and domestic production are not shown.</p>
+            </div>
+<div class="figure-status">
+<p id="c4-selection-status" class="sr-only" aria-live="polite" aria-atomic="true"></p>
 
-            <p class="section-transition">
-              Import values describe overseas purchases, not supermarket prices.
-              At the consumer level, food categories followed markedly
-              different price paths.
-            </p>
+              <p id="c4-scroll-help" class="scroll-help" hidden="hidden">This chart adapts to the available width.</p>
+
+              </div></figure>
 
             <!-- C9: Changes in consumer prices -->
-            <figure class="chart-panel" aria-labelledby="c9-title">
-              <figcaption>
-                <h3 id="c9-title">
-                  Annual food-price changes, September 2016–June 2026
-                </h3>
-              </figcaption>
-
-              <p class="section-copy">
-                Fruit and vegetable prices fluctuated: their annual changes
-                ranged from an <strong>8.3% fall</strong> to a
-                <strong>16.1% rise</strong>. Meals out and takeaway prices
-                increased in every comparison with the corresponding quarter
-                a year earlier.
-              </p>
-
-              <p id="c9-chart-help" class="chart-reading">
-                Each strip follows one food category.
-                Brown shows a rise from a year earlier; blue shows a fall.
-                Changes are folded into five-percentage-point bands,
-                with darker shades representing larger changes.
-              </p>
-
-              <div
-                class="chart-scroll"
-                role="region"
-                tabindex="0"
-                aria-label="Annual food-price changes across seven categories"
-                aria-describedby="c9-chart-help c9-scroll-help"
-                >
-                <div
-                  id="chart-9"
-                  class="chart"
-                  aria-label="Seven horizon strips comparing annual food-price changes from September 2016 to June 2026"
-                  ></div>
+            <figure class="story-frame wide-frame" aria-labelledby="c9-title"><figcaption class="figure-heading"><div class="figure-title">
+<p class="figure-scope">September 2016–June 2026 · annual food-price changes</p>
+<h3 id="c9-title">Food prices followed different paths</h3>
+              </div>
+<p class="chart-finding">Fruit and vegetable price changes ranged from an <strong>8.3% fall</strong> to a <strong>16.1% rise</strong> over this period.</p></figcaption><div class="chart-scroll" role="region" tabindex="0" aria-label="Annual food-price changes across seven categories" aria-describedby="c9-chart-help c9-scroll-help">
+                <div id="chart-9" class="chart" aria-label="Seven horizon strips comparing annual food-price changes from September 2016 to June 2026"></div>
               </div>
 
-              <p id="c9-scroll-help" class="scroll-help">
-                On narrow screens, scroll horizontally to see the full timeline.
-              </p>
+              <div class="figure-footer">
+<p id="c9-chart-help" class="chart-reading">Brown shows annual rises; blue shows falls. Darker shades add successive five-percentage-point bands.</p>
 
-              <details class="chart-details">
+              <p class="chart-reading">Slower inflation is still a price rise. Meals-out prices rose in every year-earlier comparison shown.</p>
+</div>
+<details class="chart-details">
                 <summary>How to read the folded bands</summary>
 
                 <div class="methods-content">
@@ -976,79 +699,32 @@
                   </p>
                 </div>
               </details>
-            </figure>
+            <div class="figure-status">
+<p id="c9-scroll-help" class="scroll-help" hidden="hidden">This chart adapts to the available width.</p>
 
-            <p class="section-transition">
-              These capital-city price trends hide local differences.
-              In the Northern Territory's 2023 survey,
-              <span class="text-remote">remote stores</span>
-              consistently recorded higher basket costs than their
-              <span class="text-supermarket">district supermarket</span>
-              comparisons.
-            </p>
+              </div></figure>
 
             <!-- C13: Local basket costs -->
-            <figure class="chart-panel" aria-labelledby="c13-title">
-              <figcaption>
-                <h3 id="c13-title">
-                  Food-basket costs at surveyed Northern Territory stores, 2023
-                </h3>
-              </figcaption>
-
-              <p class="section-copy">
-                The comparison covers <strong>54 remote stores across five
-                  districts</strong>. Both baskets specify food for
-                <strong>six people over a fortnight</strong>.
-              </p>
-
-              <div class="chart-controls">
-                <label for="c13-basket">Compare basket costs</label>
-
+            <figure class="story-frame wide-frame" aria-labelledby="c13-title"><figcaption class="figure-heading"><div class="figure-title">
+<p class="figure-scope">Northern Territory · 2023 · six people, fortnight</p>
+<h3 id="c13-title">Remote stores had higher basket costs</h3>
+              </div>
+<p class="chart-finding"><strong>All 54 remote stores</strong> had higher basket costs than their district supermarket comparison, for both baskets.</p></figcaption><div class="chart-scroll" role="region" tabindex="0" aria-label="Food-basket costs across Northern Territory stores" aria-describedby="c13-chart-help c13-scroll-help">
+                <div id="chart-13" class="chart" aria-label="Jitter plot comparing basket costs at 54 remote stores with five district supermarket comparisons in the Northern Territory in 2023"></div>
               </div>
 
-              <p id="c13-chart-help" class="chart-reading">
-                Circles represent <span class="text-remote">remote stores</span>;
-                diamonds represent
-                <span class="text-supermarket">district supermarkets</span>.
-                Both panels use the same dollar scale: further right means
-                higher cost. Vertical offsets separate dots and have no
-                numerical meaning. Hover for exact prices.
-              </p>
+              <div class="figure-footer">
+<p id="c13-chart-help" class="chart-reading"><span class="text-remote">Remote stores: circles.</span> <span class="text-supermarket">District supermarkets: diamonds.</span> Both panels use the same price scale. Vertical jitter only separates dots.</p>
 
-              <div
-                class="chart-scroll"
-                role="region"
-                tabindex="0"
-                aria-label="Food-basket costs across Northern Territory stores"
-                aria-describedby="c13-chart-help c13-scroll-help"
-                >
-                <div
-                  id="chart-13"
-                  class="chart"
-                  aria-label="Jitter plot comparing basket costs at 54 remote stores with five district supermarket comparisons in the Northern Territory in 2023"
-                  ></div>
-              </div>
+              <p class="chart-reading">Standardised baskets for six people over a fortnight. This survey does not isolate the causes of price differences.</p>
+</div>
+<div class="figure-status">
+<p id="c13-scroll-help" class="scroll-help" hidden="hidden">This chart adapts to the available width.</p>
 
-              <p id="c13-scroll-help" class="scroll-help">
-                On narrow screens, scroll horizontally to see the full price scale.
-              </p>
-
-              <p class="chart-reading">
-                These are standardised basket costs, not actual household
-                purchases. The results describe the surveyed NT stores,
-                rather than a national estimate.
-              </p>
-            </figure>
-
-            <p class="section-transition">
-              A basket's price is only one side of affordability.
-              The other is the household's resources. Foodbank's separate
-              2025 survey brings us back to whether households
-              had enough to eat.
-            </p>
+              </div></figure>
 
             <!-- Shared sources and methods -->
-            <div class="section-sources">
+            <details class="chapter-notes"><summary>Sources, definitions and downloads</summary><div class="section-sources">
               <p>
                 Sources:
                 <a href="https://www.abs.gov.au/statistics/economy/international-trade/international-trade-goods/dec-2025">
@@ -1089,12 +765,7 @@
                     caused consumer prices to change.
                   </p>
 
-                  <p>
-                    Line widths use the same scale across categories. Origin
-                    colours identify reporting groups within the selected view
-                    and may change when the category changes. Marker sizes
-                    do not encode another quantity.
-                  </p>
+                  <p>Line widths use one scale across categories. Neutral marks show all origins; the dark highlight identifies the selected origin in both views. Marker size encodes no quantity.</p>
 
                   <p>
                     Full origin names appear in tooltips. Grouped origins use
@@ -1113,10 +784,9 @@
                   <div class="chart-links">
                     <a href="data/food-import-flows.csv">Import values</a>
                     <a href="data/food-trade-locations.csv">Map anchors</a>
-                    <a href="charts/c4-food-import-flows.vl.json">
-                      C4 specification
-                    </a>
-                  </div>
+                    <a href="charts/c4-food-import-flows.vl.json">C4 map template</a>
+                  <a href="js/c4-flow.js">Map and bars implementation</a>
+</div>
                 </div>
               </details>
 
@@ -1207,166 +877,97 @@
                 </div>
               </details>
             </div>
-          </div>
+          </details>
+</div>
         </section>
         <!-- SECTION 5: Food access -->
-        <section
-          class="chapter household-story"
-          id="food-access"
-          aria-labelledby="food-access-title"
-          >
-          <div class="section-number">05 / ACCESS TO ENOUGH FOOD</div>
+        <section class="chapter household-story" id="food-access" aria-labelledby="food-access-title">
+          <header class="chapter-header"><div class="chapter-title">
+<div class="section-number">05 / ACCESS TO ENOUGH FOOD</div>
 
           <h2 id="food-access-title">
             An average food bill cannot tell us who has enough
           </h2>
 
-          <p class="section-copy">
-            Foodbank estimated that <strong>33% of Australian households</strong>
-            experienced moderate or severe food insecurity in 2025.
-            This included <strong>20%</strong> classified as
-            <span class="text-severe">severely food insecure</span>—
-            one in five households.
-          </p>
-
-          <!-- C10: National picture -->
+          </div>
+<p class="chapter-intro">An average bill cannot show who had enough. Foodbank’s separate 2025 survey measures household food security.</p></header><!-- C10: National picture -->
           <div class="chapter-body">
-            <figure class="chart-panel" aria-labelledby="c10-title">
-              <figcaption>
-                <h3 id="c10-title">
-                  Food security among Australian households, 2025
-                </h3>
-              </figcaption>
+            <figure class="story-frame side-frame" aria-labelledby="c10-title"><div class="support-body">
+<div class="support-copy">
+<figcaption class="figure-heading"><div class="figure-title">
+<p class="figure-scope">Foodbank · 2025 household survey</p>
+<h3 id="c10-title">One in three households faced food insecurity</h3>
+              </div>
+<p class="chart-finding"><span class="text-severe">Severe food insecurity</span> affected <strong>one in five</strong> households. A further <strong>13%</strong> experienced moderate food insecurity.</p></figcaption><p id="c10-chart-help" class="chart-reading">Each house represents 1% of households. Read left to right from the top.</p>
 
-              <p id="c10-chart-help" class="chart-reading">
-                Each house symbol represents 1% of Australian households.
-                Read left to right, starting at the top.
-                The darkest purple represents households classified as
-                <span class="text-severe">severely food insecure</span>;
-                the next shade represents moderate food insecurity.
-                Together, they account for 33%.
-              </p>
-
-              <div
-                class="chart-scroll"
-                role="region"
-                tabindex="0"
-                aria-label="National food-security estimates for 2025"
-                aria-describedby="c10-chart-help c10-scroll-help"
-                >
-                <div
-                  id="chart-10"
-                  class="chart"
-                  aria-label="Severely food insecure: 20%; moderately food insecure: 13%; marginally food secure: 11%; highly food secure: 56%."
-                  ></div>
+              </div>
+<div class="support-visual">
+<div class="chart-scroll" role="region" tabindex="0" aria-label="National food-security estimates for 2025" aria-describedby="c10-chart-help c10-scroll-help">
+                <div id="chart-10" class="chart" aria-label="Severely food insecure: 20%; moderately food insecure: 13%; marginally food secure: 11%; highly food secure: 56%."></div>
               </div>
 
-              <p id="c10-scroll-help" class="scroll-help">
-                If needed, scroll horizontally to see all category labels.
-              </p>
-            </figure>
+              </div>
+</div>
+<div class="figure-status">
+<p id="c10-scroll-help" class="scroll-help" hidden="hidden">This chart adapts to the available width.</p>
+            </div></figure>
 
-            <p class="section-transition">
-              This national estimate was reflected across much of the country:
-              seven state and territory estimates fell between
-              <strong>30% and 35%</strong>. The Northern Territory estimate
-              stood apart at 46%, although its small survey sample makes
-              that result less certain.
-            </p>
+            
 
             <!-- C11: Geographical context -->
-            <figure class="chart-panel" aria-labelledby="c11-title">
-              <figcaption>
-                <h3 id="c11-title">
-                  Moderate or severe food insecurity by state and territory
-                </h3>
-              </figcaption>
-
-              <p id="c11-chart-help" class="chart-reading">
-                Darker purple indicates a higher estimated percentage of
-                households experiencing food insecurity. Hover for exact
-                estimates and sample sizes. The map shows prevalence,
-                not the number of affected households.
-              </p>
-
-              <div
-                class="chart-scroll"
-                role="region"
-                tabindex="0"
-                aria-label="Food insecurity by Australian state and territory"
-                aria-describedby="c11-chart-help c11-sample-note c11-scroll-help"
-                >
-                <div
-                  id="chart-11"
-                  class="chart"
-                  aria-label="Moderate or severe food insecurity: NSW 33%, Victoria 32%, Queensland 35%, South Australia 30%, Western Australia 32%, Tasmania 33%, Northern Territory 46% and ACT 31%."
-                  ></div>
+            <figure class="story-frame side-frame" aria-labelledby="c11-title"><div class="support-body">
+<div class="support-copy">
+<figcaption class="figure-heading"><div class="figure-title">
+<p class="figure-scope">Foodbank · 2025 household survey</p>
+<h3 id="c11-title">Food insecurity across the country</h3>
               </div>
+<p class="chart-finding">Seven estimates were between <strong>30% and 35%</strong>. The Northern Territory’s <strong>46%</strong> estimate came from a small sample.</p></figcaption><p id="c11-chart-help" class="chart-reading">Darker purple means a higher estimate. Hover for percentages and samples.</p>
 
-              <p id="c11-scroll-help" class="scroll-help">
-                On narrow screens, scroll horizontally to see the full map.
-              </p>
-
-              <p id="c11-sample-note" class="chart-reading">
+              <details class="chart-help"><summary>Survey sample limits</summary><p id="c11-sample-note" class="chart-reading">
                 <strong>† Small samples:</strong> Northern Territory:
                 102 respondents; ACT: 69 respondents. Small differences
                 should not be treated as a reliable ranking. Statistical
                 significance has not been tested here.
-              </p>
-            </figure>
-
-            <p class="section-transition">
-              Geography still leaves important differences hidden within
-              each state. Returning to household circumstances,
-              <strong>68% of single-parent households</strong> were estimated
-              to experience food insecurity—35 percentage points above
-              the national estimate. For households without children,
-              the estimate was 28%.
-            </p>
-
-            <!-- C12: Household circumstances -->
-            <figure class="chart-panel" aria-labelledby="c12-title">
-              <figcaption>
-                <h3 id="c12-title">
-                  Food insecurity by parental status, compared with the national estimate
-                </h3>
-              </figcaption>
-
-              <p id="c12-chart-help" class="chart-reading">
-                Purple dots show each group's estimate. Open circles mark
-                the national benchmark of 33%. Connecting lines show the
-                difference from that benchmark, not a change over time.
-              </p>
-
-              <div
-                class="chart-scroll"
-                role="region"
-                tabindex="0"
-                aria-label="Food insecurity by parental status"
-                aria-describedby="c12-chart-help c12-scroll-help"
-                >
-                <div
-                  id="chart-12"
-                  class="chart"
-                  aria-label="Moderate or severe food insecurity: single-parent households 68%; relatives or co-residents of a child 40%; non-single-parent households 39%; households without children 28%. National estimate: 33%."
-                  ></div>
+              </p></details>
+</div>
+<div class="support-visual">
+<div class="chart-scroll" role="region" tabindex="0" aria-label="Food insecurity by Australian state and territory" aria-describedby="c11-chart-help c11-sample-note c11-scroll-help">
+                <div id="chart-11" class="chart" aria-label="Moderate or severe food insecurity: NSW 33%, Victoria 32%, Queensland 35%, South Australia 30%, Western Australia 32%, Tasmania 33%, Northern Territory 46% and ACT 31%."></div>
               </div>
 
-              <p id="c12-scroll-help" class="scroll-help">
-                On narrow screens, scroll horizontally to see the full comparison.
-              </p>
-            </figure>
+              </div>
+</div>
+<div class="figure-status">
+<p id="c11-scroll-help" class="scroll-help" hidden="hidden">This chart adapts to the available width.</p>
 
-            <p class="section-copy">
-              The story began with how households divided their food dollars.
-              These findings add another dimension: whether households had
-              enough food at all. Spending patterns and food security are
-              different measures, but both show why a national average cannot
-              describe every household's circumstances.
-            </p>
+              
+            </div></figure>
+
+            
+
+            <!-- C12: Household circumstances -->
+            <figure class="story-frame side-frame" aria-labelledby="c12-title"><div class="support-body">
+<div class="support-copy">
+<figcaption class="figure-heading"><div class="figure-title">
+<p class="figure-scope">Foodbank · 2025 household survey</p>
+<h3 id="c12-title">Household circumstances matter</h3>
+              </div>
+<p class="chart-finding">The estimate was <strong>68% for single-parent households</strong>, compared with <strong>28%</strong> for households without children.</p></figcaption><p id="c12-chart-help" class="chart-reading">Open circles mark the national 33% estimate. Lines show differences, rather than changes over time.</p>
+
+              </div>
+<div class="support-visual">
+<div class="chart-scroll" role="region" tabindex="0" aria-label="Food insecurity by parental status" aria-describedby="c12-chart-help c12-scroll-help">
+                <div id="chart-12" class="chart" aria-label="Moderate or severe food insecurity: single-parent households 68%; relatives or co-residents of a child 40%; non-single-parent households 39%; households without children 28%. National estimate: 33%."></div>
+              </div>
+
+              </div>
+</div>
+<div class="figure-status">
+<p id="c12-scroll-help" class="scroll-help" hidden="hidden">This chart adapts to the available width.</p>
+            </div></figure>
 
             <!-- Shared sources and methods -->
-            <div class="section-sources">
+            <details class="chapter-notes"><summary>Sources, definitions and downloads</summary><div class="section-sources">
               <p>
                 Source:
                 <a href="https://reports.foodbank.org.au/wp-content/uploads/2025/10/Foodbank_Hunger_Report_2025_Ipsos_WEBCOPY.pdf">
@@ -1483,39 +1084,23 @@
                 </div>
               </details>
             </div>
-          </div>
+          </details>
+</div>
         </section>
 
         <!-- Conclusion -->
-        <section
-          class="chapter household-story"
-          id="conclusion"
-          aria-labelledby="conclusion-title"
-          >
+        <section class="chapter closing-chapter" id="conclusion" aria-labelledby="conclusion-title">
           <div class="section-number">CONCLUSION</div>
 
           <h2 id="conclusion-title">
             The same food dollar means different things to different households
           </h2>
 
-          <p class="section-copy">
-            Australia's food budget changed, but households did not share
-            the same spending patterns or purchasing conditions.
-            Lower-income households spent fewer food dollars while
-            devoting more of their total expenditure to food. In Foodbank's
-            separate 2025 survey, one in three households experienced
-            moderate or severe food insecurity.
-          </p>
-
-          <p class="section-copy">
-            <strong>
-              The food budget divide is about more than dollars spent:
-              it is about the share of the budget food absorbs,
-              the prices households face, and whether they have enough to eat.
-            </strong>
-          </p>
-
-          <div class="section-sources">
+          <div class="closing-copy">
+<p class="section-copy">National averages hide different household circumstances. Smaller food bills can still absorb a larger budget share, while some households face much higher basket prices.</p>
+<p class="section-copy"><strong>The food budget divide concerns what households spend, the prices they face, and whether they have enough to eat.</strong></p>
+</div>
+<details class="closing-notes"><summary>Scope of this story</summary><div class="section-sources">
             <p>
               These sources cover different periods, measures and samples.
               Together they describe several dimensions of the food budget;
@@ -1523,12 +1108,11 @@
               spending patterns caused later food insecurity.
             </p>
           </div>
-        </section>
+        </details></section>
       </main>
 
-      <footer class="page-footer">
-        <p>FIT3179 — Data Visualisation 2</p>
-      </footer>
+      <footer class="page-footer"><p><strong>Joshua Teo</strong> · FIT3179 Data Visualisation 2 · Updated 14 October 2026</p>
+<details><summary>AI assistance and source files</summary><p>OpenAI Codex assisted with layout, code revisions and visual checks. Data sources and chart templates are linked in each section. The JSON templates and accompanying JavaScript together define the displayed charts.</p></details></footer>
 
     </div>
   </body>
