@@ -1,13 +1,13 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-  "description": "Marimekko chart of estimated food expenditure by household type, Australia, 2015\u201316. Column widths show contributions to total food expenditure. Tan segment heights show meals-out shares. An annotation identifies the meals-out segment for group households.",
+  "description": "Marimekko of estimated food spending, Australia, 2015–16. Column widths show aggregate contribution; tan heights show meals-out shares. Numbered columns match the adjacent household list.",
   "width": 860,
   "height": 400,
   "padding": {
     "left": 10,
     "right": 10,
     "top": 10,
-    "bottom": 40
+    "bottom": 0
   },
   "background": "#fffefa",
   "data": {
@@ -114,6 +114,10 @@
     {
       "calculate": "'Group households: ' + format(datum.purchase_share, '.1%') + ' meals out'",
       "as": "group_callout"
+    },
+    {
+      "calculate": "(datum.household_number - 0.5) / 7",
+      "as": "label_anchor"
     }
   ],
   "layer": [
@@ -150,7 +154,7 @@
             "nice": false
           },
           "axis": {
-            "title": "Share within each household type",
+            "title": "Meals-out share within each type",
             "format": ".0%",
             "values": [
               0,
@@ -185,13 +189,14 @@
           "legend": {
             "title": null,
             "orient": "top",
-            "direction": "horizontal",
-            "columns": 2,
+            "direction": "vertical",
+            "columns": 1,
             "columnPadding": 24,
-            "labelLimit": 350,
+            "labelLimit": 300,
             "symbolType": "square",
             "symbolSize": 180,
-            "offset": 20
+            "offset": 12,
+            "rowPadding": 5
           }
         },
         "tooltip": [
@@ -229,197 +234,13 @@
             "title": "Estimated households",
             "format": ",.0f"
           }
-        ]
-      }
-    },
-    {
-      "transform": [
-        {
-          "filter": "datum.purchase_field === 'meals_weekly' && datum.household_type === 'Couple with dependent children'"
-        }
-      ],
-      "mark": {
-        "type": "text",
-        "fontSize": 18,
-        "fontWeight": 600,
-        "align": "center",
-        "baseline": "middle",
-        "color": "#223b36"
-      },
-      "encoding": {
-        "x": {
-          "field": "x_middle",
-          "type": "quantitative",
-          "scale": {
-            "domain": [
-              0,
-              1
-            ],
-            "nice": false
+        ],
+        "opacity": {
+          "condition": {
+            "test": "focusedHousehold === '' || datum.household_type === focusedHousehold",
+            "value": 1
           },
-          "axis": null
-        },
-        "y": {
-          "value": 30
-        },
-        "text": {
-          "value": "38.3% of combined food spending"
-        }
-      }
-    },
-    {
-      "transform": [
-        {
-          "filter": "datum.household_type === 'Group household' && datum.purchase_field === 'meals_weekly'"
-        }
-      ],
-      "mark": {
-        "type": "rect",
-        "fill": null,
-        "stroke": "#75482d",
-        "strokeWidth": 2.5,
-        "aria": false
-      },
-      "encoding": {
-        "x": {
-          "field": "x_start",
-          "type": "quantitative",
-          "scale": {
-            "domain": [
-              0,
-              1
-            ],
-            "nice": false
-          },
-          "axis": null
-        },
-        "x2": {
-          "field": "x_end"
-        },
-        "y": {
-          "field": "y_start",
-          "type": "quantitative",
-          "scale": {
-            "domain": [
-              0,
-              1
-            ],
-            "nice": false
-          },
-          "axis": {
-            "title": "Share within each household type",
-            "format": ".0%",
-            "values": [
-              0,
-              0.25,
-              0.5,
-              0.75,
-              1
-            ],
-            "grid": false,
-            "domain": false,
-            "tickSize": 0,
-            "labelPadding": 10,
-            "titlePadding": 18
-          }
-        },
-        "y2": {
-          "field": "y_end"
-        }
-      }
-    },
-    {
-      "transform": [
-        {
-          "filter": "datum.household_type === 'Group household' && datum.purchase_field === 'meals_weekly'"
-        }
-      ],
-      "mark": {
-        "type": "rule",
-        "color": "#75482d",
-        "strokeWidth": 1.5,
-        "aria": false
-      },
-      "encoding": {
-        "x": {
-          "field": "x_middle",
-          "type": "quantitative",
-          "scale": {
-            "domain": [
-              0,
-              1
-            ],
-            "nice": false
-          },
-          "axis": null
-        },
-        "x2": {
-          "value": {
-            "expr": "width * 0.88"
-          }
-        },
-        "y": {
-          "field": "y_end",
-          "type": "quantitative",
-          "scale": {
-            "domain": [
-              0,
-              1
-            ],
-            "nice": false
-          },
-          "axis": {
-            "title": "Share within each household type",
-            "format": ".0%",
-            "values": [
-              0,
-              0.25,
-              0.5,
-              0.75,
-              1
-            ],
-            "grid": false,
-            "domain": false,
-            "tickSize": 0,
-            "labelPadding": 10,
-            "titlePadding": 18
-          }
-        },
-        "y2": {
-          "value": {
-            "expr": "height * 0.22"
-          }
-        }
-      }
-    },
-    {
-      "transform": [
-        {
-          "filter": "datum.household_type === 'Group household' && datum.purchase_field === 'meals_weekly'"
-        }
-      ],
-      "mark": {
-        "type": "text",
-        "fontSize": 18,
-        "fontWeight": 600,
-        "align": "right",
-        "baseline": "bottom",
-        "color": "#63351f"
-      },
-      "encoding": {
-        "x": {
-          "value": {
-            "expr": "width * 0.88"
-          }
-        },
-        "y": {
-          "value": {
-            "expr": "height * 0.20"
-          }
-        },
-        "text": {
-          "field": "group_callout",
-          "type": "nominal"
+          "value": 0.4
         }
       }
     },
@@ -431,11 +252,11 @@
       ],
       "mark": {
         "type": "text",
-        "fontSize": 18,
-        "fontWeight": 700,
-        "align": "center",
-        "baseline": "top",
-        "color": "#223b36"
+        "fontSize": 14,
+        "fontWeight": "bold",
+        "baseline": "middle",
+        "color": "#223b36",
+        "cursor": "pointer"
       },
       "encoding": {
         "x": {
@@ -452,13 +273,29 @@
         },
         "y": {
           "value": {
-            "expr": "height + 12"
+            "expr": "height - 15"
           }
         },
         "text": {
           "field": "household_number",
           "type": "ordinal"
-        }
+        },
+        "tooltip": [
+          {
+            "field": "household_type",
+            "title": "Household type"
+          },
+          {
+            "field": "food_expenditure_share",
+            "format": ".1%",
+            "title": "Combined spending share"
+          },
+          {
+            "field": "purchase_share",
+            "format": ".1%",
+            "title": "Meals-out share"
+          }
+        ]
       }
     }
   ],
@@ -478,5 +315,11 @@
       "labelFontSize": 18,
       "labelColor": "#223b36"
     }
-  }
+  },
+  "params": [
+    {
+      "name": "focusedHousehold",
+      "value": ""
+    }
+  ]
 }

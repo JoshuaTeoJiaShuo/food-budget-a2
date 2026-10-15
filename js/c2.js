@@ -132,16 +132,16 @@ export async function initialiseC2() {
         context.textContent =
           `${readable(group.name)}: ` +
           `${money(group.total)} per household per week. ` +
-          "Rectangle sizes now compare categories within this group.";
+          "This is a spending breakdown within the selected group.";
       } else {
         context.textContent =
-          "All 13 food groups — average household spending " +
+          "All 13 food groups, average household spending " +
           "in Australian dollars per week, 2015–16.";
       }
 
       tableCaption.textContent =
         `${group ? readable(group.name) : "All food groups"} ` +
-        "— average household dollars per week, 2015–16";
+        ", average household dollars per week, 2015–16";
 
       resetButton.disabled = !selected;
       groupColumnHeading.hidden = Boolean(selected);

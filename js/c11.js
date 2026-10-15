@@ -27,15 +27,12 @@ export async function initialiseC11() {
       const opacity = { condition: { test: "selectedState === 0 || datum.state_code === selectedState", value: 1 }, value: 0.20 };
       const stateLayer = spec.layer.find(layer => layer.transform?.some(t => t.as === "state_code"));
       stateLayer.encoding.opacity = opacity;
-      let colours, colourLegend;
+      let colours;
+      const colourLegend = null;
       walkLayers(spec, layer => {
         if (layer.encoding?.color?.field !== "moderate_or_severe_pct") return;
         colours = structuredClone(layer.encoding.color.scale);
-        Object.assign(layer.encoding.color.legend, {
-          title: "Households experiencing moderate or severe food insecurity (%)",
-          titleLimit: 0, labelLimit: 0, gradientLength: Math.min(440, mapWidth), offset: 12,
-        });
-        colourLegend = structuredClone(layer.encoding.color.legend);
+        layer.encoding.color.legend = null;
       });
       const bars = {
         data: { values: states },
@@ -58,10 +55,10 @@ export async function initialiseC11() {
         },
         layer: [
           { mark: { type: "bar", size: 24, cursor: "pointer" } },
-          { mark: { type: "text", align: "left", dx: 6, fontWeight: "bold", fontSize }, encoding: { text: { field: "value_label" }, color: { value: "#223b36" } } },
+          { mark: { type: "text", align: "left", dx: 6, fontWeight: "bold", fontSize }, encoding: { text: { field: "value_label" }, color: { value: "#223b36" }, opacity: { value: 1 } } },
         ],
       };
-      const map = { width: mapWidth, height, projection: spec.projection, layer: spec.layer };
+      const map = { width: mapWidth, height: height + (paired ? 28 : 0), projection: spec.projection, layer: spec.layer };
       return {
         $schema: spec.$schema, background: spec.background, description: spec.description + " Linked bars show the same eight estimates.",
         padding: 12, params: [{ name: "selectedState", value: 0 }],

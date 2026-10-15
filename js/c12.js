@@ -23,6 +23,7 @@ export function initialiseC12() {
       );
 
       applyTextSize(spec, fontSize);
+      spec.padding.top = 12;
 
       const comparison = spec.layer.find(
         (layer) =>

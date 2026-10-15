@@ -18,16 +18,23 @@ export async function initialiseC4Flow() {
   const originLabels = new Map(locations.map(row => [row.origin, row.label]));
   const finding = container.closest("figure").querySelector(".chart-finding");
   function updateFinding() {
-    const leading = rows.filter(row => row.category === selector.value)
-      .sort((a, b) => b.import_value_aud_million - a.import_value_aud_million)[0];
+    const ranked = rows.filter(row => row.category === selector.value)
+      .sort((a, b) => b.import_value_aud_million - a.import_value_aud_million);
+    const leading = ranked[0];
     if (leading && finding) {
       const amount = document.createElement("strong");
+      amount.className = "chart-cue cue-trade";
       amount.textContent = `A$${leading.import_value_aud_million.toFixed(1)} million`;
       finding.replaceChildren(
         document.createTextNode(`${originLabels.get(leading.origin) || leading.origin} led the six published origins, at `),
         amount,
         document.createTextNode("."),
       );
+      const combined = ranked[0].import_value_aud_million + ranked[1].import_value_aud_million;
+      const total = ranked.reduce((sum, row) => sum + row.import_value_aud_million, 0);
+      container.closest("figure").querySelector(".takeaway-meaning").textContent =
+        `${originLabels.get(ranked[0].origin) || ranked[0].origin} and ${originLabels.get(ranked[1].origin) || ranked[1].origin} together supplied ${(100 * combined / total).toFixed(0)}% of the value shown. Just two partners accounted for A$${combined.toFixed(1)} million across these six origins.`;
+
     }
   }
   updateFinding();
@@ -60,13 +67,14 @@ export async function initialiseC4Flow() {
       // Both panels use the same short origin labels and colour scale.
       flows.transform.pop();
       flows.data = { values: mapRows };
+      flows.transform.find(t=>t.as==="connection").calculate="{'type': 'LineString', 'coordinates': [[datum.longitude, datum.latitude], focusedOrigin === datum.origin ? [datum.arrow_longitude, datum.arrow_latitude] : [datum.destination_longitude, datum.destination_latitude]]}";
       flows.encoding.color = {
         condition: { test: "datum.origin === focusedOrigin", value: "#304c59" },
         value: "#839097",
       };
       flows.encoding.opacity = {
         condition: { test: "focusedOrigin === '' || datum.origin === focusedOrigin", value: 1 },
-        value: 0.15,
+        value: 0.45,
       };
       // Replace the previous selection-only labels with six visible callouts.
       flows.layer = [connections, flows.layer[1]];
@@ -83,12 +91,12 @@ export async function initialiseC4Flow() {
             align: { expr: "datum.label_align" },
             ...(halo ? { stroke: "#fffefa", strokeWidth: 3 } : {}),
           },
-          encoding: { x: pixel("label_x"), y: pixel("label_y"), text: { field: "label" }, color: { value: halo ? "#fffefa" : "#223b36" }, tooltip: null },
+          encoding: { x: pixel("label_x"), y: pixel("label_y"), text: { field: "label" }, color: { value: halo ? "#fffefa" : "#223b36" }, opacity: { value: 1 }, tooltip: null },
         });
       }
       flows.layer.push({
         transform: [{ filter: "focusedOrigin !== '' && datum.origin === focusedOrigin" }],
-        mark: { type: "point", shape: "triangle-up", filled: true, size: 140, angle: { expr: "datum.arrow_angle" }, color: "#304c59", stroke: "#fffefa", strokeWidth: 0.5 },
+        mark: { type: "point", shape: "triangle-up", filled: true, size: 220, angle: { expr: "datum.arrow_angle" }, color: "#304c59", stroke: "#fffefa", strokeWidth: 0.5 },
         encoding: { longitude: { field: "arrow_longitude", type: "quantitative" }, latitude: { field: "arrow_latitude", type: "quantitative" }, color: { value: "#304c59" }, opacity: { value: 1 } },
       });
       // The fixed line-width key sits in the shared HTML control strip.
@@ -99,7 +107,7 @@ export async function initialiseC4Flow() {
         transform: [
           ...structuredClone(flows.transform),
           { window: [{ op: "rank", as: "value_rank" }], sort: [{ field: "import_value_aud_million", order: "descending" }] },
-          { calculate: "datum.value_rank === 1 ? format(datum.import_value_aud_million, '.1f') : ''", as: "value_label" },
+          { calculate: "format(datum.import_value_aud_million, '.1f')", as: "value_label" },
         ],
         width: Math.round(barWidth),
         height: 230,
@@ -123,14 +131,19 @@ export async function initialiseC4Flow() {
       };
       bars.layer.push({
         mark: { type: "text", align: "left", fontSize },
-        encoding: { x: { value: 0 }, text: { field: "label" }, color: { value: "#223b36" } },
+        encoding: { x: { value: 0 }, text: { field: "label" }, color: { value: "#223b36" }, opacity: { value: 1 } },
       });
       // Keep numerical emphasis selective; exact values remain in tooltips.
       bars.layer.push({
         mark: { type: "text", align: "left", dx: 6, fontSize, color: "#223b36" },
-        encoding: { text: { field: "value_label" }, color: { value: "#223b36" } },
+        encoding: { text: { field: "value_label" }, color: { value: "#223b36" }, opacity: { value: 1 } },
       });
 
+      const destinationLayer=spec.layer.find(layer=>layer.transform?.some(t=>t.filter==="datum.origin === 'Australia'"));
+      if(destinationLayer) {
+        const label=destinationLayer.layer.find(layer=>layer.mark?.type==="text");
+        label.mark.baseline="bottom"; label.mark.dy=-16;
+      }
       const map = {
         width: mapWidth, height,
         projection: { type: "equalEarth", rotate: [-150, 0, 0], scale: projection.scale(), translate: projection.translate() },
@@ -201,8 +214,14 @@ function countryLabels(rows, locations, projection, width, height, fontSize) {
     const points = rows.filter(row => row.category === category).map(row => {
       const location = lookup.get(row.origin);
       const [x, y] = projection([location.longitude, location.latitude]);
-      const arrow = greatCirclePoint(location, destination, 0.40);
-      const next = greatCirclePoint(location, destination, 0.42);
+      const endpoint = projection([destination.longitude, destination.latitude]);
+      let fraction = 0.94;
+      let arrow = greatCirclePoint(location, destination, fraction);
+      // Stop just outside the destination marker; short flows need a larger fractional inset.
+      for (let attempt=0; attempt<60 && Math.hypot(...projection(arrow).map((v,i)=>v-endpoint[i]))<18; attempt++) {
+        fraction -= 0.01; arrow = greatCirclePoint(location, destination, fraction);
+      }
+      const next = greatCirclePoint(location, destination, Math.min(1,fraction+0.01));
       const a = projection(arrow), b = projection(next);
       return { ...row, ...location, anchor_x: x, anchor_y: y,
         arrow_longitude: arrow[0], arrow_latitude: arrow[1],

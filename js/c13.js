@@ -1,16 +1,36 @@
 import {
   mountChart,
   applyTextSize,
+  loadCSV,
 } from "./chart-utils.js";
 
-export function initialiseC13() {
-  return mountChart({
+export async function initialiseC13() {
+  const rows=await loadCSV("data/nt-market-basket-2023.csv");
+  const container=document.getElementById("chart-13");
+  let controller;
+  function summary() {
+    const row=rows.find(r=>r.store_id===controller?.getSignal("selectedStore"));
+    document.getElementById("c13-selection-summary").hidden = !row;
+    if (!row) {document.getElementById("c13-selection-summary").textContent="Healthy-basket premiums: 3.8%–106.0%. Current-basket premiums: 9.9%–48.2%. Both compare with the same district supermarket.";return;}
+    const ref=rows.find(r=>r.district===row.district&&r.store_type==="District supermarket");
+    const healthy=100*(row.healthy_basket_aud/ref.healthy_basket_aud-1);
+    const current=100*(row.current_basket_aud/ref.current_basket_aud-1);
+    document.getElementById("c13-selection-summary").textContent=`${row.store_id} · ${row.district}: healthy basket $${row.healthy_basket_aud.toFixed(2)} (${healthy.toFixed(1)}% premium); current basket $${row.current_basket_aud.toFixed(2)} (${current.toFixed(1)}% premium).`;
+  }
+  function select(id) {controller.setSignal("selectedStore",id);summary();}
+  controller = await mountChart({
     id: "chart-13",
     url: "charts/c13-nt-basket-costs.vl.json",
+    signals: { basketBasis: "cost", selectedStore: "", districtFocus: "" },
+    afterRender(view) {
+      view.addEventListener("click",(event,item)=>{const id=item?.datum?.store_id;if(id)select(controller.getSignal("selectedStore")===id?"":id);});
+      view.addEventListener("dblclick",()=>select(""));
+    },
 
     prepare(spec, { availableWidth, fontSize }) {
       applyTextSize(spec, fontSize);
 
+      const premium=document.querySelector('[data-c13-basis="premium"]').getAttribute("aria-pressed")==="true";
       const paired = availableWidth >= 800;
       const columns = paired ? 2 : 1;
       const gap = 20;
@@ -39,6 +59,9 @@ export function initialiseC13() {
 
       function makePanel(basket) {
         const panel = structuredClone(template);
+        panel.encoding.x.scale.domain=premium?[0,110]:[550,1450];
+        panel.encoding.x.axis.title=premium?"Above district supermarket (%)":"Basket cost (A$)";
+        panel.encoding.x.axis.format=premium?".0f":"$,.0f";
 
         panel.width = plotWidth;
         panel.height = plotHeight;
@@ -77,7 +100,7 @@ export function initialiseC13() {
         Object.assign(panel.encoding.x.axis, {
           labelFontSize: fontSize,
           titleFontSize: fontSize,
-          values: [600, 1000, 1400],
+          values: premium ? [0, 50, 100] : [600, 1000, 1400],
         });
 
         const legend = panel.layer[0].encoding.color.legend;
@@ -128,4 +151,19 @@ export function initialiseC13() {
       return spec;
     },
   });
+  const options={signal:controller.events};
+  document.querySelectorAll("[data-c13-basis]").forEach(button=>button.addEventListener("click",()=>{
+    document.querySelectorAll("[data-c13-basis]").forEach(b=>b.setAttribute("aria-pressed",String(b===button)));
+    void controller.refresh({basketBasis:button.dataset.c13Basis});
+  },options));
+  document.getElementById("c13-district").addEventListener("change",e=>{controller.setSignal("districtFocus",e.target.value);select("");},options);
+  document.getElementById("c13-clear").addEventListener("click",()=>select(""),options);
+  container.addEventListener("keydown",e=>{
+    if(e.key==="Escape"){e.preventDefault();select("");return;}
+    if(!["ArrowLeft","ArrowRight"].includes(e.key))return;
+    e.preventDefault();const district=controller.getSignal("districtFocus");const candidates=rows.filter(r=>!district||r.district===district);
+    const i=candidates.findIndex(r=>r.store_id===controller.getSignal("selectedStore"));const d=e.key==="ArrowRight"?1:-1;
+    select(candidates[i<0?(d>0?0:candidates.length-1):(i+d+candidates.length)%candidates.length].store_id);
+  },options);
+  return controller;
 }

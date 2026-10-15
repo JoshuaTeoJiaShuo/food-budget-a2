@@ -3,7 +3,6 @@
   "description": "NT basket costs for six people over a fortnight, 2023. Both panels share the same price scale and district order. Vertical jitter separates stores and has no numerical meaning.",
   "background": "#fffefa",
   "padding": 12,
-
   "data": {
     "url": "data/nt-market-basket-2023.csv",
     "format": {
@@ -15,14 +14,41 @@
       }
     }
   },
-
   "transform": [
+    {
+      "calculate": "datum.store_type === 'District supermarket' ? datum.healthy_basket_aud : null",
+      "as": "healthy_reference"
+    },
+    {
+      "calculate": "datum.store_type === 'District supermarket' ? datum.current_basket_aud : null",
+      "as": "current_reference"
+    },
+    {
+      "joinaggregate": [
+        {
+          "op": "max",
+          "field": "healthy_reference",
+          "as": "healthy_reference_cost"
+        },
+        {
+          "op": "max",
+          "field": "current_reference",
+          "as": "current_reference_cost"
+        }
+      ],
+      "groupby": [
+        "district"
+      ]
+    },
     {
       "fold": [
         "healthy_basket_aud",
         "current_basket_aud"
       ],
-      "as": ["basket_field", "basket_cost"]
+      "as": [
+        "basket_field",
+        "basket_cost"
+      ]
     },
     {
       "calculate": "datum.basket_field === 'healthy_basket_aud' ? 'Healthy food basket' : 'Current diet basket'",
@@ -31,9 +57,24 @@
     {
       "calculate": "datum.store_type === 'Remote store' ? ((datum.source_row * 37) % 101) / 100 - 0.5 : 0",
       "as": "jitter"
+    },
+    {
+      "calculate": "datum.basket_field === 'healthy_basket_aud' ? datum.healthy_reference_cost : datum.current_reference_cost",
+      "as": "reference_cost"
+    },
+    {
+      "calculate": "datum.basket_cost - datum.reference_cost",
+      "as": "premium_dollars"
+    },
+    {
+      "calculate": "100 * (datum.basket_cost / datum.reference_cost - 1)",
+      "as": "premium_pct"
+    },
+    {
+      "calculate": "basketBasis === 'premium' ? datum.premium_pct : datum.basket_cost",
+      "as": "display_value"
     }
   ],
-
   "facet": {
     "field": "basket_name",
     "type": "nominal",
@@ -50,26 +91,30 @@
       "labelPadding": 16
     }
   },
-
   "columns": 2,
   "spacing": 28,
-
   "spec": {
     "width": 350,
     "height": 340,
-
     "encoding": {
       "x": {
-        "field": "basket_cost",
+        "field": "display_value",
         "type": "quantitative",
         "scale": {
-          "domain": [550, 1450],
+          "domain": [
+            550,
+            1450
+          ],
           "zero": false,
           "nice": false
         },
         "axis": {
           "title": "Basket cost (A$)",
-          "values": [600, 1000, 1400],
+          "values": [
+            600,
+            1000,
+            1400
+          ],
           "format": "$,.0f",
           "titlePadding": 18,
           "labelPadding": 8,
@@ -78,7 +123,6 @@
           "grid": true
         }
       },
-
       "y": {
         "field": "district",
         "type": "nominal",
@@ -102,15 +146,20 @@
           "domain": false,
           "grid": true,
           "gridColor": "#e8ece6",
-          "gridDash": [2, 4]
+          "gridDash": [
+            2,
+            4
+          ]
         }
       },
-
       "yOffset": {
         "field": "jitter",
         "type": "quantitative",
         "scale": {
-          "domain": [-0.5, 0.5],
+          "domain": [
+            -0.5,
+            0.5
+          ],
           "range": [
             {
               "expr": "bandwidth('y') / 2 - 18"
@@ -122,7 +171,6 @@
           "nice": false
         }
       },
-
       "tooltip": [
         {
           "field": "district",
@@ -149,19 +197,36 @@
           "type": "quantitative",
           "title": "Six people / fortnight (A$)",
           "format": ",.2f"
+        },
+        {
+          "field": "reference_cost",
+          "type": "quantitative",
+          "title": "District supermarket (A$)",
+          "format": ",.2f"
+        },
+        {
+          "field": "premium_dollars",
+          "type": "quantitative",
+          "title": "Difference (A$)",
+          "format": "+,.2f"
+        },
+        {
+          "field": "premium_pct",
+          "type": "quantitative",
+          "title": "Premium above district supermarket (%)",
+          "format": "+.1f"
         }
       ]
     },
-
     "layer": [
       {
         "mark": {
           "type": "point",
           "filled": true,
           "stroke": "#fffefa",
-          "strokeWidth": 0.8
+          "strokeWidth": 0.8,
+          "cursor": "pointer"
         },
-
         "encoding": {
           "color": {
             "field": "store_type",
@@ -171,7 +236,10 @@
                 "Remote store",
                 "District supermarket"
               ],
-              "range": ["#39778b", "#223b36"]
+              "range": [
+                "#39778b",
+                "#223b36"
+              ]
             },
             "legend": {
               "title": null,
@@ -183,7 +251,6 @@
               "offset": 20
             }
           },
-
           "shape": {
             "field": "store_type",
             "type": "nominal",
@@ -192,14 +259,16 @@
                 "Remote store",
                 "District supermarket"
               ],
-              "range": ["circle", "diamond"]
+              "range": [
+                "circle",
+                "diamond"
+              ]
             },
             "legend": {
               "title": null,
               "orient": "top"
             }
           },
-
           "size": {
             "condition": {
               "test": "datum.store_type === 'District supermarket'",
@@ -207,19 +276,31 @@
             },
             "value": 85
           },
-
           "opacity": {
             "condition": {
-              "test": "datum.store_type === 'District supermarket'",
-              "value": 1
+              "test": "(districtFocus === '' || datum.district === districtFocus) && (selectedStore === '' || datum.store_id === selectedStore || datum.store_type === 'District supermarket')",
+              "value": 0.9
+            },
+            "value": 0.12
+          },
+          "strokeWidth": {
+            "condition": {
+              "test": "selectedStore !== '' && datum.store_id === selectedStore",
+              "value": 3
             },
             "value": 0.8
+          },
+          "stroke": {
+            "condition": {
+              "test": "selectedStore !== '' && datum.store_id === selectedStore",
+              "value": "#223b36"
+            },
+            "value": "#fffefa"
           }
         }
       }
     ]
   },
-
   "resolve": {
     "scale": {
       "x": "shared",
@@ -228,7 +309,6 @@
       "shape": "shared"
     }
   },
-
   "config": {
     "font": "Arial",
     "view": {
@@ -246,5 +326,19 @@
       "labelFontSize": 18,
       "labelColor": "#223b36"
     }
-  }
+  },
+  "params": [
+    {
+      "name": "basketBasis",
+      "value": "cost"
+    },
+    {
+      "name": "selectedStore",
+      "value": ""
+    },
+    {
+      "name": "districtFocus",
+      "value": ""
+    }
+  ]
 }

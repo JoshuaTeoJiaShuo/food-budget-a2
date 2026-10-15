@@ -3,6 +3,8 @@ import {
   loadJSON,
   loadCSV,
   applyTextSize,
+  bindHouseholdFocus,
+  setHouseholdFocus,
 } from "./chart-utils.js";
 
 export async function initialiseC5() {
@@ -22,23 +24,28 @@ export async function initialiseC5() {
   // Share the parsed rows with the chart and companion table.
   specification.data = { values: rows };
 
-  return mountChart({
+  const controller = await mountChart({
     id: "chart-5",
     specification,
+    signals: { focusedHousehold: "" },
+    afterRender(view) {
+      view.addEventListener("click", (event,item) => { if (item?.datum?.household_type) setHouseholdFocus(item.datum.household_type); }); },
 
     prepare(spec, { availableWidth, fontSize }) {
       const axisAllowance = Math.ceil(
-        fontSize * 6.5 + 30
+        fontSize * 6.5 + 28
       );
 
       spec.width = Math.max(
-        480,
+        300,
         Math.min(1100, availableWidth - axisAllowance)
       );
 
+
+      spec.padding.bottom=0;
       spec.height = Math.max(
-        260,
-        Math.round(fontSize * 18)
+        310,
+        Math.round(fontSize * 22)
       );
 
       applyTextSize(spec, fontSize);
@@ -46,6 +53,20 @@ export async function initialiseC5() {
       return spec;
     },
   });
+  bindHouseholdFocus(controller, document.getElementById("chart-5"));
+  const update = () => {
+    const name = document.body.dataset.householdFocus || "";
+    const row = rows.find(r => r.household_type === name);
+    document.getElementById("household-focus-summary").hidden = !name;
+    document.querySelectorAll("#c5-household-key button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.household === name)));
+    document.getElementById("household-focus-summary").textContent = row
+      ? `${name}: $${Number(row.food_weekly).toFixed(2)} per household; approximately $${Number(row.food_per_person).toFixed(2)} per person (mean size ${row.mean_size}). `
+      : "Couples with children contributed the most overall; group households allocated the highest share to meals out.";
+  };
+  window.addEventListener("household-focus", update, { signal: controller.events });
+  document.getElementById("household-clear").addEventListener("click", () => setHouseholdFocus(""), { signal: controller.events });
+  update();
+  return controller;
 }
 
 function buildHouseholdKey(rows, tableBody) {
@@ -135,7 +156,25 @@ function buildHouseholdKey(rows, tableBody) {
 
     households.forEach((household) => {
       const item = document.createElement("li");
-      item.textContent = household.name;
+      const button = document.createElement("button");
+      button.type = "button";
+      const number = document.createElement("span");
+      number.className = "household-number";
+      number.textContent = String(households.indexOf(household) + 1);
+      const name = document.createElement("span");
+      name.className = "household-name";
+      name.textContent = household.name;
+      const values = document.createElement("span");
+      values.className = "household-values";
+      values.textContent = percentage.format(household.mealsShare);
+      const contribution = document.createElement("span");
+      contribution.className = "household-contribution";
+      contribution.textContent = `${percentage.format(household.total / totalFoodSpending)} of combined spending`;
+      button.append(number, name, values, contribution);
+      button.dataset.household = household.name;
+      button.setAttribute("aria-pressed", "false");
+      button.addEventListener("click", () => setHouseholdFocus(household.name));
+      item.append(button);
 
       item.classList.toggle(
         "is-highlighted",

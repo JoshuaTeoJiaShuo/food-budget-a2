@@ -54,7 +54,7 @@
       "as": "row"
     },
     {
-      "calculate": "datum.status + ' — ' + format(datum.pct, '.0f') + '%'",
+      "calculate": "datum.status + ', ' + format(datum.pct, '.0f') + '%'",
       "as": "status_label"
     }
   ],

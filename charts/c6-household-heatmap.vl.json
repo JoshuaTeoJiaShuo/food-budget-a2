@@ -1,6 +1,6 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v6.json",
-  "description": "Weekly expenditure on food categories other than meals out, by household type, Australia, 2015\u201316. Compare household averages with approximate per-person amounts calculated using average household size.",
+  "description": "Weekly expenditure on food categories other than meals out, by household type, Australia, 2015–16. Compare household averages with approximate per-person amounts calculated using average household size.",
   "width": 756,
   "height": 528,
   "background": "#fffefa",
@@ -21,6 +21,10 @@
     {
       "name": "spendingBasis",
       "value": "Approx. per person"
+    },
+    {
+      "name": "focusedHousehold",
+      "value": ""
     }
   ],
   "transform": [
@@ -65,7 +69,7 @@
       ]
     },
     {
-      "calculate": "datum.display_amount === datum.category_maximum ? datum.cell_label : (isValid(datum.rse_pct) && datum.rse_pct >= 25 ? '*' : '')",
+      "calculate": "focusedHousehold !== '' && datum.household_type === focusedHousehold ? datum.cell_label : (datum.display_amount === datum.category_maximum ? datum.cell_label : (isValid(datum.rse_pct) && datum.rse_pct >= 25 ? '*' : ''))",
       "as": "visible_label"
     }
   ],
@@ -186,6 +190,13 @@
             "format": ".1f",
             "offset": 20
           }
+        },
+        "opacity": {
+          "condition": {
+            "test": "focusedHousehold === '' || datum.household_type === focusedHousehold",
+            "value": 1
+          },
+          "value": 0.4
         }
       }
     },
@@ -202,10 +213,13 @@
         },
         "color": {
           "condition": {
-            "test": "datum.display_amount > datum.maximum_amount * 0.6",
+            "test": "datum.display_amount > datum.maximum_amount * 0.6 && (focusedHousehold === '' || datum.household_type === focusedHousehold)",
             "value": "#ffffff"
           },
           "value": "#223b36"
+        },
+        "opacity": {
+          "value": 1
         }
       }
     }

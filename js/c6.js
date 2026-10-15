@@ -1,6 +1,10 @@
 import {
   mountChart,
+  loadCSV,
+  setTextCues,
   applyTextSize,
+  bindHouseholdFocus,
+  setHouseholdFocus,
 } from "./chart-utils.js";
 
 export async function initialiseC6() {
@@ -8,15 +12,37 @@ export async function initialiseC6() {
 
   const selector = document.getElementById("c6-basis");
 
+  const meat = (await loadCSV("data/household-food-heatmap.csv")).filter(row => Number(row.hec_code) === 302);
+  const finding = document.getElementById("chart-6").closest("figure").querySelector(".chart-finding");
+  function updateFinding() {
+    const household = selector.value === "Per household";
+    const field = household ? "household_weekly" : "approx_per_person_weekly";
+    const ordered = [...meat].sort((a,b) => Number(b[field])-Number(a[field]));
+    const leader = ordered[0];
+    const other = meat.find(row => row.household_type === (household ? "Couple only" : "Multiple-family"));
+    setTextCues(finding, household ? [
+      "Multiple-family households had the ", {text:`highest meat bill: $${Number(leader[field]).toFixed(2)}`,cue:"cue-spending-high"},
+      ` per household per week. Couple-only households averaged $${Number(other[field]).toFixed(2)}.`
+    ] : [
+      "Couple-only households had the ", {text:`highest meat spending: approximately $${Number(leader[field]).toFixed(2)}`,cue:"cue-spending-high"},
+      ` per person per week. Multiple-family households averaged $${Number(other[field]).toFixed(2)}.`
+    ]);
+  }
+  updateFinding();
   const controller = await mountChart({
     id: "chart-6",
     url: "charts/c6-household-heatmap.vl.json",
 
     signals: {
       spendingBasis: selector.value,
+      focusedHousehold: "",
     },
 
+    afterRender(view) { view.addEventListener("click", (event,item) => { if (item?.datum?.household_type) setHouseholdFocus(item.datum.household_type); }); },
+
     prepare(spec, { availableWidth, fontSize }) {
+      spec.layer[0].encoding.color.legend.title = selector.value === "Per household"
+        ? "A$ per household per week" : "Approx. A$ per person per week";
       const labelAllowance = Math.ceil(
         fontSize * 10 + 24
       );
@@ -53,15 +79,14 @@ export async function initialiseC6() {
     },
   });
 
+  bindHouseholdFocus(controller, document.getElementById("chart-6"));
   selector.disabled = false;
 
   selector.addEventListener(
     "change",
     () => {
-      controller.setSignal(
-        "spendingBasis",
-        selector.value
-      );
+      void controller.refresh({ spendingBasis: selector.value });
+      updateFinding();
     },
     { signal: controller.events }
   );
