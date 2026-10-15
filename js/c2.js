@@ -1,13 +1,11 @@
+// C2 | Treemap: food-group dropdown, reset button and exact-values table.
 import { mountChart } from "./chart-utils.js";
 
+// LAYOUT | Size the treemap for the available width
 function treemapLayout({ availableWidth, fontSize }) {
   return {
     width: availableWidth,
-    height: Math.round(
-      availableWidth < 500
-        ? Math.max(560, fontSize * 34)
-        : Math.max(460, fontSize * 33)
-    ),
+    height: Math.round(availableWidth < 500 ? Math.max(560, fontSize * 34) : Math.max(460, fontSize * 33)),
   };
 }
 
@@ -20,9 +18,7 @@ export async function initialiseC2() {
   const tableBody = document.getElementById("c2-table-body");
   const tableCaption = document.getElementById("c2-table-caption");
 
-  const groupColumnHeading = tableBody
-    .closest("table")
-    .querySelector("thead th:first-child");
+  const groupColumnHeading = tableBody.closest("table").querySelector("thead th:first-child");
 
   selector.disabled = true;
 
@@ -31,16 +27,13 @@ export async function initialiseC2() {
     url: "charts/c2-food-treemap.vg.json",
     mode: "vega",
 
-    signals: {
-      selectedGroup: "",
-    },
+    signals: { selectedGroup: "", },
 
+    // CHART | Prepare the data encodings and responsive layout
     prepare(spec, layout) {
       Object.assign(spec, treemapLayout(layout));
 
-      spec.signals.find(
-        (signal) => signal.name === "labelSize"
-      ).value = layout.fontSize - 1;
+      spec.signals.find((signal) => signal.name === "labelSize").value = layout.fontSize - 1;
 
       return spec;
     },
@@ -58,12 +51,7 @@ export async function initialiseC2() {
 
   try {
     // Use independent copies for the controls and table.
-    const rows = controller.view.data("raw").map((row) => ({
-      parent: row.parent,
-      parent_label: row.parent_label,
-      category: row.category,
-      weekly: row.weekly,
-    }));
+    const rows = controller.view.data("raw").map((row) => ({ parent: row.parent, parent_label: row.parent_label, category: row.category, weekly: row.weekly, }));
 
     const groups = controller.view
       .data("groupNodes")
@@ -72,37 +60,24 @@ export async function initialiseC2() {
         name: group.name,
         label: group.label,
         total: group.total,
-        childCount: rows.filter(
-          (row) => row.parent === group.id
-        ).length,
+        childCount: rows.filter((row) => row.parent === group.id).length,
       }))
       .sort((a, b) => b.total - a.total);
 
     if (rows.length !== 42 || groups.length !== 13) {
-      throw new Error(
-        "C2 expects 42 categories in 13 groups. " +
-        "Check food-hierarchy.csv."
-      );
+      throw new Error("C2 expects 42 categories in 13 groups. " + "Check food-hierarchy.csv.");
     }
 
     const money = (value) => `$${value.toFixed(2)}`;
 
     const readable = (text) =>
-      text
-        .replace(/\bnfd\b/g, "(not further defined)")
-        .replace(/\bnec\b/g, "(not elsewhere classified)");
+      text.replace(/\bnfd\b/g, "(not further defined)").replace(/\bnec\b/g, "(not elsewhere classified)");
 
-    const groupOrder = new Map(
-      groups.map((group, index) => [group.id, index])
-    );
+    const groupOrder = new Map(groups.map((group, index) => [group.id, index]));
 
-    const groupCounts = new Map(
-      groups.map((group) => [group.id, group.childCount])
-    );
+    const groupCounts = new Map(groups.map((group) => [group.id, group.childCount]));
 
-    selector.replaceChildren(
-      new Option("All food groups", "")
-    );
+    selector.replaceChildren(new Option("All food groups", ""));
 
     for (const group of groups) {
       if (group.childCount <= 1) continue;
@@ -112,21 +87,13 @@ export async function initialiseC2() {
 
     selector.disabled = false;
 
+    // TABLE | Keep detailed rows and captions in sync with the selected group
     function updateTableAndContext(selected) {
-      const group = groups.find(
-        (item) => item.id === selected
-      );
+      const group = groups.find((item) => item.id === selected);
 
       const visibleRows = rows
-        .filter(
-          (row) => !selected || row.parent === selected
-        )
-        .sort(
-          (a, b) =>
-            groupOrder.get(a.parent) -
-              groupOrder.get(b.parent) ||
-            b.weekly - a.weekly
-        );
+        .filter((row) => !selected || row.parent === selected)
+        .sort((a, b) => groupOrder.get(a.parent) - groupOrder.get(b.parent) || b.weekly - a.weekly);
 
       if (group) {
         context.textContent =
@@ -135,8 +102,7 @@ export async function initialiseC2() {
           "This is a spending breakdown within the selected group.";
       } else {
         context.textContent =
-          "All 13 food groups, average household spending " +
-          "in Australian dollars per week, 2015–16.";
+          "All 13 food groups, average household spending " + "in Australian dollars per week, 2015–16.";
       }
 
       tableCaption.textContent =
@@ -178,23 +144,17 @@ export async function initialiseC2() {
       tableBody.replaceChildren(fragment);
     }
 
+    // DROPDOWN | Apply the treemap food-group selection
     function chooseGroup(value) {
       selector.value = value;
       controller.setSignal("selectedGroup", value);
       updateTableAndContext(value);
     }
 
-    selector.addEventListener(
-      "change",
-      () => chooseGroup(selector.value),
-      { signal: controller.events }
-    );
+    // CONTROLS | DOM events and keyboard access
+    selector.addEventListener("change", () => chooseGroup(selector.value), { signal: controller.events });
 
-    resetButton.addEventListener(
-      "click",
-      () => chooseGroup(""),
-      { signal: controller.events }
-    );
+    resetButton.addEventListener("click", () => chooseGroup(""), { signal: controller.events });
 
     updateTableAndContext("");
 

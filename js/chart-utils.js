@@ -1,6 +1,5 @@
-// Shared chart utilities.
-// Chart-specific data transformations and encodings stay in charts/*.json.
-
+// SHARED | Data loading, chart lifecycle, linked focus and responsive alignment.
+// DATA | Load a chart specification
 export async function loadJSON(url) {
   const response = await fetch(url);
 
@@ -11,6 +10,7 @@ export async function loadJSON(url) {
   return response.json();
 }
 
+// DATA | Load and parse CSV rows
 export async function loadCSV(url) {
   const response = await fetch(url);
 
@@ -18,12 +18,10 @@ export async function loadCSV(url) {
     throw new Error(`${url}: HTTP ${response.status}`);
   }
 
-  return vega.read(await response.text(), {
-    type: "csv",
-    parse: "auto",
-  });
+  return vega.read(await response.text(), { type: "csv", parse: "auto", });
 }
 
+// ERROR | Accessible chart failure message
 export function showChartError(id, error) {
   console.error(`${id}:`, error);
 
@@ -33,13 +31,13 @@ export function showChartError(id, error) {
   const message = document.createElement("p");
   message.className = "chart-error";
   message.setAttribute("role", "alert");
-  message.textContent =
-    "This chart could not load. Check its files and internet connection, then refresh.";
+  message.textContent = "This chart could not load. Check its files and internet connection, then refresh.";
 
   container.replaceChildren(message);
   container.setAttribute("aria-busy", "false");
 }
 
+// SPEC | Visit nested Vega-Lite layers
 export function walkLayers(spec, visit) {
   visit(spec);
 
@@ -49,25 +47,15 @@ export function walkLayers(spec, visit) {
 }
 
 // Set text sizes before Vega calculates the chart's layout.
+// SPEC | Set chart-label sizes before layout
 export function applyTextSize(spec, fontSize) {
   spec.config ||= {};
 
-  spec.config.axis = {
-    ...spec.config.axis,
-    labelFontSize: fontSize,
-    titleFontSize: fontSize,
-  };
+  spec.config.axis = { ...spec.config.axis, labelFontSize: fontSize, titleFontSize: fontSize, };
 
-  spec.config.legend = {
-    ...spec.config.legend,
-    labelFontSize: fontSize,
-    titleFontSize: fontSize,
-  };
+  spec.config.legend = { ...spec.config.legend, labelFontSize: fontSize, titleFontSize: fontSize, };
 
-  spec.config.text = {
-    ...spec.config.text,
-    fontSize,
-  };
+  spec.config.text = { ...spec.config.text, fontSize, };
 
   walkLayers(spec, (layer) => {
     if (layer.mark?.type === "text") {
@@ -85,18 +73,11 @@ export function applyTextSize(spec, fontSize) {
   });
 }
 
-export function mapLayout(availableWidth) {
-  const width = Math.max(300, Math.min(680, availableWidth - 48));
-
-  return {
-    width,
-    height: Math.round(width * 0.74),
-  };
-}
 
 // Manage loading, rendering, selection state and cleanup in one place.
 // Most charts rebuild when their layout changes.
 // Charts supporting direct resizing can provide resizeView instead.
+// RENDER | Chart loading, signals, resizing and disposal
 export async function mountChart({
   id,
   url,
@@ -110,8 +91,7 @@ export async function mountChart({
   const container = document.getElementById(id);
   if (!container) return null;
 
-  const wrapper =
-    container.closest(".chart-scroll") || container;
+  const wrapper = container.closest(".chart-scroll") || container;
 
   const template = specification || (await loadJSON(url));
   const state = { ...signals };
@@ -131,8 +111,7 @@ export async function mountChart({
 
     return {
       availableWidth: Math.floor(wrapper.clientWidth),
-      fontSize:
-        parseFloat(styles.getPropertyValue("--chart-font")) || 14,
+      fontSize: parseFloat(styles.getPropertyValue("--chart-font")) || 14,
     };
   }
 
@@ -143,8 +122,7 @@ export async function mountChart({
     const hint = document.getElementById(`c${chartNumber}-scroll-help`);
 
     if (hint?.classList.contains("scroll-help")) {
-      hint.hidden =
-        wrapper.scrollWidth <= wrapper.clientWidth + 1;
+      hint.hidden = wrapper.scrollWidth <= wrapper.clientWidth + 1;
     }
   }
 
@@ -167,11 +145,7 @@ export async function mountChart({
         const signalValues = { ...state };
         const signalKey = JSON.stringify(signalValues);
 
-        if (
-          embedded &&
-          layoutKey === lastLayout &&
-          signalKey === lastSignals
-        ) {
+        if (embedded && layoutKey === lastLayout && signalKey === lastSignals) {
           continue;
         }
 
@@ -181,23 +155,15 @@ export async function mountChart({
           } else {
             const scroll = wrapper.scrollLeft;
 
-            const spec = prepare(
-              structuredClone(template),
-              dimensions
-            );
+            const spec = prepare(structuredClone(template), dimensions);
 
-            const parameters =
-              mode === "vega" ? spec.signals : spec.params;
+            const parameters = mode === "vega" ? spec.signals : spec.params;
 
             for (const [name, value] of Object.entries(signalValues)) {
-              const parameter = parameters?.find(
-                (item) => item.name === name
-              );
+              const parameter = parameters?.find((item) => item.name === name);
 
               if (!parameter) {
-                throw new Error(
-                  `Missing chart parameter: ${name}`
-                );
+                throw new Error(`Missing chart parameter: ${name}`);
               }
 
               parameter.value = value;
@@ -206,11 +172,7 @@ export async function mountChart({
             embedded?.finalize();
             embedded = null;
 
-            const result = await vegaEmbed(container, spec, {
-              mode,
-              actions: false,
-              renderer: "svg",
-            });
+            const result = await vegaEmbed(container, spec, { mode, actions: false, renderer: "svg", });
 
             if (disposed) {
               result.finalize();
@@ -238,10 +200,7 @@ export async function mountChart({
         alignFigureToPlots(container);
 
         // Handle changes made while rendering was in progress.
-        if (
-          JSON.stringify(layout()) + ":" + revision !== layoutKey ||
-          JSON.stringify(state) !== signalKey
-        ) {
+        if (JSON.stringify(layout()) + ":" + revision !== layoutKey || JSON.stringify(state) !== signalKey) {
           pending = true;
         }
       }
@@ -320,42 +279,62 @@ export async function mountChart({
 }
 
 // Household focus is shared by the mosaic and heatmap, without filtering denominators.
+// LINK | Apply household selection to another chart
 export function bindHouseholdFocus(controller, container) {
   const update = () => controller.setSignal("focusedHousehold", document.body.dataset.householdFocus || "");
   window.addEventListener("household-focus", update, { signal: controller.events });
   update();
-  container.addEventListener("keydown", event => {
-    if (event.key === "Escape") { event.preventDefault(); setHouseholdFocus(""); }
-  }, { signal: controller.events });
+  // CONTROLS | DOM events and keyboard access
+  // KEYBOARD | Arrow-key selection and Escape to clear
+  container.addEventListener(
+    "keydown",
+    (event) => {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        setHouseholdFocus("");
+      }
+    },
+    { signal: controller.events },
+  );
 }
+// LINK | Broadcast the selected household
 export function setHouseholdFocus(name) {
   const current = document.body.dataset.householdFocus || "";
   document.body.dataset.householdFocus = current === name ? "" : name;
   window.dispatchEvent(new Event("household-focus"));
 }
 
-
 // Chart columns, headings and reading text share the same measured rails.
+// LAYOUT | Align chart columns, reading cards and controls
 function alignFigureToPlots(container) {
   const figure = container.closest("figure");
   const svg = container.querySelector("svg");
   if (!figure || !svg) return;
   const heading = figure.querySelector(":scope > .plot-heading");
-  heading?.classList.toggle("has-inline-control", Boolean(heading.querySelector(".compact-timeline, .header-actions")));
-  figure.classList.remove("has-comparison-columns");
+  heading?.classList.toggle(
+    "has-inline-control",
+    Boolean(heading.querySelector(".compact-timeline, .header-actions")),
+  );
   figure.style.setProperty("--plot-inset", "0px");
   const body = figure.querySelector(".takeaway-body");
   if (!body) return;
   const frame = figure.getBoundingClientRect();
-  const contentLeft = frame.left + parseFloat(getComputedStyle(figure).paddingLeft) + parseFloat(getComputedStyle(figure).borderLeftWidth);
-  const contentRight = frame.right - parseFloat(getComputedStyle(figure).paddingRight) - parseFloat(getComputedStyle(figure).borderRightWidth);
-  const scope = name => svg.querySelector(`g.role-scope.${name}`)?.getBoundingClientRect();
+  const contentLeft =
+    frame.left +
+    parseFloat(getComputedStyle(figure).paddingLeft) +
+    parseFloat(getComputedStyle(figure).borderLeftWidth);
+  const contentRight =
+    frame.right -
+    parseFloat(getComputedStyle(figure).paddingRight) -
+    parseFloat(getComputedStyle(figure).borderRightWidth);
+  const scope = (name) => svg.querySelector(`g.role-scope.${name}`)?.getBoundingClientRect();
   const outer = svg.querySelector(":scope > g")?.getBoundingClientRect();
-  let primary = outer, secondary;
+  let primary = outer,
+    secondary;
   if (["chart-1", "chart-3", "chart-11", "chart-13"].includes(container.id)) {
     primary = scope("concat_0_group") || outer;
     const next = scope("concat_1_group");
-    if (next && next.left > primary.right - 20 && Math.abs(next.top-primary.top) < 80) secondary = next;
+    if (next && next.left > primary.right - 20 && Math.abs(next.top - primary.top) < 80) secondary = next;
   }
   if (container.id === "chart-9") {
     primary = scope("concat_0_concat_0_group") || outer;
@@ -367,83 +346,120 @@ function alignFigureToPlots(container) {
   }
   if (container.id === "chart-11") {
     const comparison = scope("concat_1_group");
-    figure.style.setProperty("--stacked-key-inset", `${Math.max(0,(comparison?.left || contentLeft)-contentLeft)}px`);
+    figure.style.setProperty(
+      "--stacked-key-inset",
+      `${Math.max(0, (comparison?.left || contentLeft) - contentLeft)}px`,
+    );
     heading?.classList.toggle("aligned-map-key", Boolean(secondary && innerWidth > 800));
-    if (secondary) figure.style.setProperty("--map-key-first-width", `${secondary.left-contentLeft-20}px`);
+    if (secondary)
+      figure.style.setProperty("--map-key-first-width", `${secondary.left - contentLeft - 20}px`);
   }
   const sidebar = Boolean(figure.querySelector(".chart-and-takeaway"));
-  const rail = Math.max(contentLeft, Math.min(primary?.left || contentLeft, contentLeft+20));
-  figure.style.setProperty("--visual-inset", `${rail-contentLeft}px`);
-  const split = secondary && secondary.left < contentRight-240 && innerWidth > 800;
+  const rail = Math.max(contentLeft, Math.min(primary?.left || contentLeft, contentLeft + 20));
+  figure.style.setProperty("--visual-inset", `${rail - contentLeft}px`);
+  const split = secondary && secondary.left < contentRight - 240 && innerWidth > 800;
   figure.classList.toggle("has-visual-columns", Boolean(split && !sidebar));
   if (split && !sidebar) {
     const bodyLeft = body.getBoundingClientRect().left;
-    figure.style.setProperty("--reading-first-width", `${secondary.left-bodyLeft-24}px`);
-    figure.style.setProperty("--visual-first-span", `${secondary.left-rail-24}px`);
+    figure.style.setProperty("--reading-first-width", `${secondary.left - bodyLeft - 24}px`);
+    figure.style.setProperty("--visual-first-span", `${secondary.left - rail - 24}px`);
   }
   // A finding box keeps its edge at the frame, while its text follows the chart.
   const panel = body.querySelector(".takeaway-finding");
-  if (!sidebar && panel) panel.style.setProperty("--finding-text-inset", `${Math.max(0,rail-body.getBoundingClientRect().left-1)}px`);
-  heading?.classList.toggle("has-timeline-comparison", Boolean(split && heading.querySelector(".compact-timeline")));
-  if (split) figure.style.setProperty("--timeline-first-width", `${secondary.left-contentLeft-24}px`);
+  if (!sidebar && panel)
+    panel.style.setProperty(
+      "--finding-text-inset",
+      `${Math.max(0, rail - body.getBoundingClientRect().left - 1)}px`,
+    );
+  heading?.classList.toggle(
+    "has-timeline-comparison",
+    Boolean(split && heading.querySelector(".compact-timeline")),
+  );
+  if (split) figure.style.setProperty("--timeline-first-width", `${secondary.left - contentLeft - 24}px`);
   if (container.id === "chart-9") {
     const headings = document.getElementById("c9-column-headings");
-    headings.style.paddingLeft = `${Math.max(0,primary.left-headings.getBoundingClientRect().left)}px`;
-    headings.style.gridTemplateColumns = split ? `${secondary.left-primary.left-24}px minmax(0,1fr)` : "minmax(0,1fr)";
+    headings.style.paddingLeft = `${Math.max(0, primary.left - headings.getBoundingClientRect().left)}px`;
+    headings.style.gridTemplateColumns = split
+      ? `${secondary.left - primary.left - 24}px minmax(0,1fr)`
+      : "minmax(0,1fr)";
   }
   const interpretation = body.querySelector(".takeaway-interpretation");
   const meaning = interpretation?.querySelector(".takeaway-meaning");
-  if (!sidebar && panel && meaning && innerWidth > 650 && getComputedStyle(body).gridTemplateColumns.split(" ").length > 1) {
+  if (
+    !sidebar &&
+    panel &&
+    meaning &&
+    innerWidth > 650 &&
+    getComputedStyle(body).gridTemplateColumns.split(" ").length > 1
+  ) {
     const start = meaning.getBoundingClientRect().left;
     const end = panel.getBoundingClientRect().right;
-    interpretation.style.setProperty("--arrow-left", `${(start+end)/2-interpretation.getBoundingClientRect().left-16}px`);
+    interpretation.style.setProperty(
+      "--arrow-left",
+      `${(start + end) / 2 - interpretation.getBoundingClientRect().left - 16}px`,
+    );
   }
   if (["chart-7", "chart-8"].includes(container.id)) balanceIncomeFindings();
   alignSectionIntroduction(container);
 }
 
 // Small semantic cues survive copy updates without parsing data as HTML.
+// CARD | Update finding text with encoding-colour cues
 export function setTextCues(element, parts) {
-  element.replaceChildren(...parts.map(part => {
-    if (typeof part === "string") return document.createTextNode(part);
-    const cue = document.createElement("span");
-    cue.className = `chart-cue ${part.cue}`;
-    cue.textContent = part.text;
-    return cue;
-  }));
+  element.replaceChildren(
+    ...parts.map((part) => {
+      if (typeof part === "string") return document.createTextNode(part);
+      const cue = document.createElement("span");
+      cue.className = `chart-cue ${part.cue}`;
+      cue.textContent = part.text;
+      return cue;
+    }),
+  );
 }
 
+// LAYOUT | Keep income finding cards equal in height
 function balanceIncomeFindings() {
   const comparison = document.querySelector(".income-comparison");
   const panels = [...document.querySelectorAll(".income-chart .takeaway-finding")];
-  panels.forEach(panel => panel.style.minHeight = "0px");
+  panels.forEach((panel) => (panel.style.minHeight = "0px"));
   if (!comparison || innerWidth <= 800 || panels.length !== 2) return;
-  const height = Math.max(...panels.map(panel => panel.getBoundingClientRect().height));
-  panels.forEach(panel => panel.style.minHeight = `${height}px`);
+  const height = Math.max(...panels.map((panel) => panel.getBoundingClientRect().height));
+  panels.forEach((panel) => (panel.style.minHeight = `${height}px`));
 }
 
-
-
 // Section introductions use the first visual in their own section, never the preceding one.
+// LAYOUT | Align each section introduction with its own following chart
 function alignSectionIntroduction(container) {
-  if (container.id === "chart-8") { alignSectionIntroduction(document.getElementById("chart-7")); return; }
+  if (container.id === "chart-8") {
+    alignSectionIntroduction(document.getElementById("chart-7"));
+    return;
+  }
   const section = container.closest("section.chapter");
   const header = section?.querySelector(":scope > .chapter-header");
   const figure = container.closest("figure");
   if (!section || !figure) return;
   const svg = container.querySelector("svg");
-  const scope = name => svg?.querySelector(`g.role-scope.${name}`)?.getBoundingClientRect();
+  const scope = (name) => svg?.querySelector(`g.role-scope.${name}`)?.getBoundingClientRect();
   if (header && section.querySelector(".chart") === container) {
     const bounds = header.getBoundingClientRect();
     const title = figure.querySelector(".figure-title h3, .income-chart-heading h3");
-    if (title) header.style.setProperty("--section-title-inset", `${Math.max(24,title.getBoundingClientRect().left-bounds.left-1)}px`);
+    if (title)
+      header.style.setProperty(
+        "--section-title-inset",
+        `${Math.max(24, title.getBoundingClientRect().left - bounds.left - 1)}px`,
+      );
     let target;
     if (container.id === "chart-1") target = scope("concat_1_group")?.left;
-    if (container.id === "chart-5") target = figure.querySelector(".mosaic-key-heading")?.getBoundingClientRect().left;
-    if (container.id === "chart-7") target = section.querySelector(".income-chart:nth-child(2) h3")?.getBoundingClientRect().left;
-    if (container.id === "chart-4") target = figure.querySelector(".takeaway-meaning")?.getBoundingClientRect().left;
-    if (container.id === "chart-10") target = figure.querySelector(".chart-finding")?.getBoundingClientRect().left;
-    if (target && innerWidth > 850) header.style.setProperty("--section-first-width", `${target-bounds.left-17}px`);
+    if (container.id === "chart-5")
+      target = figure.querySelector(".mosaic-key-heading")?.getBoundingClientRect().left;
+    if (container.id === "chart-7")
+      target = section.querySelector(".income-chart:nth-child(2) h3")?.getBoundingClientRect().left;
+    if (container.id === "chart-4")
+      target = figure.querySelector(".takeaway-meaning")?.getBoundingClientRect().left;
+    if (container.id === "chart-10")
+      target = figure.querySelector(".chart-finding")?.getBoundingClientRect().left;
+    if (target && innerWidth > 850)
+      header.style.setProperty("--section-first-width", `${target - bounds.left - 17}px`);
     else header.style.removeProperty("--section-first-width");
   }
   const bridge = figure.previousElementSibling;
@@ -452,9 +468,12 @@ function alignSectionIntroduction(container) {
     const title = figure.querySelector(".figure-title h3");
     if (innerWidth > 850 && first && title) {
       bridge.style.width = `${first.width}px`;
-      bridge.style.marginLeft = `${Math.max(0,title.getBoundingClientRect().left-bridge.parentElement.getBoundingClientRect().left-17)}px`;
+      bridge.style.marginLeft = `${Math.max(0, title.getBoundingClientRect().left - bridge.parentElement.getBoundingClientRect().left - 17)}px`;
     } else if (title) {
-      const inset = Math.max(0,title.getBoundingClientRect().left-bridge.parentElement.getBoundingClientRect().left-17);
+      const inset = Math.max(
+        0,
+        title.getBoundingClientRect().left - bridge.parentElement.getBoundingClientRect().left - 17,
+      );
       bridge.style.width = `calc(100% - ${inset}px)`;
       bridge.style.marginLeft = `${inset}px`;
     }

@@ -1,3 +1,4 @@
+// APP | Start all 13 charts; release chart resources when leaving the page.
 import { showChartError } from "./chart-utils.js";
 import { initialiseC1 } from "./c1.js";
 import { initialiseC2 } from "./c2.js";
@@ -14,7 +15,6 @@ import { initialiseC12 } from "./c12.js";
 import { initialiseC13 } from "./c13.js";
 
 async function start() {
-
   const charts = [
     initialiseC1,
     initialiseC2,
@@ -62,15 +62,12 @@ async function start() {
       } catch (error) {
         showChartError(`chart-${index + 1}`, error);
       }
-    })
+    }),
   );
 }
 
 // Wait for the HTML and deferred chart libraries before starting.
-if (
-  document.readyState === "loading" ||
-  document.readyState === "interactive"
-) {
+if (document.readyState === "loading" || document.readyState === "interactive") {
   document.addEventListener("DOMContentLoaded", start, { once: true });
 } else {
   void start();
